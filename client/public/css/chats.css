@@ -1,0 +1,276 @@
+/* .chat-bubble */
+
+#client-tiny-chat .chat-bubble {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#client-tiny-chat .chat-bubble .status-badge {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: none;
+    background-color: var(--danger);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 12px;
+    color: var(--light);
+    font-weight: 700;
+}
+
+#client-tiny-chat .chat-bubble .chat-bubble_avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* message */
+#client-tiny-chat .message {
+    max-width: 80%;
+    line-height: 18px;
+    padding: 5px 0;
+}
+
+#client-tiny-chat .message-left {
+    float: left;
+}
+
+#client-tiny-chat .message-right {
+    float: right;
+}
+
+#client-tiny-chat .message .messenger-content {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: var(--bg-message);
+    display: inline-block;
+}
+
+#client-tiny-chat .message .messenger-content .content-msg {
+    font-size: 12px;
+    text-align: start;
+}
+
+#client-tiny-chat .message .messenger-content .content-info {
+    display: flex;
+    justify-content: end;
+}
+
+#client-tiny-chat .message .messenger-content .content-isseen,
+#client-tiny-chat .message .messenger-content .content-time {
+    margin-top: 2px;
+    font-size: 10px;
+}
+
+#client-tiny-chat .message .messenger-content .content-isseen {
+    display: none;
+}
+
+#client-tiny-chat .message .messenger-content .content-isseen i {
+    color: var(--warning);
+    padding-left: 5px;
+}
+
+#client-tiny-chat .message.message-right .messenger-content {
+    background-color: var(--bg-main);
+    color: var(--color-main);
+}
+
+#client-tiny-chat #client-tiny-chat .message-right .messenger-user,
+#client-tiny-chat .message-left .messenger-user {
+    font-weight: 500;
+    padding: 5px 10px;
+}
+
+#client-tiny-chat .message-left .messenger-user {
+    text-align: start;
+}
+
+#client-tiny-chat .message-right .messenger-user {
+    text-align: end;
+}
+
+#client-tiny-chat .message-right .messenger-user .user-avatar,
+#client-tiny-chat .message-left .messenger-user .user-avatar {
+    width: 40px;
+    height: 40px;
+    float: right;
+}
+
+#client-tiny-chat .message-right .messenger-user .user-avatar img,
+#client-tiny-chat .message-left .messenger-user .user-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+#client-tiny-chat .message.message-avatar {
+    display: flex;
+}
+
+
+/* register-chat  */
+#client-tiny-chat .register-chat .register-content img {
+    width: 300px;
+}
+
+#client-tiny-chat .register-chat .register-coppyright {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 10px;
+}
+
+#client-tiny-chat .register-chat .register-coppyright img {
+    width: 100px;
+}
+
+#client-tiny-chat .register-chat .register-title {
+    padding: 10px 20px;
+    height: 80px;
+    background-color: var(--bg-main);
+    color: var(--color-main);
+    font-weight: 500;
+    border-radius: 5px 5px 0 0;
+}
+
+#client-tiny-chat .register-chat .register-title span {
+    font-size: 12px;
+}
+
+#client-tiny-chat .register-chat .register-content {
+    height: 270px;
+}
+
+#client-tiny-chat .register-chat .register-content .error {
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+#client-tiny-chat .register-chat .register-content form {
+    padding: 0 20px;
+}
+
+#client-tiny-chat .register-chat .register-content form .input-group button {
+    background-color: transparent;
+    border-radius: 20px;
+    color: var(--bg-main);
+    font-weight: 700;
+    border-color: var(--bg-main);
+    padding: 10px 20px;
+}
+
+#client-tiny-chat .register-chat .register-content form .input-group button:hover {
+    border-color: var(--bg-hover__main);
+    color: var(--bg-hover__main);
+    cursor: pointer;
+}
+
+#client-tiny-chat .register-chat .register-content form .input-group {
+    width: 100%;
+}
+
+#client-tiny-chat .register-chat .register-content form input {
+    width: -webkit-fill-available;
+    height: 30px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 0 20px;
+    border-color: var(--bg-main);
+}
+
+#client-tiny-chat .register-chat .register-content form input:active {
+    border-color: var(--bg-hover__main);
+}
+
+
+/* .chat-box */
+#client-tiny-chat .register-chat,
+#client-tiny-chat .chat-box {
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    position: absolute;
+    border-radius: 6px;
+    top: -410px;
+    right: 0px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+#client-tiny-chat .register-chat {
+    display: block;
+}
+
+#client-tiny-chat .chat-box::after {
+    content: "";
+    position: absolute;
+    right: 15px;
+    margin: 0 auto;
+    width: 0;
+    height: 0;
+    border-top: 10px solid var(--bg-main);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    bottom: -10px;
+}
+
+#client-tiny-chat .chat-box .chat-box__head {
+    width: 100%;
+    height: 60px;
+}
+
+#client-tiny-chat .chat-box .chat-box__content {
+    height: calc(100% - 105px);
+    width: 100%;
+    background-color: var(--bg);
+}
+
+#client-tiny-chat .chat-box .chat-box__content .chat-box__view {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#client-tiny-chat .chat-box .chat-box__input {
+    width: 100%;
+    height: 45px;
+    position: absolute;
+    bottom: 0;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+#client-tiny-chat .chat-box .chat-box__input .message-textarea {
+    resize: none;
+    outline: none;
+    border: 0;
+    margin-top: 5px;
+    width: 260px;
+    border-radius: 40px;
+    padding: 10px 15px 5px 15px;
+    height: 20px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+#client-tiny-chat .chat-box .chat-box__move-down {
+    position: absolute;
+    right: 10px;
+    bottom: 60px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    background-color: var(--bg-btn);
+    color: var(--color-btn);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

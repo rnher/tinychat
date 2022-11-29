@@ -1,0 +1,53 @@
+/* badge-danger */
+
+#client-tiny-chat div[class^=badge-] {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    padding-top: 1px;
+}
+
+#client-tiny-chat .badge-danger {
+    background-color: var(--danger);
+}
+
+#client-tiny-chat .badge-success {
+    background-color: var(--success);
+}
+
+/* out-of-data */
+#client-tiny-chat .out-of-data {
+    display: flex;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--secondary);
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+#client-tiny-chat .out-of-data::after,
+#client-tiny-chat .out-of-data::before {
+    content: " ";
+    display: inline-block;
+    height: 1px;
+    width: 35%;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    border-radius: 5px;
+}
+
+/* tooltip */
+#client-tiny-chat .tooltip {
+    position: relative;
+}
+
+#client-tiny-chat .tooltip .tooltipisseen {
+    display: none;
+}
+
+#client-tiny-chat .tooltip:hover .tooltipisseen {
+    display: contents;
+}

@@ -1,0 +1,28 @@
+#tiny-chat .search-input {
+    border: none;
+    border-radius: 10px;
+}
+
+#tiny-chat .input-group_search {
+    position: relative;
+}
+
+#tiny-chat .input-group_search .input-icon {
+    position: absolute;
+    left: 20px;
+    font-size: 20px;
+    padding: 5px 10px 10px 10px;
+}
+
+#tiny-chat .input-group_search .search-input {
+    padding-left: 50px;
+}
+
+#tiny-chat .input-group_search {
+    padding: 10px;
+}
+
+#tiny-chat .input-group_search .search-input {
+    width: 100%;
+    padding-right: 40px;
+}

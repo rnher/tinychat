@@ -1,0 +1,86 @@
+/* info-user  */
+#client-tiny-chat .chat-box .chatinfo {
+    display: flex;
+    padding: 0px 10px;
+    height: 100%;
+    align-items: center;
+}
+
+#client-tiny-chat .register-chat .register-content form .input-group button:hover,
+#client-tiny-chat .register-chat .register-content form .input-group input:hover,
+#client-tiny-chat .chat-box #message-textarea:hover,
+#client-tiny-chat .chat-bubble:hover,
+#client-tiny-chat .chat-box .chatinfo:hover {
+    cursor: pointer;
+}
+
+#client-tiny-chat .chat-box .chatinfo .info-user {
+    width: 80%;
+    padding-right: 10px;
+}
+
+#client-tiny-chat .chat-box .chatinfo .info-action {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#client-tiny-chat .chat-box .chatinfo .info-action .action-icon {
+    font-size: 20px;
+    display: none;
+}
+
+#client-tiny-chat .chat-box .chatinfo:hover .action-icon {
+    display: block;
+}
+
+#client-tiny-chat .chat-box .chatinfo .info-user .user-phone {
+    width: 70%;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+#client-tiny-chat .chat-box .chatinfo .info-user .user-name {
+    width: 80%;
+    font-weight: 700;
+    display: inline;
+    position: relative;
+}
+
+#client-tiny-chat .chat-box .chatinfo .info-user .user-online {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 5px;
+}
+
+#client-tiny-chat .chat-box .chatinfo.chatinfo-avatar .info-user .user-avatar {
+    width: 50px;
+    height: 50px;
+}
+
+#client-tiny-chat .chat-box .chatinfo.chatinfo-avatar .info-user .user-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+#client-tiny-chat .chat-box .chatinfo.chatinfo-avatar .info-user .user-name,
+#client-tiny-chat .chat-box .chatinfo.chatinfo-avatar .info-user .user-phone {
+    padding-left: 10px;
+    align-self: self-start;
+}
+
+#client-tiny-chat .chat-box .chatinfo.chatinfo-avatar .info-user {
+    display: flex;
+    align-items: center;
+}
+
+#client-tiny-chat .chat-box .chatinfo.chatinfo-avatar .info-user .user-name,
+#client-tiny-chat .chat-box .chatinfo.chatinfo-avatar .info-user .user-avatar {
+    position: relative;
+}

@@ -1,0 +1,6 @@
+#tiny-chat .btn-icon {
+    border: none;
+    background: transparent;
+    font-size: 30px;
+    color: var(--bg-btn);
+}

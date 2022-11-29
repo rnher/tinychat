@@ -1,0 +1,177 @@
+@import "fontawesome-all.css";
+@import "forms.css";
+@import "errors.css";
+@import "buttons.css";
+@import "images.css";
+@import "texts.css";
+@import "inputs.css";
+@import "loaddings.css";
+@import "chats.css";
+@import "users.css";
+
+:root {
+    --primary: #1877f2;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+
+    --secondary: #9fa4a8;
+    --light: #f8f9fa;
+    --dark: #343a40;
+
+    --bg: #f5f8fd;
+
+    --bg-btn: #1877f2;
+    --color-btn: #f5f8fd;
+    --color-link: #1877f2;
+
+    --bg-hover: #e6e9ec;
+    --color-hover: black;
+
+    --bg-message: #f6faff;
+
+    --bg-active: #1877f2;
+    --color-active: #f5f8fd;
+
+    --bg-main: #1877f2;
+    --color-main: #f5f8fd;
+    --bg-hover__main: #074699;
+    --color-hover__main: #f5f8fd;
+
+    --text-secondary: #9fa4a8;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--dark);
+    text-align: left;
+    background-color: var(--bg);
+}
+
+ul, ol {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+a {
+    color: var(--dark);
+    text-decoration: none;
+    outline: none;
+}
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container:before,
+.container::after {
+    display: table;
+    content: " ";
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--color-link);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-link);
+}
+
+#tiny-chat input::-webkit-outer-spin-button,
+#tiny-chat input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#tiny-chat input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.clearfix {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+#tiny-chat .chat-box .chat-box__move-down:hover,
+#tiny-chat .alert-action i:hover,
+#tiny-chat .chat-menu__item:hover,
+#tiny-chat .message:hover,
+#tiny-chat .chatinfo:hover,
+#tiny-chat .menu-item:hover,
+#tiny-chat input:hover,
+#tiny-chat button:hover,
+#tiny-chat label:hover,
+#tiny-chat image:hover {
+    cursor: pointer;
+}
+
+#tiny-chat .chatinfo.active,
+#tiny-chat .menu-item:active {
+    background-color: var(--bg-active);
+    color: var(--color-active);
+}
+
+#tiny-chat input {
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+#tiny-chat input:focus,
+#tiny-chat button:focus {
+    border: none;
+    outline: none;
+    box-shadow: #1877f2 0px 0px 0px 1px;
+
+}
+
+#tiny-chat .active {
+    background-color: var(--bg-active);
+    color: var(--color-active);
+}
+
+#tiny-chat {
+    position: relative;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}
