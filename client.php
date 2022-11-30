@@ -10,7 +10,8 @@
 
 <body>
 
-<script id="client-tiny-chat-script" type="module" src="http://localhost/client/public/js/main.js" data-id="6ab8785b6de51c2e7c293f0fa5b28b6d1744ecc06385cba285f83"></script>
+
+    <script id="client-tiny-chat-script" type="module" src="http://localhost/client/public/js/main.js" data-id="24f6837c25687e174f9afebd82cdf5130601e84863864229a179a"></script>
 
 </body>
 

@@ -5,11 +5,10 @@ include_once "models/Customer.php";
 include_once "models/Brand.php";
 include_once "models/ChatInfo.php";
 include_once "models/User.php";
-include_once "models/message.php";
+include_once "models/Message.php";
 include_once "app/utils/util.php";
 
 use APP\App;
-use MODELS\User;
 use MODELS\Brand;
 use MODELS\ChatInfo;
 use MODELS\Customer;
@@ -23,90 +22,43 @@ $view = function () {
         "isError" => false
     ];
 
-    $user = Auth::User();
-    $member = Auth::Member();
     $customer = Auth::Customer();
 
-    if (isset($user)) {
-        $is_member =  true;
-        $someone = $user;
-        $someone["brand_id"] = $member["brand_id"];
-    } else {
-        $is_member =  false;
-        $someone =  $customer;
-    }
-
     $uri = App::GetURI();
-    $column = isset($uri[token]) ? token : id;
-    $value = isset($uri[token]) ? $uri[token] : $someone["brand_id"];
 
-    // Kiểm tra hết hạng token
-    $brand = Brand::Find_Not_Expired([$column], [$value]);
-    $is_referer = true;
-
-    // Kiểm tra client từ domain nhãn hàng cho phép nhúng
-    if (isset($uri[token])) {
-        $is_referer = App::GetRequestReferer($brand["domain"]);
-    }
+    $brand = Brand::Find_Not_Expired("token", $uri[token]);
 
     // Xác thực người dùng và tồn tại nhãn hàng
-    if ($is_referer && isset($someone) && isset($brand)) {
-        if ($is_member) {
-            $chatinfo = ChatInfo::Find_Where(
-                ["id",   "brand_id"],
-                [$uri[id],   $brand["id"]]
-            );
-        } else {
-            $chatinfo = ChatInfo::Find_Where(
-                ["customer_id",   "brand_id"],
-                [$someone["id"],   $brand["id"]]
-            );
-        }
+    if (isset($customer) && isset($brand)) {
+        // Xác thực người dùng và tồn tại nhãn hàng
+        $chatinfo = ChatInfo::Find_Where(
+            ["customer_id",   "brand_id"],
+            [$customer["id"],   $customer["brand_id"]]
+        );
 
         $per_page  = CONF_PAGINATION["message"];
         $total = Message::Count_Where("id", "chatinfo_id", $chatinfo["id"]);
-        $page_url = CONF_URL["chats"] . "?" . (isset($uri[token]) ? token . "=" . $uri[token] . "&" : "");
+        $page_url = CONF_URL["chats"] . "?" .  token . "=" . $uri[token] . "&";
 
         $response["data"] = initPaginationMeta($page_url, $total, $per_page);
         $messages = Message::Get_With_Page($response["data"], "chatinfo_id", $chatinfo["id"]);
         $response["data"]["chatinfo_id"] =  $chatinfo["id"];
 
-        function creatData($message, $someone, $brand, $is_member)
+        function creatData($message, $customer, $brand)
         {
             $isSelf = false;
 
             // Tin nhắn của nhãn hàng
             if ($message["is_brand"]) {
-                // Người lấy là cửa hàng
-                if ($is_member) {
-                    $u = User::Find_Where("id", $message["sender_id"]);
-
-                    $name = $u["name"];
-                    $avatar = $u["avatar"];
-
-                    $isSelf = true;
-                } else {
-                    // Người lấy là khách
-                    $name = $brand["name"];
-                    $avatar = $brand["avatar"];
-                }
+                // Người lấy là khách
+                $name = $brand["name"];
+                $avatar = $brand["avatar"];
             } else {
                 // Tin nhắn của khách
+                $name = $customer["name"];
+                $avatar = $customer["avatar"];
 
-                // Người lấy là cửa hàng
-                if ($is_member) {
-                    $c = Customer::Find_Where("id", $message["sender_id"]);
-
-                    $name = $c["name"];
-                    $avatar = $c["avatar"];
-                } else {
-                    // Người lấy là khách
-
-                    $name = $someone["name"];
-                    $avatar = $someone["avatar"];
-
-                    $isSelf = true;
-                }
+                $isSelf = true;
             }
 
             // Nội dung tin nhắn
@@ -127,7 +79,7 @@ $view = function () {
             }
 
             foreach ($messages as $index => $message) {
-                $messages[$index] =  creatData($message, $someone, $brand, $is_member);
+                $messages[$index] = creatData($message, $customer, $brand);
             }
 
             $response["data"]["items"] =  $messages;
@@ -136,9 +88,9 @@ $view = function () {
             $response["data"]["items"] = [];
         }
 
-        $response["data"]["is_seen"] =  $chatinfo[$is_member ? "is_seen_customer" :  "is_seen_member"];
+        $response["data"]["is_seen"] =  $chatinfo["is_seen_member"];
         $response["data"]["users"] = ["brand" => Brand::ShortcutInfo($brand)];
-        $response["data"]["users"][$is_member ? "user" : "customer"] = $is_member ? User::ShortcutInfo($someone) : Customer::ShortcutInfo($someone);
+        $response["data"]["users"]["customer"] = Customer::ShortcutInfo($customer);
     } else {
         $response["isError"] = true;
         $response["error"]["is"] = "Thao tác bị từ chối";
@@ -154,9 +106,9 @@ $create = function () {
 
     $uri = App::GetURI();
 
-    $brand = Brand::Find_Not_Expired("token", $uri["token"]);
-
     if (!$response["isError"]) {
+        $brand = Brand::Find_Not_Expired("token", $uri[token]);
+
         // Nhãn hàng đã tồn tại
         if (isset($brand)) {
             $customer = Auth::Customer();

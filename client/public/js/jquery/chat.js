@@ -10,6 +10,9 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
+            // Fix xuất hiện khoảng trắng khi khởi tạo
+            _this.val("");
+
             _this.on("keydown", function (e) {
                 let message = $(this);
                 let key = e.which || e.keyCode || 0;
@@ -190,14 +193,14 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
 
                 _this.ajaxForm({
                     fields: ["name", "phone"],
-                    url: CONF_URL.chats + "?token=" + $("#client-tiny-chat-script").data("id"),
+                    url: CONF_URL.clients + "?token=" + $("#client-tiny-chat-script").data("id"),
                     success: function (data) {
                         _this.endabaleInput();
 
                         // Lưu id để đăng nhập socket
                         // Kết nối socket khi đăng ký thành công
-                        Chat.getInstance(() => {
-                            Chat.getInstance().sendAddChatInfo({
+                        Chat.getInstance((chat) => {
+                            chat.sendAddChatInfo({
                                 customer_id: data.customer_id
                             })
                         });
@@ -205,19 +208,21 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
                         $(".register-chat").remove();
                         //TODO: add layout loading
 
+
                         $("#client-tiny-chat").ajaxForm({
                             method: "GET",
-                            url: CONF_URL.chats + "?token=" + $("#client-tiny-chat-script").data("id"),
+                            url: CONF_URL.clients + "?token=" + $("#client-tiny-chat-script").data("id"),
                             success: function (data) {
-
                                 $("#client-tiny-chat").initChatBox({ data });
                                 $(".chat-box__view").onScrollExtraMasegers();
                                 $("#message-textarea").submitSendMessage();
                                 setInterval(
                                     $("#client-tiny-chat").updateMSGTime
-                                    , CONF_SOCKET.pingTime);
+                                    , CONF_SOCKET.pingTime
+                                );
 
-                                $("#chat-bubble").onClickAction({
+                                // Send seen and update croll
+                                $("#client-tiny-chat").onClickAction({
                                     selector: ".chat-bubble",
                                     callback: function () {
                                         // Nếu chat hidden cần nhấn để hiển thị
@@ -225,6 +230,8 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
                                         $("#client-tiny-chat").seenMessage({
                                             chatinfo_id: data.chatinfo_id
                                         })
+
+                                        $("#client-tiny-chat #chat-box").toggle();
                                     }
                                 });
 
@@ -274,14 +281,18 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
 
         _this.init = function () {
             $("#client-tiny-chat").append($("#client-tiny-chat").createChatBox(settings.data));
+
             let messages = settings.data.items;
             for (let i = 0; i < messages.length; i++) {
                 let chatBoxView = $(".chat-box__view[data-id=" + settings.data.chatinfo_id + "]");
                 chatBoxView.prepend($(chatBoxView).createMessageItem({ data: messages[i] }))
             }
 
-            // Nếu chat hiển thị mặc định
-            // $("#client-tiny-chat").updateScrollBottomChatBoxView();
+            // Ẩn nó khi mới khỏi tạo. Sẽ được hiển thị khi chạy updateScrollBottomChatBoxView
+            $("#chat-box__move-down").hide();
+
+            // Bât cái này Nếu chat hiển thị mặc định thì update scroll
+            $("#client-tiny-chat").updateScrollBottomChatBoxView();
             $("#chat-box__move-down").onClickMoveDowMessage();
         };
 

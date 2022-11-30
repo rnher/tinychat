@@ -6,7 +6,7 @@ include_once "Auth.php";
 include_once "models/User.php";
 include_once "models/ChatInfo.php";
 include_once "models/Member.php";
-include_once "models/message.php";
+include_once "models/Message.php";
 include_once "models/Brand.php";
 include_once "app/Config.php";
 include_once "app/utils/util.php";

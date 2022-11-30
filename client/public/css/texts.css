@@ -1,3 +1,19 @@
+/* text */
+/* label */
+#client-tiny-chat .text-center {
+    text-align: center;
+}
+
+#client-tiny-chat .label-error {
+    color: var(--danger);
+    font-size: 12px;
+}
+
+#tiny-chat .label-info {
+    color: var(--info);
+    font-size: 12px;
+}
+
 /* badge-danger */
 
 #client-tiny-chat div[class^=badge-] {

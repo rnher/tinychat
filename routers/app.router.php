@@ -60,12 +60,28 @@ switch ($uri[router]) {
         }
         break;
     case CONF_ROUTERS["chats"]: {
-            $chatinfo_controller = include_once "controllers/chatinfos/chatinfo.controller.php";
+            $member_chatinfo_controller = include_once "controllers/chatinfos/member.chatinfo.controller.php";
 
-            if ($uri[id] || $uri[token]) {
+            if ($uri[id]) {
                 App::Controller([
-                    "get" => $chatinfo_controller["view"],
-                    "post" => $chatinfo_controller["create"],
+                    "get" => $member_chatinfo_controller["view"]
+                ]);
+            } else {
+                App::Go();
+            }
+        }
+        break;
+    case CONF_ROUTERS["clients"]: {
+            $auth_client_middleware = include_once "app/middlewares/auth.client.middleware.php";
+            $client_chatinfo_controller = include_once "controllers/chatinfos/client.chatinfo.controller.php";
+            $brand_auth_middleware = $auth_client_middleware["brand_auth"];
+
+            if ($uri[token]) {
+                $brand_auth_middleware();
+
+                App::Controller([
+                    "get" => $client_chatinfo_controller["view"],
+                    "post" => $client_chatinfo_controller["create"],
                 ]);
             } else {
                 App::Go();

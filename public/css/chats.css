@@ -131,7 +131,7 @@
 }
 
 #tiny-chat .chat-box .chat-box__content .chat-box__view {
-    height: calc(100% - 60px);
+    height: calc(100% - 55px);
     overflow-y: scroll;
 }
 

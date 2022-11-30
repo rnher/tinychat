@@ -41,7 +41,7 @@ window.Chat = (function () {
                         break;
                     case CONF_SOCKET.actionKey.login: {
                         if (typeof this.listen == "function") {
-                            this.listen(data);
+                            this.listen(this, data);
                         }
                     }
                         break;
@@ -110,8 +110,8 @@ window.Chat = (function () {
                         .hide();
                 } else {
                     let chatBoxView = $(".chat-box__view[data-id=" + data.chatinfo_id + "]");
-                    chatBoxView.find(".message-right:nth-last-of-type(2) .content-isseen").hide();
-                    chatBoxView.find(".message-right:last-of-type .content-isseen").show();
+                    chatBoxView.find(".message-right .content-isseen").hide();
+                    chatBoxView.find(".message-right:last-child .content-isseen").show();
                 }
             }
         }

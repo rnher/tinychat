@@ -80,7 +80,7 @@
     color: var(--color-main);
 }
 
-#client-tiny-chat #client-tiny-chat .message-right .messenger-user,
+#client-tiny-chat .message-right .messenger-user,
 #client-tiny-chat .message-left .messenger-user {
     font-weight: 500;
     padding: 5px 10px;

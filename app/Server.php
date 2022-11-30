@@ -85,15 +85,21 @@ class Server
     // Kiểm tra format url
     static function GetRequestReferer($domain)
     {
-        if ("/" == substr($domain, -1)) {
-            $domain = substr($domain, 0, -1);
+        if (isset($domain)) {
+
+            if ("/" == substr($domain, -1)) {
+                $domain = substr($domain, 0, -1);
+            }
+            $domain = str_replace("https://", "", $domain);
+            $domain = str_replace("http://", "", $domain);
+            $domain = str_replace("/", "\/", $domain);
+
+            $preg = "/^((https)|(http))(:\/\/)($domain)(.)*(\/)*([a-zA_Z0-9-]*)([\/a-zA_Z0-9-?_&=]*)$/i";
+
+            return  !!preg_match($preg, $_SERVER["HTTP_REFERER"]);
         }
-        $domain = str_replace("https://", "", $domain);
-        $domain = str_replace("http://", "", $domain);
-        $domain = str_replace("/", "\/", $domain);
 
-        $preg = "/^((https)|(http))(:\/\/)($domain)(.)*(\/)*([a-zA_Z0-9-]*)([\/a-zA_Z0-9-?_&=]*)$/i";
 
-        return preg_match($preg, $_SERVER["HTTP_REFERER"]);
+        return false;
     }
 }

@@ -223,7 +223,7 @@ import { CONF_HOST } from "/client/public/js/config.js";
                 
                     <!-- register-chat -->
                 
-                    <div class="chat-bubble" data-action="toggle" data-target="chat-box">
+                    <div class="chat-bubble action-btn" data-action="toggle" data-target="chat-box">
                         <img class="chat-bubble_avatar" src="`+ CONF_HOST + `/public/images/defaults/chat-bubble-avatar.jpg" alt="">
                         <div class="status-badge badge-danger badge-new-msg" data-value title="Tin nhắn chưa đọc">
                         </div>

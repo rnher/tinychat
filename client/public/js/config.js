@@ -4,9 +4,7 @@ export let CONF_DOMAIN = "localhost";
 export let CONF_HOST = CONF_PROTOCOL + "://" + CONF_DOMAIN;
 
 export let CONF_URL = {
-    chats: CONF_HOST + "/chats",
-    brands: CONF_HOST + "/brands",
-    home: CONF_HOST
+    clients: CONF_HOST + "/clients",
 }
 
 export let CONF_SOCKET = {

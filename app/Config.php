@@ -49,6 +49,7 @@ class Config
             "signin" => "signin",
             "profile" => "profile",
             "check" => "check",
+            "clients" => "clients",
         ]);
 
         define("CONF_URL", [
@@ -58,6 +59,7 @@ class Config
             "home" => "/",
             "chats" => "/chats",
             "brands" => "/brands",
+            "clients" => "/clients",
 
         ]);
 
