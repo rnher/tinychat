@@ -123,7 +123,7 @@ window.Chat = (function () {
             addChatInfo(data) {
                 let chatInfoContent = $(".chat-info__content");
                 // Ẩn thông báo lỗi
-                chatInfoContent.find("error").remove();
+                chatInfoContent.find(".error").remove();
                 // Add chat info
                 chatInfoContent.prepend($("#tiny-chat").createChatinfoItem({ data }));
                 // Add add chat box

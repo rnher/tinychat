@@ -1,25 +1,25 @@
 <?php
 
-include_once "vendor/autoload.php";
-include_once "app/services/Chat.php";
-include_once "app/Config.php";
+// include_once "vendor/autoload.php";
+// include_once "app/services/Chat.php";
+// include_once "app/Config.php";
 
-use APP\Config;
-use APP\SERVICES\Chat;
+// use APP\Config;
+// use APP\SERVICES\Chat;
 
-Config::Init();
+// Config::Init();
 
-use Ratchet\Http\HttpServer;
-use Ratchet\Server\IoServer;
-use Ratchet\WebSocket\WsServer;
-use React\Socket\LimitingServer;
-use React\Socket\SocketServer;
-use React\EventLoop\Loop;
-use React\Socket\SecureServer;
+// use Ratchet\Http\HttpServer;
+// use Ratchet\Server\IoServer;
+// use Ratchet\WebSocket\WsServer;
+// use React\Socket\LimitingServer;
+// use React\Socket\SocketServer;
+// use React\EventLoop\Loop;
+// use React\Socket\SecureServer;
 
-$loop = Loop::get();
+// $loop = Loop::get();
 
-$server = new SocketServer("0.0.0.0:" . CONF_SOCKET["port"], array(), $loop);
+// $server = new SocketServer("0.0.0.0:" . CONF_SOCKET["port"], array(), $loop);
 
 // $secureServer = new SecureServer($server, $loop, [
 //     "local_cert"  =>  "/app/ssl/certificate.crt",
@@ -28,18 +28,43 @@ $server = new SocketServer("0.0.0.0:" . CONF_SOCKET["port"], array(), $loop);
 // ]);
 
 // $secureServer
-$limitingServer = new LimitingServer($server, CONF_SOCKET["max_connect"]);
+// $limitingServer = new LimitingServer($server, CONF_SOCKET["max_connect"]);
 
-$httpServer = new HttpServer(
+// $httpServer = new HttpServer(
+//     new WsServer(
+//         Chat::Singleton()
+//     )
+// );
+
+// $ioServer = new IoServer($httpServer, $limitingServer, $loop);
+
+// $ioServer->run();
+
+
+// CRON
+// /usr/bin/wget -O /dev/null https://designweb.vn/socket.php
+
+include_once "vendor/autoload.php";
+include_once "app/services/Chat.php";
+include_once "app/Config.php";
+
+use APP\Config;
+use APP\SERVICES\Chat;
+use Ratchet\Http\HttpServer;
+use Ratchet\Server\IoServer;
+use Ratchet\WebSocket\WsServer;
+
+Config::Init();
+
+$server =  new HttpServer(
     new WsServer(
         Chat::Singleton()
     )
 );
 
-$ioServer = new IoServer($httpServer, $limitingServer, $loop);
+$io = IoServer::factory(
+    $server,
+    CONF_SOCKET["port"]
+);
 
-$ioServer->run();
-
-
-// CRON
-// /usr/bin/wget -O /dev/null https://designweb.vn/socket.php
+$io->run();

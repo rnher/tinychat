@@ -11,7 +11,7 @@
 <body>
 
 
-    <script id="client-tiny-chat-script" type="module" src="http://localhost/client/public/js/main.js" data-id="24f6837c25687e174f9afebd82cdf5130601e84863864229a179a"></script>
+    <script id="client-tiny-chat-script" type="module" src="http://localhost/client/public/js/main.js" data-id="9cf127b725f88082f7e710418e48b5a0afad34fa63871d16422cf"></script>
 
 </body>
 

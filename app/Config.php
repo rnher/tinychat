@@ -14,7 +14,7 @@ class Config
         define("id", "id");
         define("token", "token");
 
-        define("CONF_DOMAIN", "localhost");
+        define("CONF_DOMAIN", "159.223.80.158");
         define("CONF_PROTOCOl", "http");
         define("CONF_HOST", CONF_PROTOCOl . "://" . CONF_DOMAIN);
 
@@ -64,14 +64,13 @@ class Config
         ]);
 
         define("CONF_DB", [
-            "dbname" => "designweb_tnchat",
+            "dbname" => "tinychat",
             "hostname" => "localhost",
-            // Server
-            // "username" => "designweb_tnchat",
-            // "password" => "d301DSpqfE",
-            // Local
             "username" => "root",
-            "password" => "",
+            // Server
+            "password" => "password",
+            // Local
+            // "password" => "",
         ]);
 
         define("CONF_PAGINATION", [
