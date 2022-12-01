@@ -14,7 +14,7 @@ class Config
         define("id", "id");
         define("token", "token");
 
-        define("CONF_DOMAIN", "159.223.80.158");
+        define("CONF_DOMAIN", "104.248.148.149");
         define("CONF_PROTOCOl", "http");
         define("CONF_HOST", CONF_PROTOCOl . "://" . CONF_DOMAIN);
 
@@ -68,7 +68,7 @@ class Config
             "hostname" => "localhost",
             "username" => "root",
             // Server
-            "password" => "password",
+            "password" => "`1Tinychat",
             // Local
             // "password" => "",
         ]);

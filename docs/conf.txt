@@ -1,0 +1,75 @@
+==========================================Config
+Server: Localhost via UNIX socket
+*Server type: MariaDB
+Server connection: SSL is not being used Documentation
+Server version: 10.6.11-MariaDB-0ubuntu0.22.04.1 - Ubuntu 22.04
+Protocol version: 10
+User: root@localhost
+Server charset: UTF-8 Unicode (utf8mb4)
+
+*Web server
+Apache/2.4.52 (Ubuntu)
+Database client version: libmysql - mysqlnd 8.1.13
+PHP extension: mysqli Documentation curl Documentation mbstring Documentation
+PHP version: 8.1.13
+
+*phpMyAdmin
+Version information: 5.1.1deb5ubuntu1
+
+==========================================User and Password
+*DB
+dbname: 	tinychat
+hostname: 	localhost
+username: 	root
+password: 	`1Tinychat
+
+==========================================Create server
+*Create ssh
+ssh-keygen
+[tiny-chat]
+enter
+enter
+cat [tiny-chat].pub
+
+==========================================Install
+** Pre install
+sudo apt update && sudo apt -y upgrade
+
+*Install apache2
+sudo apt install apache2
+sudo ufw app list
+sudo ufw allow in "Apache"
+sudo ufw status
+
+*Find your Server’s Public IP Address
+ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'
+curl http://icanhazip.com
+
+*Install php 8.1
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+sudo apt install php8.1
+sudo php -v
+
+*Install MariaDB
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+sudo add-apt-repository "deb [arch=amd64,arm64,ppc64el] http://mariadb.mirror.liquidtelecom.com/repo/10.4/ubuntu $(lsb_release -cs) main"
+sudo apt -y install mariadb-server mariadb-client
+sudo mysql_secure_installation 
+sudo systemctl status mysql
+
+*Install phpmyadmin with php 8.1
+sudo apt install phpmyadmin php8.1-mbstring php-zip php-gd php-json php-curl
+// Khong biet co can khong
+sudo phpenmod mbstring
+
+// 
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+sudo a2enconf phpmyadmin.conf
+sudo service apache2 reload
+
+*Install git
+sudo apt install git
+
+==========================================Deploy
+cd /var/www/html/
