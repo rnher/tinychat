@@ -61,8 +61,9 @@
                 url: settings.url,
                 data: settings.data,
                 xhrFields: {
-                    withCredentials: true
+                    withCredentials: false
                 },
+                crossDomain: true,
                 dataType: "json",
             }).done(function (response) {
                 if (response.isError) {
