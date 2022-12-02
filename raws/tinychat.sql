@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2022 at 12:36 PM
+-- Generation Time: Dec 02, 2022 at 02:35 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -34,7 +34,7 @@ CREATE TABLE `table_brand` (
   `avatar` varchar(150) DEFAULT NULL,
   `domain` varchar(200) DEFAULT NULL,
   `token` varchar(200) NOT NULL,
-  `description` varchar(2000) DEFAULT NULL,
+  `description` varchar(2000) NOT NULL,
   `expired_date` datetime DEFAULT NULL,
   `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -68,7 +68,7 @@ CREATE TABLE `table_customer` (
   `brand_id` int(50) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `phone` int(50) UNSIGNED NOT NULL,
-  `is_active` tinyint(1) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL,
   `avatar` varchar(150) DEFAULT NULL,
   `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -82,8 +82,8 @@ CREATE TABLE `table_customer` (
 
 CREATE TABLE `table_member` (
   `id` int(50) UNSIGNED NOT NULL,
-  `brand_id` int(50) UNSIGNED DEFAULT NULL,
-  `user_id` int(50) UNSIGNED DEFAULT NULL,
+  `brand_id` int(50) UNSIGNED NOT NULL,
+  `user_id` int(50) UNSIGNED NOT NULL,
   `role` varchar(100) NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()

@@ -38,7 +38,7 @@ $view = function () {
 
         $per_page  = CONF_PAGINATION["message"];
         $total = Message::Count_Where("id", "chatinfo_id", $chatinfo["id"]);
-        $page_url = CONF_URL["chats"] . "?" .  token . "=" . $uri[token] . "&";
+        $page_url = CONF_URL["clients"] . "?" .  token . "=" . $uri[token] . "&";
 
         $response["data"] = initPaginationMeta($page_url, $total, $per_page);
         $messages = Message::Get_With_Page($response["data"], "chatinfo_id", $chatinfo["id"]);
@@ -162,10 +162,10 @@ $create = function () {
                     "is_seen_customer" => 0,
                 ]);
 
-                App::Cookie("_ssid", $token, time() + CONF_COOKIE["expire"], '/');
+                App::Cookie("tinychat_client_ssid", $token, time() + CONF_COOKIE["expire"], '/');
                 $response["data"] = [
                     "customer_id" => $customer_id,
-                    "chatinfo_id" => $chatinfo_id
+                    "chatinfo_id" => $chatinfo_id,
                 ];
             }
         } else {

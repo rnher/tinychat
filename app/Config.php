@@ -14,10 +14,18 @@ class Config
         define("id", "id");
         define("token", "token");
 
-        // define("CONF_DOMAIN", "localhost");
-        define("CONF_DOMAIN", "159.223.46.242");
+        define("CONF_DOMAIN", "localhost");
+        // define("CONF_DOMAIN", "159.223.46.242");
         define("CONF_PROTOCOl", "http");
         define("CONF_HOST", CONF_PROTOCOl . "://" . CONF_DOMAIN);
+
+        define("CONF_DB", [
+            "dbname" => "tinychat",
+            "hostname" => "localhost",
+            "username" => "root",
+            "password" => "",
+            // "password" => "`1Tinychat",
+        ]);
 
         define("CONF_APP", [
             "name" => "Tiny Chat",
@@ -62,14 +70,6 @@ class Config
             "brands" => "/brands",
             "clients" => "/clients",
 
-        ]);
-
-        define("CONF_DB", [
-            "dbname" => "tinychat",
-            "hostname" => "localhost",
-            "username" => "root",
-            // "password" => "",
-            "password" => "`1Tinychat",
         ]);
 
         define("CONF_PAGINATION", [

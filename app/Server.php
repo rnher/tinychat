@@ -34,7 +34,7 @@ class Server
     static function Cookie($parameter, $value = null, $time = 0, $part = "")
     {
         if (isset($value)) {
-            if ($parameter == "ssid" || $parameter == "_ssid") {
+            if ($parameter == "tinychat_ssid" || $parameter == "tinychat_client_ssid") {
                 $value = base64_encode($value);
             }
 
@@ -42,7 +42,7 @@ class Server
             return $value;
         } else {
             $cookie =  isset($_COOKIE[$parameter]) ? $_COOKIE[$parameter] : null;
-            if ($cookie && ($parameter == "ssid" || $parameter == "_ssid")) {
+            if ($cookie && ($parameter == "tinychat_ssid" || $parameter == "tinychat_client_ssid")) {
                 $cookie = base64_decode($cookie);
             }
 

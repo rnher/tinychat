@@ -33,7 +33,7 @@ $signup = function () {
                         "token" =>  $token
                     ];
                     $session_id = Session::Save($session_data);
-                    App::Cookie("ssid",  $token, time() + CONF_COOKIE["expire"], '/');
+                    App::Cookie("tinychat_ssid",  $token, time() + CONF_COOKIE["expire"], '/');
                 } else {
                     $response["isError"] = true;
                     $response["error"]["is"] = "Đăng ký thất bại";
@@ -65,7 +65,7 @@ $signin = function () {
                 Session::Update_Where("user_id", $user["id"], $update_session);
 
                 $session = Session::Find_Where("user_id", $user["id"]);
-                App::Cookie("ssid", $session["token"], time() + CONF_COOKIE["expire"], '/');
+                App::Cookie("tinychat_ssid", $session["token"], time() + CONF_COOKIE["expire"], '/');
 
                 if ($data["remember"]) {
                     App::Cookie("username", $data["username"],  time() + CONF_COOKIE["expire"], '/');
@@ -102,9 +102,9 @@ $signout = function () {
             "expire" => -1,
             "is_login" => 0
         ];
-        Session::Update_Where("token", App::Cookie("ssid"), $update_session);
+        Session::Update_Where("token", App::Cookie("tinychat_ssid"), $update_session);
 
-        App::Cookie("ssid", "", -1, '/');
+        App::Cookie("tinychat_ssid", "", -1, '/');
     } else {
         $response["isError"] = true;
         $response["error"]["is"] = "Thao tác bị từ chối";

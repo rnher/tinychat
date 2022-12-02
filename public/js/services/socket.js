@@ -62,7 +62,7 @@ export default class Socket extends WebSocket {
 
     sendLogin() {
         this.send({
-            ssid: getCookie("ssid"),
+            ssid: getCookie("tinychat_ssid"),
             isMember: true,
             actionKey: CONF_SOCKET.actionKey.login
         })

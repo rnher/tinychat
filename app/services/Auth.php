@@ -29,34 +29,34 @@ class Auth
         return self::$auth;
     }
 
-    static function User($ssid = null)
+    static function User($tinychat_ssid = null)
     {
-        if (isset($ssid)) {
-            $ssid = $ssid;
+        if (isset($tinychat_ssid)) {
+            $tinychat_ssid = $tinychat_ssid;
         } else {
-            $ssid = Server::Cookie("ssid");
+            $tinychat_ssid = Server::Cookie("tinychat_ssid");
         }
 
-        $session = Session::Find_Where("token",  $ssid);
+        $session = Session::Find_Where("token",  $tinychat_ssid);
         return isset($session) ?  User::Find_Where("id", $session["user_id"]) : null;
     }
 
-    static function Member($ssid = null)
+    static function Member($tinychat_ssid = null)
     {
 
-        $user = Auth::User($ssid);
+        $user = Auth::User($tinychat_ssid);
         return isset($user) ? Member::Find_Where("user_id", $user["id"]) : null;
     }
 
 
-    static function Customer($ssid = null)
+    static function Customer($tinychat_client_ssid = null)
     {
-        if (isset($ssid)) {
-            $ssid = $ssid;
+        if (isset($tinychat_client_ssid)) {
+            $tinychat_client_ssid = $tinychat_client_ssid;
         } else {
-            $ssid = Server::Cookie("_ssid");
+            $tinychat_client_ssid = Server::Cookie("tinychat_client_ssid");
         }
 
-        return Customer::Find_Where("token", $ssid);
+        return Customer::Find_Where("token", $tinychat_client_ssid);
     }
 }
