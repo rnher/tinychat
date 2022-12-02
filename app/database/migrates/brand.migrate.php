@@ -7,7 +7,7 @@ $runCreateTableBrand = function () {
             avatar VARCHAR(150) NULL,
             domain VARCHAR(200) NULL,
             token VARCHAR(200) NOT NULL,
-            description VARCHAR(2000) NULL,
+            description VARCHAR(2000) NOT NULL,
             expired_date DATETIME,
             create_date TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP,
             update_date TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

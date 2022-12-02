@@ -6,7 +6,7 @@ $runCreateTableCustomer = function () {
             brand_id INT(50) UNSIGNED NOT NULL,
             name VARCHAR(100) NOT NULL,
             phone INT(50) UNSIGNED NOT NULL,
-            is_active BOOLEAN NULL,
+            is_active BOOLEAN NOT NULL,
             avatar VARCHAR(150) NULL,
             create_date TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP,
             update_date TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

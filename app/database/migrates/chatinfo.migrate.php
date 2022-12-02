@@ -6,7 +6,7 @@ $runCreateTableChatInfo = function () {
             customer_id INT(50) UNSIGNED NOT NULL,
             is_seen_member BOOLEAN NOT NULL,
             is_seen_customer BOOLEAN NOT NULL,
-            create_date TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            update_date TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            update_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )";
 };
