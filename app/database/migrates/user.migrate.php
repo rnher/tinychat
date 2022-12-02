@@ -6,7 +6,7 @@ $runCreateTableUser = function () {
             name VARCHAR(100) NOT NULL,
             password VARCHAR(200) NOT NULL,
             avatar VARCHAR(150) NULL,
-            create_date TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            update_date TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            update_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )";
 };

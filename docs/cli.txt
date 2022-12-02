@@ -1,0 +1,4 @@
+*To list all
+sudo netstat --all
+*To list all Listening ports Numbers with the Process responsible on each one. Terminate or kill the process to close port. (kill, pkill ...)
+sudo netstat -lnp

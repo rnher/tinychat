@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2022 at 05:43 AM
+-- Generation Time: Dec 01, 2022 at 12:36 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -50,8 +50,8 @@ CREATE TABLE `table_chat_info` (
   `id` int(50) UNSIGNED NOT NULL,
   `brand_id` int(50) UNSIGNED NOT NULL,
   `customer_id` int(50) UNSIGNED NOT NULL,
-  `is_seen_member` int(1) UNSIGNED NOT NULL,
-  `is_seen_customer` int(1) UNSIGNED NOT NULL,
+  `is_seen_member` tinyint(1) NOT NULL,
+  `is_seen_customer` tinyint(1) NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -68,7 +68,7 @@ CREATE TABLE `table_customer` (
   `brand_id` int(50) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `phone` int(50) UNSIGNED NOT NULL,
-  `is_active` int(1) DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT NULL,
   `avatar` varchar(150) DEFAULT NULL,
   `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -99,11 +99,11 @@ CREATE TABLE `table_message` (
   `id` int(50) UNSIGNED NOT NULL,
   `chatinfo_id` int(50) UNSIGNED NOT NULL,
   `sender_id` int(50) UNSIGNED NOT NULL,
-  `is_brand` int(1) UNSIGNED NOT NULL,
+  `is_brand` tinyint(1) NOT NULL,
   `type` varchar(50) NOT NULL,
   `content` varchar(1000) NOT NULL,
-  `is_seen_member` int(1) UNSIGNED NOT NULL,
-  `is_seen_customer` int(1) UNSIGNED NOT NULL,
+  `is_seen_member` tinyint(1) NOT NULL,
+  `is_seen_customer` tinyint(1) NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -118,7 +118,7 @@ CREATE TABLE `table_session` (
   `id` int(50) UNSIGNED NOT NULL,
   `token` varchar(200) NOT NULL,
   `user_id` int(50) UNSIGNED NOT NULL,
-  `is_login` int(1) NOT NULL,
+  `is_login` tinyint(1) NOT NULL,
   `expire` int(50) NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()

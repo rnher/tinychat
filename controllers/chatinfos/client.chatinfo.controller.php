@@ -125,8 +125,8 @@ $create = function () {
                     $chatinfo_id = ChatInfo::Save([
                         "brand_id" => $brand["id"],
                         "customer_id" => $customer["id"],
-                        "is_seen_member" => false,
-                        "is_seen_customer" => false,
+                        "is_seen_member" => 0,
+                        "is_seen_customer" => 0,
                     ]);
 
                     // Có customer nhưng không có trò chuyện
@@ -151,15 +151,15 @@ $create = function () {
                     "brand_id" => $brand["id"],
                     "name" =>  $data["name"],
                     "phone" => $data["phone"],
-                    "is_active" => false,
+                    "is_active" => 0,
                     "avatar" => Customer::Get_Default_Avatar()
                 ]);
 
                 $chatinfo_id = ChatInfo::Save([
                     "brand_id" => $brand["id"],
                     "customer_id" =>  $customer_id,
-                    "is_seen_member" => false,
-                    "is_seen_customer" => false,
+                    "is_seen_member" => 0,
+                    "is_seen_customer" => 0,
                 ]);
 
                 App::Cookie("_ssid", $token, time() + CONF_COOKIE["expire"], '/');

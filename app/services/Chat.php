@@ -397,19 +397,19 @@ class Chat implements MessageComponentInterface
                 $msgSend = [
                     "chatinfo_id" => $chatinfo["id"],
                     "sender_id" => $client->id,
-                    "is_brand" =>  $client->isMember,
+                    "is_brand" =>  (int)($client->isMember),
                     "type" => "text",
                     "content" => $data["msg"],
-                    "is_seen_member" => $client->isMember,
-                    "is_seen_customer" => !$client->isMember
+                    "is_seen_member" => (int)($client->isMember),
+                    "is_seen_customer" => (int)(!$client->isMember)
                 ];
 
                 if ($client->isMember) {
-                    $msgSend["is_seen_member"] = true;
-                    $msgSend["is_seen_customer"] = false;
+                    $msgSend["is_seen_member"] = 1;
+                    $msgSend["is_seen_customer"] = 0;
                 } else {
-                    $msgSend["is_seen_member"] = false;
-                    $msgSend["is_seen_customer"] = true;
+                    $msgSend["is_seen_member"] = 0;
+                    $msgSend["is_seen_customer"] = 1;
                 }
 
                 Message::Save($msgSend);
@@ -484,14 +484,14 @@ class Chat implements MessageComponentInterface
                     $client->isMember
                     && !$chatInfo["is_seen_member"]
                 ) {
-                    $dataUpdate["is_seen_member"] = true;
+                    $dataUpdate["is_seen_member"] = 1;
                     $checkUpdate = true;
                 } else if (
                     !$client->isMember
                     && !$chatInfo["is_seen_customer"]
                     && $chatInfo["customer_id"] == $_auth["id"]
                 ) {
-                    $dataUpdate["is_seen_customer"] = true;
+                    $dataUpdate["is_seen_customer"] = 1;
                     $checkUpdate = true;
                 }
 
@@ -506,7 +506,7 @@ class Chat implements MessageComponentInterface
 
                     Message::Update_Where(
                         ["chatinfo_id", "is_brand"],
-                        [$chatInfo["id"], $client->isMember],
+                        [$chatInfo["id"], (int)($client->isMember)],
                         $dataUpdate
                     );
                 }

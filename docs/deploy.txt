@@ -1,4 +1,21 @@
-==========================================Config
+==========================================
+*Database server
+Server: Localhost via UNIX socket
+Server type: MariaDB
+Server connection: SSL is not being used Documentation
+Server version: 10.4.27-MariaDB-1:10.4.27+maria~ubu2004-log - mariadb.org binary distribution
+Protocol version: 10
+User: root@localhost
+Server charset: cp1252 West European (latin1)
+
+*Web server
+Apache/2.4.41 (Ubuntu)
+Database client version: libmysql - mysqlnd 8.1.13
+PHP extension: mysqli Documentation curl Documentation mbstring Documentation
+PHP version: 8.1.13
+
+*phpMyAdmin
+Version information: 5.2.0
 
 ==========================================User and Password
 *DB
@@ -21,8 +38,9 @@ Protocol:   SFPT
 User:       root
 
 ==========================================Install
-** Pre install
+** Install OS 
 sudo apt update && sudo apt -y upgrade
+sudo apt install net-tools
 
 *Install apache2
 sudo apt install apache2
@@ -76,7 +94,24 @@ sudo service mysql start
 sudo service mysql status
 
 *Install phpmyadmin with php 8.1
-sudo apt install phpmyadmin php8.1-mbstring php-zip php-gd php-json php-curl
+sudo wget https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz
+sudo tar xzf phpMyAdmin-5.2.0-all-languages.tar.gz
+sudo ls
+sudo mv phpMyAdmin-5.2.0-all-languages/* /usr/share/phpmyadmin
+sudo nano /usr/share/phpmyadmin/config.inc.php
+
+<?php
+// use here a value of your choice 32 chars long
+$cfg['blowfish_secret'] = 'PASTE__32__CHAR__BLOWFISH_SECRET';
+$i=0;
+$i++;
+$cfg['Servers'][$i]['auth_type']     = 'cookie';
+
+sudo mkdir /usr/share/phpmyadmin/tmp && sudo chmod 777 /usr/share/phpmyadmin/tmp
+sudo rm /usr/share/phpmyadmin/phpMyAdmin-5.2.0-all-languages.tar.gz
+sudo rm -rf /usr/share/phpmyadmin/phpMyAdmin-5.2.0-all-languages
+
+sudo apt install php8.1-mbstring php-zip php-gd php-json php-curl php-gettext
 sudo phpenmod mbstring
 sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
 sudo a2enconf phpmyadmin.conf

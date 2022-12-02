@@ -34,7 +34,7 @@ for ($i = 1; $i <= CONF_SEED["count_customer"]; $i++) {
     $chatinfo_sample_record[] = [
         "brand_id" => 1,
         "customer_id" => $i,
-        "is_seen_member" => true,
-        "is_seen_customer" => false,
+        "is_seen_member" => 1,
+        "is_seen_customer" => 0,
     ];
 }
