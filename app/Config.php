@@ -27,6 +27,20 @@ class Config
             // "password" => "`1Tinychat",
         ]);
 
+        define("CONF_SOCKET", [
+            "port" => 8080,
+            "max_connect" => 1024,
+            "actionKey" => [
+                "addMessage" => "addMessage",
+                "noticationPing" => "noticationPing",
+                "logout" => "logout",
+                "login" => "login",
+                "checkPingUsers" => "checkPingUsers",
+                "addChatInfo" => "addChatInfo",
+                "updateSeen" => "updateSeen"
+            ]
+        ]);
+
         define("CONF_APP", [
             "name" => "Tiny Chat",
             "description" => "Tiny Chat - Ứng dụng chat đa nền tảng",
@@ -90,20 +104,6 @@ class Config
 
         define("CONF_COOKIE", [
             "expire" => 30 * 24 * 60 * 60
-        ]);
-
-        define("CONF_SOCKET", [
-            "port" => 8080,
-            "max_connect" => 1024,
-            "actionKey" => [
-                "addMessage" => "addMessage",
-                "noticationPing" => "noticationPing",
-                "logout" => "logout",
-                "login" => "login",
-                "checkPingUsers" => "checkPingUsers",
-                "addChatInfo" => "addChatInfo",
-                "updateSeen" => "updateSeen"
-            ]
         ]);
     }
 

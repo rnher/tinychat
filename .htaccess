@@ -10,5 +10,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ / [L,R]
 
 <IfModule mod_headers.c>
-   Header set Access-Control-Allow-Origin "*"
+   Header set Access-Control-Allow-Credentials "true"
+   Header set Access-Control-Allow-Origin "http://localhost" 
+   Header set Access-Control-Allow-Methods "GET, POST"
 </IfModule>

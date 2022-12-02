@@ -52,18 +52,27 @@ sudo ufw status
 ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'
 curl http://icanhazip.com
 
+*Create SSl
+https://app.zerossl.com
+
 *Install Virtual Hosts and enable htacess
 sudo mkdir /var/www/tinychat
 sudo chmod -R 755 /var/www/tinychat
 sudo nano /etc/apache2/sites-available/tinychat.conf
 
-<VirtualHost *:80>
+<VirtualHost *:443>
     ServerAdmin admin@tinychat
     ServerName tinychat
     ServerAlias www.tinychat
     DocumentRoot /var/www/tinychat
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    SSLEngine on
+    SSLCertificateFile /var/www/tinychat/app/ssl/certificate.crt
+    SSLCertificateKeyFile /var/www/tinychat/app/ssl/private.key
+    SSLCertificateChainFile /var/www/tinychat/app/ssl/ca_bundle.crt
+
     <Directory /var/www/tinychat>
         Options Indexes FollowSymLinks MultiViews
         AllowOverride All
@@ -74,9 +83,11 @@ sudo nano /etc/apache2/sites-available/tinychat.conf
 
 sudo a2ensite tinychat.conf
 sudo a2dissite 000-default.conf
-sudo apache2ctl configtest
 sudo a2enmod rewrite
 sudo a2enmod headers
+sudo a2enmod ssl
+// Test config errors
+sudo apache2ctl configtest
 sudo service apache2 restart
 
 *Install php 8.1
@@ -101,11 +112,12 @@ sudo mv phpMyAdmin-5.2.0-all-languages/* /usr/share/phpmyadmin
 sudo nano /usr/share/phpmyadmin/config.inc.php
 
 <?php
-// use here a value of your choice 32 chars long
+// Use here a value of your choice 32 chars long
 $cfg['blowfish_secret'] = 'PASTE__32__CHAR__BLOWFISH_SECRET';
 $i=0;
 $i++;
-$cfg['Servers'][$i]['auth_type']     = 'cookie';
+$cfg['Servers'][$i]['auth_type'] = 'cookie';
+php>
 
 sudo mkdir /usr/share/phpmyadmin/tmp && sudo chmod 777 /usr/share/phpmyadmin/tmp
 sudo rm /usr/share/phpmyadmin/phpMyAdmin-5.2.0-all-languages.tar.gz
@@ -122,3 +134,6 @@ sudo apt install git
 
 ==========================================Deploy
 cd /var/www/tinychat
+sudo netstat -lnp
+sudo kill -9 `sudo lsof -t -i:8080`
+sudo php socket.php

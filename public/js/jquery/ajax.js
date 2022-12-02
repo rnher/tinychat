@@ -60,9 +60,6 @@
                 method: settings.method,
                 url: settings.url,
                 data: settings.data,
-                xhrFields: {
-                    withCredentials: true
-                },
                 dataType: "json",
             }).done(function (response) {
                 if (response.isError) {

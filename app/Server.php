@@ -30,24 +30,59 @@ class Server
             && !empty($_POST[$parameter])) ? $_POST[$parameter] : null;
     }
 
-
-    static function Cookie($parameter, $value = null, $time = 0, $part = "")
-    {
-        if (isset($value)) {
-            if ($parameter == "tinychat_ssid" || $parameter == "tinychat_client_ssid") {
+    static function Cookie(
+        $key,
+        $value = null,
+        $time = 0,
+        $part = "/",
+        $domain = "",
+        $secure = false,
+        $httponly = false,
+        $samesite = "Lax"
+    ) {
+        if (isset($key)) {
+            if (isset($value)) {
                 $value = base64_encode($value);
-            }
 
-            setrawcookie($parameter, $value, $time, $part);
-            return $value;
-        } else {
-            $cookie =  isset($_COOKIE[$parameter]) ? $_COOKIE[$parameter] : null;
-            if ($cookie && ($parameter == "tinychat_ssid" || $parameter == "tinychat_client_ssid")) {
-                $cookie = base64_decode($cookie);
-            }
+                switch ($key) {
+                    case "tinychat_ssid": {
+                            setrawcookie($key, $value, [
+                                "expires" => $time,
+                                "path" => $part,
+                                "domain" => $domain,
+                                "secure" => $secure,
+                                "httponly" => $httponly,
+                                "samesite" => $samesite,
+                            ]);
+                        }
+                        break;
+                    case "tinychat_client_ssid": {
+                            setrawcookie($key, $value, [
+                                "expires" => $time,
+                                "path" => $part,
+                                "domain" => $domain,
+                                "secure" => true,
+                                "httponly" => $httponly,
+                                "samesite" => "none",
+                            ]);
+                        }
+                        break;
+                    default:
+                        break;
+                }
 
-            return  $cookie;
+                return $value;
+            } else {
+                $cookie =  isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
+                if ($cookie && ($key == "tinychat_ssid" || $key == "tinychat_client_ssid")) {
+                    $cookie = base64_decode($cookie);
+                }
+
+                return  $cookie;
+            }
         }
+
+        return false;
     }
 
     static function GetURI()

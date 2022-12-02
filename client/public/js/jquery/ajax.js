@@ -60,11 +60,12 @@
                 method: settings.method,
                 url: settings.url,
                 data: settings.data,
+                dataType: "json",
+                // Cross-Origin Resource Sharing
                 xhrFields: {
-                    withCredentials: false
+                    withCredentials: true
                 },
                 crossDomain: true,
-                dataType: "json",
             }).done(function (response) {
                 if (response.isError) {
                     // Reset input
