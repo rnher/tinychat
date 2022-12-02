@@ -22,12 +22,12 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
                     case keyEnter: {
                         e.preventDefault();
 
-                        let msg = message.val();
+                        let content = message.val();
                         let chatinfo_id = message.data("chatinfo");
 
-                        if (msg.length) {
+                        if (content.length) {
                             Chat.getInstance().sendMessage({
-                                msg,
+                                content,
                                 chatinfo_id
                             });
                         }
@@ -199,7 +199,7 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
 
                         // Lưu id để đăng nhập socket
                         // Kết nối socket khi đăng ký thành công
-                        Chat.getInstance((chat) => {
+                        Chat.getInstance(data.ssid, (chat) => {
                             chat.sendAddChatInfo({
                                 customer_id: data.customer_id
                             })

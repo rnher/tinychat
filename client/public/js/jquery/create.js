@@ -15,12 +15,12 @@ import { CONF_HOST } from "/client/public/js/config.js";
 
         let user = `<div class="messenger-user">
                         <div class="user-avatar clearfix">
-                            <img title="`+ data.name + `" src="` + data.avatar + `" alt="` + data.name + `">
+                            <img title="`+ data.userName + `" src="` + data.avatar + `" alt="` + data.userName + `">
                         </div> 
                     </div>`;
         let content = `<div class="messenger-content">
                             <div class="content-msg">
-                            `+ data.msg + `
+                            `+ data.content + `
                             </div>
                             <div class="content-info">
                                 <div class="content-time" data-value="`+ data.time + `">

@@ -16,7 +16,7 @@ use MODELS\Brand;
 use MODELS\Member;
 use MODELS\ChatInfo;
 use MODELS\Customer;
-use MODELS\message;
+use MODELS\Message;
 use APP\SERVICES\Auth;
 use Ratchet\MessageComponentInterface;
 
@@ -390,8 +390,6 @@ class Chat implements MessageComponentInterface
 
             $chatinfo = ChatInfo::Find_Where("id", $data["chatinfo_id"]);
             if (isset($chatinfo)) {
-                // $data["time"] = get_time();
-
                 $this->sendToChatinfo($auth, $chatinfo, $data);
 
                 $msgSend = [
@@ -399,7 +397,7 @@ class Chat implements MessageComponentInterface
                     "sender_id" => $client->id,
                     "is_brand" =>  (int)($client->isMember),
                     "type" => "text",
-                    "content" => $data["msg"],
+                    "content" => $data["content"],
                     "is_seen_member" => (int)($client->isMember),
                     "is_seen_customer" => (int)(!$client->isMember)
                 ];

@@ -45,17 +45,6 @@ class Server
                 $value = base64_encode($value);
 
                 switch ($key) {
-                    case "tinychat_ssid": {
-                            setrawcookie($key, $value, [
-                                "expires" => $time,
-                                "path" => $part,
-                                "domain" => $domain,
-                                "secure" => $secure,
-                                "httponly" => $httponly,
-                                "samesite" => $samesite,
-                            ]);
-                        }
-                        break;
                     case "tinychat_client_ssid": {
                             setrawcookie($key, $value, [
                                 "expires" => $time,
@@ -67,14 +56,24 @@ class Server
                             ]);
                         }
                         break;
-                    default:
+                    case "tinychat_ssid":
+                    default: {
+                            setrawcookie($key, $value, [
+                                "expires" => $time,
+                                "path" => $part,
+                                "domain" => $domain,
+                                "secure" => $secure,
+                                "httponly" => $httponly,
+                                "samesite" => $samesite,
+                            ]);
+                        }
                         break;
                 }
 
                 return $value;
             } else {
                 $cookie =  isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
-                if ($cookie && ($key == "tinychat_ssid" || $key == "tinychat_client_ssid")) {
+                if (isset($cookie)) {
                     $cookie = base64_decode($cookie);
                 }
 
@@ -83,6 +82,11 @@ class Server
         }
 
         return false;
+    }
+
+    static function getEndcodeCookie($key)
+    {
+        return isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
     }
 
     static function GetURI()

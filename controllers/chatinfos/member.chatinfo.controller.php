@@ -13,7 +13,7 @@ use MODELS\User;
 use MODELS\Brand;
 use MODELS\ChatInfo;
 use MODELS\Customer;
-use MODELS\message;
+use MODELS\Message;
 use APP\SERVICES\Auth;
 
 $view = function () {

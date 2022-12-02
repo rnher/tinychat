@@ -20,12 +20,12 @@
                     case keyEnter: {
                         e.preventDefault();
 
-                        let msg = message.val();
+                        let content = message.val();
                         let chatinfo_id = message.data("chatinfo");
 
-                        if (msg.length) {
+                        if (content.length) {
                             Chat.getInstance().sendMessage({
-                                msg,
+                                content,
                                 chatinfo_id
                             });
                         }

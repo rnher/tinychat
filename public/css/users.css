@@ -127,7 +127,7 @@
     border-radius: 50%;
     position: absolute;
     top: 5px;
-    right: 5px;
+    right: 0px;
 }
 
 #tiny-chat .chatinfo.chatinfo-avatar .info-user .user-avatar {

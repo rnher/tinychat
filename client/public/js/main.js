@@ -26,7 +26,7 @@ class ClientTinyChat {
             method: "GET",
             url: CONF_URL.clients + "?token=" + $("#client-tiny-chat-script").data("id"),
             success: function (data) {
-                Chat.getInstance(function (chat) {
+                Chat.getInstance(data.ssid, function (chat) {
                     $("#client-tiny-chat").initChatBox({ data });
                     $("#client-tiny-chat .chat-box__view").onScrollExtraMasegers();
                     $("#client-tiny-chat #message-textarea").submitSendMessage();

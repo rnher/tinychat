@@ -12,7 +12,7 @@ use APP\App;
 use MODELS\Brand;
 use MODELS\ChatInfo;
 use MODELS\Customer;
-use MODELS\message;
+use MODELS\Message;
 use APP\SERVICES\Auth;
 
 $view = function () {
@@ -42,7 +42,6 @@ $view = function () {
 
         $response["data"] = initPaginationMeta($page_url, $total, $per_page);
         $messages = Message::Get_With_Page($response["data"], "chatinfo_id", $chatinfo["id"]);
-        $response["data"]["chatinfo_id"] =  $chatinfo["id"];
 
         function creatData($message, $customer, $brand)
         {
@@ -88,6 +87,8 @@ $view = function () {
             $response["data"]["items"] = [];
         }
 
+        $response["data"]["ssid"] = App::getEndcodeCookie("tinychat_client_ssid");
+        $response["data"]["chatinfo_id"] =  $chatinfo["id"];
         $response["data"]["is_seen"] =  $chatinfo["is_seen_member"];
         $response["data"]["users"] = ["brand" => Brand::ShortcutInfo($brand)];
         $response["data"]["users"]["customer"] = Customer::ShortcutInfo($customer);
@@ -163,11 +164,14 @@ $create = function () {
                 ]);
 
                 App::Cookie("tinychat_client_ssid", $token, time() + CONF_COOKIE["expire"], '/');
+
                 $response["data"] = [
                     "customer_id" => $customer_id,
-                    "chatinfo_id" => $chatinfo_id,
+                    "chatinfo_id" => $chatinfo_id
                 ];
             }
+
+            $response["data"]["ssid"] = App::getEndcodeCookie("tinychat_client_ssid");
         } else {
             $response["isError"] = true;
             $response["error"]["is"] = "Kênh trò chuyện của nhãn hàng không có";

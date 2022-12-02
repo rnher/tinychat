@@ -1,5 +1,9 @@
 ==========================================
+==========================================
+==========================================
+*
 *Database server
+*
 Server: Localhost via UNIX socket
 Server type: MariaDB
 Server connection: SSL is not being used Documentation
@@ -8,24 +12,36 @@ Protocol version: 10
 User: root@localhost
 Server charset: cp1252 West European (latin1)
 
+*
 *Web server
+*
 Apache/2.4.41 (Ubuntu)
 Database client version: libmysql - mysqlnd 8.1.13
 PHP extension: mysqli Documentation curl Documentation mbstring Documentation
 PHP version: 8.1.13
 
+*
 *phpMyAdmin
+*
 Version information: 5.2.0
 
+==========================================
 ==========================================User and Password
+==========================================
+*
 *DB
+*
 dbname: 	tinychat
 hostname: 	localhost
 username: 	roottinychat
 password: 	`1Tinychat
 
+==========================================
 ==========================================Create server
+==========================================
+*
 *Create ssh
+*
 ssh-keygen
 tinychat
 enter
@@ -37,25 +53,37 @@ Edit->Settings->SFPT->Add->tinychat
 Protocol:   SFPT
 User:       root
 
-==========================================Install
-** Install OS 
+==========================================
+==========================================Install server
+==========================================
+*
+* Install OS 
+*
 sudo apt update && sudo apt -y upgrade
 sudo apt install net-tools
 
+*
 *Install apache2
+*
 sudo apt install apache2
 sudo ufw app list
 sudo ufw allow in "Apache"
 sudo ufw status
 
+*
 *Find your Server’s Public IP Address
+*
 ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'
 curl http://icanhazip.com
 
+*
 *Create SSl
+*
 https://app.zerossl.com
 
+*
 *Install Virtual Hosts and enable htacess
+*
 sudo mkdir /var/www/tinychat
 sudo chmod -R 755 /var/www/tinychat
 sudo nano /etc/apache2/sites-available/tinychat.conf
@@ -90,13 +118,17 @@ sudo a2enmod ssl
 sudo apache2ctl configtest
 sudo service apache2 restart
 
+*
 *Install php 8.1
+*
 sudo apt install software-properties-common
 sudo add-apt-repository ppa:ondrej/php
 sudo apt install php8.1
 sudo php -v
 
+*
 *Install MariaDB
+*
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 sudo add-apt-repository "deb [arch=amd64,arm64,ppc64el] http://mariadb.mirror.liquidtelecom.com/repo/10.4/ubuntu $(lsb_release -cs) main"
 sudo apt -y install mariadb-server-10.4 mariadb-client-10.4
@@ -104,7 +136,9 @@ sudo mysql_secure_installation
 sudo service mysql start
 sudo service mysql status
 
+*
 *Install phpmyadmin with php 8.1
+*
 sudo wget https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz
 sudo tar xzf phpMyAdmin-5.2.0-all-languages.tar.gz
 sudo ls
@@ -129,10 +163,68 @@ sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.co
 sudo a2enconf phpmyadmin.conf
 sudo service apache2 reload
 
+*
+*Install composer
+*
+sudo apt install php-cli unzip
+cd ~
+curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
+HASH=`curl -sS https://composer.github.io/installer.sig`
+echo $HASH
+php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+sudo php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+composer
+
+*
 *Install git
+*
 sudo apt install git
 
+==========================================
+==========================================Orther config server
+==========================================
+*
+*Time zone
+*
+**
+**PHP
+**
+/etc/php/8.1/apache2/php.ini
+
+[Date]
+; Defines the default timezone used by the date functions
+; https://php.net/date.timezone
+date.timezone = Asia/Ho_Chi_Minh
+
+sudo service apache2 restart
+
+**
+**Mysql
+**
+/etc/mysql/my.cnf
+
+[vi +7]
+default-time-zone='+07:00'
+
+sudo service mysql restart
+
+**
+**Ubuntu
+**
+timedatectl list-timezones
+sudo timedatectl set-timezone Asia/Ho_Chi_Minh
+timedatectl
+sudo apt-get install ntp
+
+==========================================
 ==========================================Deploy
+==========================================
+cd /var/www/tinychat
+php composer.phar update
+
+==========================================
+==========================================Start socket
+==========================================
 cd /var/www/tinychat
 sudo netstat -lnp
 sudo kill -9 `sudo lsof -t -i:8080`

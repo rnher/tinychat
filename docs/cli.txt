@@ -1,10 +1,6 @@
-==========================================Listening ports Numbers
-*To list all
-sudo netstat --all
-*To list all Listening ports Numbers with the Process responsible on each one. Terminate or kill the process to close port. (kill, pkill ...)
-sudo netstat -lnp
-
+==========================================
 ==========================================Git
+==========================================
 *All files
 git add -A
 *All add files (at the root of your project folder)
@@ -12,7 +8,22 @@ git add .
 *All update and delete files
 git add -u
 
-==========================================Start socket
-sudo kill -9 `sudo lsof -t -i:8080`
-cd /var/www/tinychat
-sudo php socket.php
+==========================================
+==========================================Ubuntu
+==========================================
+*
+*Delete folder
+*
+sudo rm -rf folder-name
+
+*
+*Listening ports Numbers
+*
+**
+**To list all
+**
+sudo netstat --all
+**
+**Process responsible on each one. Terminate or kill the process to close port. (kill, pkill ...)
+**
+sudo netstat -lnp

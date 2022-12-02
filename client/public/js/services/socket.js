@@ -2,8 +2,12 @@ import { CONF_SOCKET } from "/client/public/js/config.js";
 import { getCookie } from "/client/public/js/util.js";
 
 export default class Socket extends WebSocket {
-    constructor() {
+    ssid;
+
+    constructor(ssid) {
         super(CONF_SOCKET.url);
+
+        this.ssid = ssid;
 
         this.addEventListener("open", this.open);
         this.addEventListener("message", this.message);
@@ -51,7 +55,7 @@ export default class Socket extends WebSocket {
 
     sendLogin() {
         this.send({
-            ssid: getCookie("tinychat_client_ssid"),
+            ssid: this.ssid,
             isMember: false,
             actionKey: CONF_SOCKET.actionKey.login
         })
@@ -60,7 +64,7 @@ export default class Socket extends WebSocket {
     sendMessage(data) {
         this.send({
             ...data,
-            time: new Date(),
+            time: new Date().toUTCString(),
             actionKey: CONF_SOCKET.actionKey.addMessage,
         })
     }

@@ -14,7 +14,7 @@ use MODELS\User;
 use MODELS\Brand;
 use MODELS\Member;
 use MODELS\ChatInfo;
-use MODELS\message;
+use MODELS\Message;
 use APP\SERVICES\Auth;
 use APP\SERVICES\UploadImage;
 use MODELS\Customer;

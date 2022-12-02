@@ -19,15 +19,17 @@ use React\Socket\SecureServer;
 
 $loop = Loop::get();
 
-$server = new SocketServer(CONF_DOMAIN . CONF_SOCKET["port"], array(), $loop);
+$server = new SocketServer(CONF_DOMAIN . ":" . CONF_SOCKET["port"], array(), $loop);
 
+// https
 $secureServer = new SecureServer($server, $loop, [
-    "local_cert"  =>  "/app/ssl/certificate.crt",
-    "local_pk" => "/app/ssl/private.key",
+    "local_cert"  =>  "app/ssl/certificate.crt",
+    "local_pk" => "app/ssl/private.key",
     "verify_peer" => false,
     "allow_self_signed" => false
 ]);
 
+// https -> secureServer | http -> server
 $limitingServer = new LimitingServer($secureServer, CONF_SOCKET["max_connect"]);
 
 $httpServer = new HttpServer(

@@ -10,8 +10,8 @@ window.Chat = (function () {
         class Chat extends Socket {
             listen;
 
-            constructor(listen) {
-                super();
+            constructor(ssid, listen) {
+                super(ssid);
 
                 this.listen = listen;
             }
@@ -118,13 +118,13 @@ window.Chat = (function () {
 
 
         // Create chat
-        return new Chat(listen);
+        return new Chat(ssid, listen);
     }
 
     return {
-        getInstance: function (listen = null) {
+        getInstance: function (ssid, listen = null) {
             if (!instance) {
-                instance = init(listen);
+                instance = init(ssidlisten);
             }
             return instance;
         }
