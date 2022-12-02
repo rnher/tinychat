@@ -19,7 +19,7 @@ $view = function () {
 
     $user = Auth::User();
     if (isset($user)) {
-        $response["data"] = $user;
+        $response["data"] = User::DetailInfo($user);
     } else {
         $response["isError"] = true;
         $response["error"]["is"] = "Không có thông tin";
@@ -31,7 +31,7 @@ $view = function () {
 $update =  function () {
     $validater = include_once "app/validates/users/profile.user.validate.php";
     $response = $validater["update"]();
-    $data =  $response["data"];
+    $data = $response["data"];
 
     $user = Auth::User();
     if (isset($user)) {
@@ -46,7 +46,7 @@ $update =  function () {
                         ["name" => "avatar", "data" => $data["avatar"]],
                         "users/" . $user["id"]
                     );
-                    
+
                     $data["avatar"] = $image->save();
                 } else {
                     unset($data["avatar"]);

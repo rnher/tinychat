@@ -441,8 +441,8 @@ class Chat implements MessageComponentInterface
                         $customer["brand_id"],
                         [
                             "self" => $client,
-                            "chatinfo" => $chatinfo,
-                            "customer" => $customer,
+                            "chatinfo" => ChatInfo::ShortcutInfo($chatinfo),
+                            "customer" => Customer::ShortcutInfo($customer),
                             "data" => $data
                         ],
                         function ($params) {

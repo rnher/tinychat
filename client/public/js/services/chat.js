@@ -6,7 +6,7 @@ import Socket from "/client/public/js/services/socket.js";
 window.Chat = (function () {
     let instance;
 
-    function init(listen) {
+    function init(ssid, listen) {
         class Chat extends Socket {
             listen;
 
@@ -124,7 +124,7 @@ window.Chat = (function () {
     return {
         getInstance: function (ssid, listen = null) {
             if (!instance) {
-                instance = init(ssidlisten);
+                instance = init(ssid, listen);
             }
             return instance;
         }

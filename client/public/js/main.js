@@ -48,10 +48,18 @@ class ClientTinyChat {
                 });
             },
             reject: function (error) {
-                $("#client-tiny-chat").onClickAction({ selector: ".chat-bubble" });
                 $("#client-tiny-chat")
                     .append($("#client-tiny-chat").createRegisterChat());
-                $("#client-tiny-chat #register-chat__form").submitRegisterChat();
+
+                if (error.not == "brand") {
+                    // Brand không tồn tại hoặc hết hạn
+                    $(".register-content").showError({ error });
+                } else {
+                    $("#client-tiny-chat #register-chat__form").submitRegisterChat();
+                }
+
+                $("#client-tiny-chat").onClickAction({ selector: ".chat-bubble" });
+
             }
         });
     }

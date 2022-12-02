@@ -30,7 +30,9 @@ class App extends Server
 
     function start()
     {
-        include_once 'app/utils/Faker/autoload.php';
+        // When installed via composer
+        require_once 'vendor/autoload.php';
+
         Config::Init();
 
         Database::Singleton()->init();
@@ -45,7 +47,8 @@ class App extends Server
         include_once "routers/app.router.php";
     }
 
-    function getConfig(){
+    function getConfig()
+    {
         return $this->config;
     }
 

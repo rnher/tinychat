@@ -35,7 +35,6 @@ class Database
             "table_user" => $runCreateTableUser,
         ];
 
-
         include_once "seeds/chatinfo.seed.php";
         include_once "seeds/customer.seed.php";
         include_once "seeds/message.seed.php";
@@ -50,7 +49,6 @@ class Database
             "table_chat_info" => $runCreateRecordChatInfo,
             // "table_user" => $runCreateRecordUser,
         ];
-
 
         $this->sample_records = [
             "table_brand" => $brand_sample_record,

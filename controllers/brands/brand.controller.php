@@ -34,7 +34,6 @@ $create = function () {
                 $response["isError"] = true;
                 $response["error"]["name"] = "Tên thương hiệu đã tồn tại";
             } else {
-                $response["data"]["token"] = create_random_bytes();
                 $response["data"]["expired_date"] = Brand::Create_Date_Next("m", 1); // Mặt định 1 tháng dùng thử
                 $response["data"]["avatar"] = Brand::Get_Default_Avatar();
 
@@ -91,7 +90,7 @@ $view = function () {
         {
             $customer = Customer::Find_Where("id", $chatinfo["customer_id"]);
             return  [
-                "chatinfo" => $chatinfo,
+                "chatinfo" => ChatInfo::ShortcutInfo($chatinfo),
                 "customer" => Customer::ShortcutInfo($customer),
                 "count_not_seen_msg" =>
                 Message::Count_Where(
@@ -133,8 +132,7 @@ $profile = function () {
     if (isset($member) && $member["role"] == "admin") {
         $brand =  Brand::Find_Where("id", $member["brand_id"]);
         if (isset($brand)) {
-            $brand["token"] = Brand::Get_Script_Token($brand);
-            $response["data"] = $brand;
+            $response["data"] = Brand::DetailInfo($brand);
         } else {
             $response["isError"] = true;
             $response["error"]["is"] = "Chưa có nhãn hiệu";
@@ -155,19 +153,9 @@ $update =  function () {
     $member = Auth::Member();
     if (isset($member) && $member["role"] == "admin") {
         if (!$response["isError"]) {
-            if (isset($data["token"])) {
-                $new_token =  create_random_bytes();
-                Brand::Update_Where(
-                    "id",
-                    $member["brand_id"],
-                    ["token" => $new_token]
-                );
-
-                $response["data"] = [];
-                $response["data"]["token"] = $new_token;
-            } else if (User::Login([
+            if (User::Login([
                 "username" => Auth::User()["username"],
-                "password" =>  $data["password"]
+                "password" => $data["password"]
             ])) {
                 if (isset($data["avatar"])) {
                     $image = new UploadImage(
@@ -183,20 +171,27 @@ $update =  function () {
                 }
 
                 unset($data["password"]);
-                unset($data["token"]);
-
-                Brand::Update_Where("id", $member["brand_id"], $data);
 
                 $brand = Brand::Find_Where("id", $member["brand_id"]);
-                $brand["token"] = Brand::Get_Script_Token($brand);
-                $response["data"] = $brand;
+                if (isset($data["domain"]) && $data["domain"] != "") {
+                    if ($data["domain"] != $brand["domain"]) {
+                        $data["token"] = Brand::Create_Token($data["name"]);
+                    }
+                } else {
+                    $data["token"] = null;
+                    $data["domain"] = null;
+                }
+
+                Brand::Update_Where("id", $member["brand_id"], $data);
+                $brand = Brand::Find_Where("id", $member["brand_id"]);
+                $response["data"] = Brand::DetailInfo($brand);
             } else {
                 $response["isError"] = true;
                 $response["error"]["is"] = "Cập nhật không thành công";
                 $response["error"]["password"] = "Mật khẩu không đúng";
 
                 $brand = Brand::Find_Where("id", $member["brand_id"]);
-                $brand["token"] = Brand::Get_Script_Token($brand);
+                $response["data"] = Brand::DetailInfo($brand);
                 $response["error"]["data"] = $brand;
             }
         } else {
@@ -204,7 +199,7 @@ $update =  function () {
             $response["error"]["is"] = "Cập nhật không thành công";
 
             $brand = Brand::Find_Where("id", $member["brand_id"]);
-            $brand["token"] = Brand::Get_Script_Token($brand);
+            $response["data"] = Brand::DetailInfo($brand);
             $response["error"]["data"] = $brand;
         }
     } else {

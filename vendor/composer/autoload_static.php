@@ -41,6 +41,7 @@ class ComposerStaticInit6f99183a80e139accf20c385a4be962e
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
+            'Psr\\Container\\' => 14,
         ),
         'G' => 
         array (
@@ -49,6 +50,7 @@ class ComposerStaticInit6f99183a80e139accf20c385a4be962e
         'F' => 
         array (
             'Fig\\Http\\Message\\' => 17,
+            'Faker\\' => 6,
         ),
     );
 
@@ -118,6 +120,10 @@ class ComposerStaticInit6f99183a80e139accf20c385a4be962e
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
             1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
         'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
@@ -125,6 +131,10 @@ class ComposerStaticInit6f99183a80e139accf20c385a4be962e
         'Fig\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/fig/http-message-util/src',
+        ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
         ),
     );
 

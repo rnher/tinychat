@@ -38,7 +38,7 @@ class Auth
         }
 
         $session = Session::Find_Where("token",  $tinychat_ssid);
-        return isset($session) ?  User::Find_Where("id", $session["user_id"]) : null;
+        return isset($session) ? User::Find_Where("id", $session["user_id"]) : null;
     }
 
     static function Member($tinychat_ssid = null)

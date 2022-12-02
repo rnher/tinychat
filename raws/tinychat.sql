@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2022 at 02:35 AM
+-- Generation Time: Dec 02, 2022 at 04:01 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -33,7 +33,7 @@ CREATE TABLE `table_brand` (
   `name_alias` varchar(100) NOT NULL,
   `avatar` varchar(150) DEFAULT NULL,
   `domain` varchar(200) DEFAULT NULL,
-  `token` varchar(200) NOT NULL,
+  `token` varchar(200) DEFAULT NULL,
   `description` varchar(2000) NOT NULL,
   `expired_date` datetime DEFAULT NULL,
   `create_date` timestamp NOT NULL DEFAULT current_timestamp(),

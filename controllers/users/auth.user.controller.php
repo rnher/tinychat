@@ -24,7 +24,7 @@ $signup = function () {
                 $user_id = User::Save($response["data"]);
 
                 if (isset($user_id)) {
-                    $token = create_random_bytes();
+                    $token = User::Create_Token($response["data"]);
 
                     $session_data = [
                         "user_id" => $user_id,

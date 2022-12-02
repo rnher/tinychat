@@ -45,7 +45,6 @@ $view = function () {
 
             $response["data"] = initPaginationMeta($page_url, $total, $per_page);
             $messages = Message::Get_With_Page($response["data"], "chatinfo_id", $chatinfo["id"]);
-            $response["data"]["chatinfo_id"] =  $chatinfo["id"];
 
             function creatData($message)
             {
@@ -72,9 +71,9 @@ $view = function () {
                 // Nội dung tin nhắn
                 return  [
                     "isSelf" =>  $isSelf,
-                    "name" => $name,
+                    "userName" => $name,
                     "avatar" => $avatar,
-                    "msg" => $message["content"],
+                    "content" => $message["content"],
                     "time" => $message["create_date"],
                     "type" => $message["type"],
                 ];
@@ -97,8 +96,9 @@ $view = function () {
                 $response["data"]["items"] = [];
             }
 
-            $response["data"]["is_seen"] =  "is_seen_customer";
-            $response["data"]["users"] = ["brand" => Brand::ShortcutInfo($brand)];
+            $response["data"]["chatinfo_id"] = $chatinfo["id"];
+            $response["data"]["is_seen"] = $chatinfo["is_seen_customer"];
+            $response["data"]["users"]["brand"] = Brand::ShortcutInfo($brand);
             $response["data"]["users"]["user"] = User::ShortcutInfo($user);
         } else {
             $response["isError"] = true;

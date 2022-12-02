@@ -44,8 +44,6 @@ for ($i = 1; $i <= CONF_SEED["count_brand"]; $i++) {
         "name" =>  $name,
         "name_alias" =>  $name_alias,
         "avatar" =>  "public/images/temp/" . $faker->numberBetween(1, 15) . ".jpg",
-        "domain" => "localhost/mini-chat",
-        "token" => create_random_bytes(),
         "description" => $faker->paragraph,
         "expired_date" => time() + 1000 * 60 * 60 * 24, // 24h
     ];

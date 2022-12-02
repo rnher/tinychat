@@ -94,4 +94,9 @@ class Customer
             "is_active" => $data["is_active"],
         ] : null;
     }
+
+    static function Create_Token($data)
+    {
+        return create_random_bytes(to_alias($data["name"]) . to_alias($data["phone"]));
+    }
 }

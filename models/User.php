@@ -89,8 +89,23 @@ class User
     static function ShortcutInfo($data)
     {
         return isset($data) ? [
+            "username" => $data["username"],
             "name" => $data["name"],
             "avatar" => $data["avatar"],
         ] : null;
+    }
+
+    static function DetailInfo($data)
+    {
+        return isset($data) ? [
+            "username" => $data["username"],
+            "name" => $data["name"],
+            "avatar" => $data["avatar"],
+        ] : null;
+    }
+
+    static function Create_Token($data)
+    {
+        return create_random_bytes(to_alias($data["username"]));
     }
 }

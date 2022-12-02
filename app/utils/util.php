@@ -27,9 +27,9 @@ function to_alias($str)
     return str_replace(" ", "-",  strtolower(to_latin(($str))));
 }
 
-function create_random_bytes($byte = 20)
+function create_random_bytes($prefix = "", $byte = 20)
 {
-    return bin2hex(random_bytes($byte)) . uniqid();
+    return bin2hex(random_bytes($byte)) . uniqid($prefix);
 }
 
 function to_format_monney($str)

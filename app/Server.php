@@ -35,7 +35,7 @@ class Server
         $value = null,
         $time = 0,
         $part = "/",
-        $domain = "",
+        $domain = CONF_DOMAIN,
         $secure = false,
         $httponly = false,
         $samesite = "Lax"
@@ -84,8 +84,12 @@ class Server
         return false;
     }
 
-    static function getEndcodeCookie($key)
+    static function getEndcodeCookie($key, $is_raw_value = false)
     {
+        if ($is_raw_value) {
+            return base64_encode($key);
+        }
+
         return isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
     }
 

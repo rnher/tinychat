@@ -265,7 +265,7 @@
 
 #client-tiny-chat .chat-box .chat-box__move-down {
     position: absolute;
-    right: 10px;
+    right: 20px;
     bottom: 60px;
     border-radius: 50%;
     width: 25px;

@@ -1,5 +1,5 @@
 export let CONF_PROTOCOL = "http";
-export let CONF_DOMAIN = "localhost";
+export let CONF_DOMAIN = "127.0.0.1";
 // export let CONF_DOMAIN = "159.223.46.242";
 export let CONF_HOST = CONF_PROTOCOL + "://" + CONF_DOMAIN;
 

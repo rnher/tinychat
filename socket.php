@@ -1,5 +1,6 @@
 <?php
 
+// When installed via composer
 include_once "vendor/autoload.php";
 include_once "app/services/Chat.php";
 include_once "app/Config.php";
@@ -22,15 +23,17 @@ $loop = Loop::get();
 $server = new SocketServer(CONF_DOMAIN . ":" . CONF_SOCKET["port"], array(), $loop);
 
 // https
-$secureServer = new SecureServer($server, $loop, [
-    "local_cert"  =>  "app/ssl/certificate.crt",
-    "local_pk" => "app/ssl/private.key",
-    "verify_peer" => false,
-    "allow_self_signed" => false
-]);
+// $secureServer = new SecureServer($server, $loop, [
+//     "local_cert"  =>  "app/ssl/certificate.crt",
+//     "local_pk" => "app/ssl/private.key",
+//     "verify_peer" => false,
+//     "allow_self_signed" => false
+// ]);
 
-// https -> secureServer | http -> server
-$limitingServer = new LimitingServer($secureServer, CONF_SOCKET["max_connect"]);
+// https
+// $limitingServer = new LimitingServer($secureServer, CONF_SOCKET["max_connect"]);
+// http
+$limitingServer = new LimitingServer($server, CONF_SOCKET["max_connect"]);
 
 $httpServer = new HttpServer(
     new WsServer(

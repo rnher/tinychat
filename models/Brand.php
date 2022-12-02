@@ -30,6 +30,7 @@ class Brand
     {
         $name_alias = to_alias($data["name"]);
         $domain = isset($data["domain"]) ? '{$data["domain"]}' : 'NULL';
+        $token = isset($data["token"]) ? '{$data["token"]}' : 'NULL';
 
         return "INSERT INTO table_brand (
             id,
@@ -49,7 +50,7 @@ class Brand
             '$name_alias',
             '{$data["avatar"]}',
             $domain,
-            '{$data["token"]}',
+            $token,
             '{$data["description"]}',
             '{$data["expired_date"]}',
             CURRENT_TIMESTAMP,
@@ -136,13 +137,31 @@ class Brand
         ] : null;
     }
 
+    static function DetailInfo($data)
+    {
+        return isset($data) ? [
+            "name" => $data["name"],
+            "avatar" => $data["avatar"],
+            "name_alias" => $data["name_alias"],
+            "description" => $data["description"],
+            "domain" => $data["domain"],
+            "expired_date" => $data["expired_date"],
+            "token" => Brand::Get_Script_Token($data["token"]),
+        ] : null;
+    }
+
     static function Get_Default_Avatar()
     {
         return CONF_APP["defaults"]["brand_avatar"];
     }
 
-    static function Get_Script_Token($data)
+    static function Get_Script_Token($token)
     {
-        return '<script id="client-tiny-chat-script" type="module" src="' . CONF_HOST . '/client/public/js/main.js" data-id="' . $data["token"] . '"></script>';
+        return '<script id="client-tiny-chat-script" type="module" src="' . CONF_HOST . '/client/public/js/main.js" data-id="' . $token . '"></script>';
+    }
+
+    static function Create_Token($prefix)
+    {
+        return create_random_bytes(to_alias($prefix));
     }
 }

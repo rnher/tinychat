@@ -75,4 +75,16 @@ class ChatInfo
     {
         return Database::Singleton()->Update_Form_Where("table_chat_info", $column, $value, $data);
     }
+
+    static function ShortcutInfo($data)
+    {
+        return isset($data) ? [
+            "id" => $data["id"],
+            "brand_id" => $data["brand_id"],
+            "customer_id" => $data["customer_id"],
+            "is_seen_member" => $data["is_seen_member"],
+            "is_seen_customer" => $data["is_seen_customer"],
+        ] : null;
+    }
+
 }

@@ -144,7 +144,18 @@ import { CONF_URL, CONF_HOST } from "/public/js/config.js";
                     _this.find("#name").val(data.name);
                     _this.find("#description").val(data.description);
                     _this.find("#domain").val(data.domain);
-                    _this.find("#token").val(data.token);
+
+                    if (!!data.domain) {
+                        _this.find("#token").val(data.token).show();
+                        _this.find(".label-error[data-name=token]")
+                            .empty("")
+                            .hide();
+                    } else {
+                        _this.find("#token").val(data.token).hide();
+                        _this.find(".label-error[data-name=token]")
+                            .text("Hãy đăng ký tên miền trang web để lấy mã nhúng.")
+                            .show();
+                    }
 
                     if (data.avatar) {
                         let avatar = _this.find(".review-image img");
@@ -287,12 +298,29 @@ import { CONF_URL, CONF_HOST } from "/public/js/config.js";
 
         _this.init = function () {
             function reloadData(form, brand) {
-                form.find("#token").prop("value", brand.token);
-                form.find("#token").prop("disabled", true);
+                form.find("#domain").prop("value", brand.domain);
+                if (!!brand.domain) {
+                    let token = form.find("#token")
+                        .prop("value", brand.token)
+                        .prop("disabled", true)
+                        .show();
+
+                    let tokenErorrLabel = form.find(".label-error[data-name=token]")
+                        .empty("")
+                        .hide();
+                } else {
+                    let token = form.find("#token")
+                        .prop("value", "")
+                        .prop("disabled", true)
+                        .hide();
+
+                    let tokenErorrLabel = form.find(".label-error[data-name=token]")
+                        .text("Hãy đăng ký tên miền trang web để lấy mã nhúng.")
+                        .show();
+                }
 
                 form.find("#name").prop("value", brand.name);
                 form.find("#description").prop("value", brand.description);
-                form.find("#domain").prop("value", brand.domain);
 
                 form.find("#password").val("");
 

@@ -208,7 +208,6 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
                         $(".register-chat").remove();
                         //TODO: add layout loading
 
-
                         $("#client-tiny-chat").ajaxForm({
                             method: "GET",
                             url: CONF_URL.clients + "?token=" + $("#client-tiny-chat-script").data("id"),
@@ -251,18 +250,7 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
                         _this.endabaleInput();
 
                         // Brand không tồn tại hoặc hết hạn
-                        switch (error.not) {
-                            case "brand": {
-                                $(".register-content")
-                                    .empty()
-                                    .append($("#client-tiny-chat").createMini404({
-                                        text: error.is
-                                    }));
-                            }
-                                break;
-                            default:
-                                break;
-                        }
+                        $(".register-content").showError({ error });
                     }
                 })
             });

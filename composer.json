@@ -2,6 +2,7 @@
     "require": {
         "cboden/ratchet": "^0.4.4",
         "react/http": "^1.8",
-        "react/socket": "^1.12"
+        "react/socket": "^1.12",
+        "fakerphp/faker": "^1.20"
     }
 }
