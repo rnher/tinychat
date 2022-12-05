@@ -145,7 +145,7 @@ import { uniqId } from "/public/js/util.js";
     }
 
     $.fn.go = function (url) {
-        $(location).prop("href", url);
+        $(location).attr("href", url);
     };
 
     // FIXME: khi hiện alert thì form không thể submiy được
