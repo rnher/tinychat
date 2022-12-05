@@ -117,7 +117,6 @@ class Chat implements MessageComponentInterface
 
         return [
             "auth" => $auth,
-            "client" => $client,
         ];;
     }
 
@@ -136,9 +135,9 @@ class Chat implements MessageComponentInterface
     {
         if (isset($data["ssid"])) {
             if ($data["isMember"]) {
-                $_auth = Auth::User(base64_decode($data["ssid"]));
+                $_auth = Auth::User($data["ssid"]);
             } else {
-                $_auth = Auth::Customer(base64_decode($data["ssid"]));
+                $_auth = Auth::Customer($data["ssid"]);
             }
         }
 
@@ -162,7 +161,11 @@ class Chat implements MessageComponentInterface
             $this->noticationPing($auth, 1);
         }
 
-        $this->send($client, ["actionKey" => CONF_SOCKET["actionKey"]["login"]]);
+        $this->send($client, [
+            "actionKey" => CONF_SOCKET["actionKey"]["login"],
+            // Test
+            "auth" => $_auth 
+        ]);
     }
 
     function logout($auth)

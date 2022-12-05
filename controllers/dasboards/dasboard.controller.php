@@ -1,11 +1,9 @@
 <?php
 
-include_once "app/App.php";
 include_once "app/services/Auth.php";
 include_once "models/User.php";
 include_once "models/Brand.php";
 
-use APP\App;
 use MODELS\Brand;
 use APP\SERVICES\Auth;
 

@@ -35,8 +35,10 @@
             method: "POST",
             url: "",
             fields: [],
-            data: {}
+            data: {},
+            params: {}
         };
+        
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
@@ -56,14 +58,16 @@
             // Reset nhãn lỗi
             _this.find(".label-error").text("");
 
+            let url = settings.url + (settings.params ? ("?" + $.param(settings.params)) : "");
+
             $.ajax({
                 method: settings.method,
-                url: settings.url,
+                url: url,
                 data: settings.data,
                 dataType: "json",
-                // Cross-Origin Resource Sharing
+                // CORS
                 xhrFields: {
-                    withCredentials: true
+                    // withCredentials: true
                 },
                 crossDomain: true,
             }).done(function (response) {

@@ -35,7 +35,7 @@ CREATE TABLE `table_brand` (
   `domain` varchar(200) DEFAULT NULL,
   `token` varchar(200) DEFAULT NULL,
   `description` varchar(2000) NOT NULL,
-  `expired_date` datetime DEFAULT NULL,
+  `expired` datetime DEFAULT NULL,
   `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

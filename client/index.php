@@ -12,7 +12,7 @@
 
     <!--Add script từ trang quản trị chat  -->
     <!-- Server  -->
-    <script id="client-tiny-chat-script" type="module" src="http://127.0.0.1/client/public/js/main.js" data-id="3a045921901a22a2088a0a214b68277005d7fc3fbanh-mi6389fc6f0d3c9"></script>
+    <script id="client-tiny-chat-script" type="module" src="https://159.223.46.242/client/public/js/main.js" data-id="b372582769107590fe2be2aa9ec1fa54eaf23c5811638ac7972b8e2"></script>
     <!-- Local  -->
 </body>
 

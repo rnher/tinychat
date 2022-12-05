@@ -42,7 +42,7 @@
                     <input class="clipboard" type="text" value="" placeholder="Mã nhúng" name="token" id="token" disabled>
                     <label class="label-error" data-name="token" for="token"></label>
                     <label class="label-info" for="token">Mã của bạn hết hạn ngày:
-                        <?= (new DateTime($brand["expired_date"]))->format("m-d-Y")  ?>.</label>
+                        <?= (new DateTime($brand["expired"]))->format("m-d-Y")  ?>.</label>
                 </div>
 
                 <!-- <div class="input-group token-input-group">

@@ -34,7 +34,7 @@ $create = function () {
                 $response["isError"] = true;
                 $response["error"]["name"] = "Tên thương hiệu đã tồn tại";
             } else {
-                $response["data"]["expired_date"] = Brand::Create_Date_Next("m", 1); // Mặt định 1 tháng dùng thử
+                $response["data"]["expired"] = Brand::Create_Date_Next("m", 1); // Mặt định 1 tháng dùng thử
                 $response["data"]["avatar"] = Brand::Get_Default_Avatar();
 
                 $brand_id = Brand::Save($response["data"]);
@@ -173,10 +173,15 @@ $update =  function () {
                 unset($data["password"]);
 
                 $brand = Brand::Find_Where("id", $member["brand_id"]);
-                if (isset($data["domain"]) && $data["domain"] != "") {
-                    if ($data["domain"] != $brand["domain"]) {
-                        $data["token"] = Brand::Create_Token($data["name"]);
-                    }
+                if (
+                    isset($data["domain"])
+                    && $data["domain"] != ""
+                    && $data["domain"] != $brand["domain"]
+                ) {
+
+                    // CORS
+                    // App::UpdateAccessControlAllowOrigin($brand["domain"], $data["domain"]);
+                    $data["token"] = Brand::Create_Token($data["name"]);
                 } else {
                     $data["token"] = null;
                     $data["domain"] = null;

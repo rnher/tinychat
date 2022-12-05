@@ -191,11 +191,24 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
 
                 _this.disabledInput();
 
+                let token = $("#client-tiny-chat-script").data("id");
+
                 _this.ajaxForm({
                     fields: ["name", "phone"],
-                    url: CONF_URL.clients + "?token=" + $("#client-tiny-chat-script").data("id"),
+                    url: CONF_URL.clients,
+                    params: {
+                        token
+                    },
                     success: function (data) {
                         _this.endabaleInput();
+
+                        // TODO: để chỗ khác
+                        // Lưu id để client truy cập lần sau
+                        if (typeof (Storage) !== "undefined") {
+                            localStorage.setItem(token, data.ssid);
+                        } else {
+                            // Sorry! No Web Storage support..
+                        }
 
                         // Lưu id để đăng nhập socket
                         // Kết nối socket khi đăng ký thành công
@@ -208,9 +221,12 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
                         $(".register-chat").remove();
                         //TODO: add layout loading
 
-                        $("#client-tiny-chat").ajaxForm({
-                            method: "GET",
-                            url: CONF_URL.clients + "?token=" + $("#client-tiny-chat-script").data("id"),
+                        $("#client-tiny-chat").get({
+                            url: CONF_URL.clients,
+                            params: {
+                                token,
+                                ssid: localStorage.getItem(token)
+                            },
                             success: function (data) {
                                 $("#client-tiny-chat").initChatBox({ data });
                                 $(".chat-box__view").onScrollExtraMasegers();

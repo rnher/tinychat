@@ -57,7 +57,7 @@ $signin = function () {
         if (!Auth::User()) {
 
             $user = User::Login($data);
-            if ($user) {
+            if (isset($user)) {
                 $update_session = [
                     "expire" => time() + CONF_SESSION["expire"],
                     "is_login" => 1
@@ -68,11 +68,11 @@ $signin = function () {
                 App::Cookie("tinychat_ssid", $session["token"], time() + CONF_COOKIE["expire"], '/');
 
                 if ($data["remember"]) {
-                    App::Cookie("username", $data["username"],  time() + CONF_COOKIE["expire"], '/');
+                    App::Cookie("username", $data["username"], time() + CONF_COOKIE["expire"], '/');
                     App::Cookie("password", $data["password"], time() +  CONF_COOKIE["expire"], '/');
                     App::Cookie("remember", 1, time() +  CONF_COOKIE["expire"], '/');
                 } else {
-                    App::Cookie("username", "",  -1, '/');
+                    App::Cookie("username", "", -1, '/');
                     App::Cookie("password", "", -1, '/');
                     App::Cookie("remember", "", -1, '/');
                 }
@@ -97,10 +97,12 @@ $signout = function () {
         "isError" => false
     ];
 
-    if (Auth::User()) {
+    $user = Auth::User();
+    if (isset($user)) {
         $update_session = [
             "expire" => -1,
-            "is_login" => 0
+            "is_login" => 0,
+            "token" => User::Create_Token($user)
         ];
         Session::Update_Where("token", App::Cookie("tinychat_ssid"), $update_session);
 

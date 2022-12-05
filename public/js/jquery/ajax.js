@@ -35,7 +35,8 @@
             method: "POST",
             url: "",
             fields: [],
-            data: {}
+            data: {},
+            params: {}
         };
         let settings = $.extend({}, defaults, options);
 
@@ -56,9 +57,11 @@
             // Reset nhãn lỗi
             _this.find(".label-error").text("");
 
+            let url = settings.url + (settings.params ? ("?" + $.param(settings.params)) : "");
+
             $.ajax({
                 method: settings.method,
-                url: settings.url,
+                url: url,
                 data: settings.data,
                 dataType: "json",
             }).done(function (response) {

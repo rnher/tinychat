@@ -55,4 +55,14 @@ class Session
     {
         return Database::Singleton()->Find_From_Where("table_session", $column, $value);
     }
+
+    static function Find_Not_Expired($column, $value)
+    {
+        $where = Database::Singleton()->String_Where($column, $value);
+        $now_date = time();
+
+        $sql = "SELECT * FROM `table_session` WHERE " . $where . " AND `expired` > '$now_date';";
+
+        return Database::Singleton()->query($sql);;
+    }
 }

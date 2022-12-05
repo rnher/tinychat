@@ -13,22 +13,24 @@ class Config
         define("action", "action");
         define("id", "id");
         define("token", "token");
+        define("ssid", "ssid");
 
-        define("CONF_DOMAIN", "127.0.0.1");
         // define("CONF_DOMAIN", "159.223.46.242");
+        // define("CONF_PROTOCOl", "https");
+        define("CONF_DOMAIN", "localhost");
         define("CONF_PROTOCOl", "http");
         define("CONF_HOST", CONF_PROTOCOl . "://" . CONF_DOMAIN);
 
         define("CONF_DB", [
             "dbname" => "tinychat",
-            "hostname" => CONF_DOMAIN,
+            "hostname" => "localhost",
             "username" => "root",
-            "password" => "",
             // "password" => "`1Tinychat",
+            "password" => "",
         ]);
 
         define("CONF_SOCKET", [
-            "port" => 8080,
+            "host" => "0.0.0.0:8080",
             "max_connect" => 1024,
             "actionKey" => [
                 "addMessage" => "addMessage",
@@ -104,6 +106,14 @@ class Config
 
         define("CONF_COOKIE", [
             "expire" => 30 * 24 * 60 * 60
+        ]);
+
+        define("CONF_ACCESS", [
+            "dir" => ".htaccess"
+        ]);
+
+        define("CONF_REG", [
+            "url" => "/^(https?:\/\/)?(([\w\-])+\.{1}([a-zA-Z]{2,63})|(localhost))([\/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)$/i"
         ]);
     }
 

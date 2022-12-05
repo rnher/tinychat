@@ -40,7 +40,7 @@ class Brand
             domain,
             token,
             description,
-            expired_date,
+            expired,
             create_date,
             update_date
             )
@@ -52,7 +52,7 @@ class Brand
             $domain,
             $token,
             '{$data["description"]}',
-            '{$data["expired_date"]}',
+            '{$data["expired"]}',
             CURRENT_TIMESTAMP,
             CURRENT_TIMESTAMP
         )";
@@ -68,7 +68,7 @@ class Brand
         $where = Database::Singleton()->String_Where($column, $value);
         $now_date = time();
 
-        $sql = "SELECT * FROM `table_brand` WHERE " . $where . " AND `expired_date` > '$now_date';";
+        $sql = "SELECT * FROM `table_brand` WHERE " . $where . " AND `expired` > '$now_date';";
 
         return Database::Singleton()->query($sql);;
     }
@@ -145,7 +145,7 @@ class Brand
             "name_alias" => $data["name_alias"],
             "description" => $data["description"],
             "domain" => $data["domain"],
-            "expired_date" => $data["expired_date"],
+            "expired" => $data["expired"],
             "token" => Brand::Get_Script_Token($data["token"]),
         ] : null;
     }

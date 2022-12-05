@@ -49,9 +49,10 @@ enter
 cat tinychat.pub
 
 *Connect FileZilla
-Edit->Settings->SFPT->Add->tinychat
+Edit->Settings->SFPT->Add->[tinychat/raws/tinychat]
 Protocol:   SFPT
 User:       root
+Host:       159.223.46.242
 
 ==========================================
 ==========================================Install server
@@ -219,8 +220,54 @@ sudo apt-get install ntp
 ==========================================
 ==========================================Deploy
 ==========================================
+*
+*Clone
+*
+cd /var/www/
+git clone release https://github.com/rnher/tinychat.git 
+
+*
+*Init
+*
+sudo chmod 777 /var/www/tinychat/.htaccess
+sudo chmod 777 -R /var/www/tinychat/public/images
 cd /var/www/tinychat
 php composer.phar update
+
+*
+*Inport DB server
+*
+cd /var/www/tinychat/raws/tinychat.sql
+
+*
+*Start
+*
+sudo apache2ctl configtest
+sudo service apache2 restart
+sudo service apache2 status
+
+sudo service mysql start
+sudo service mysql status
+
+==========================================
+==========================================Edit server confix
+==========================================
+/var/www/tinychat/socket.php
+Open    //https
+Close   //http
+
+/var/www/tinychat/app/Config.js
+CONF_DOMAIN
+CONF_PROTOCOl
+CONF_DB["password"]
+
+/var/www/tinychat/client/public/js/config.js
+CONF_DOMAIN
+CONF_PROTOCOl
+
+/var/www/tinychat/public/js/config.js
+CONF_DOMAIN
+CONF_PROTOCOl
 
 ==========================================
 ==========================================Start socket

@@ -20,11 +20,11 @@ use React\Socket\SecureServer;
 
 $loop = Loop::get();
 
-$server = new SocketServer(CONF_DOMAIN . ":" . CONF_SOCKET["port"], array(), $loop);
+$server = new SocketServer(CONF_SOCKET["host"], array(), $loop);
 
 // https
 // $secureServer = new SecureServer($server, $loop, [
-//     "local_cert"  =>  "app/ssl/certificate.crt",
+//     "local_cert"  => "app/ssl/certificate.crt",
 //     "local_pk" => "app/ssl/private.key",
 //     "verify_peer" => false,
 //     "allow_self_signed" => false

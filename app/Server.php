@@ -35,7 +35,7 @@ class Server
         $value = null,
         $time = 0,
         $part = "/",
-        $domain = CONF_DOMAIN,
+        $domain = "",
         $secure = false,
         $httponly = false,
         $samesite = "Lax"
@@ -100,6 +100,7 @@ class Server
             "id" => Server::MethodGet(id),
             "action" => Server::MethodGet(action),
             "token" => Server::MethodGet(token),
+            "ssid" => Server::MethodGet(ssid),
         ];
     }
 
@@ -137,11 +138,58 @@ class Server
             $domain = str_replace("http://", "", $domain);
             $domain = str_replace("/", "\/", $domain);
 
-            $preg = "/^((https)|(http))(:\/\/)($domain)(.)*(\/)*([a-zA_Z0-9-]*)([\/a-zA_Z0-9-?_&=]*)$/i";
+            $refererDomain = $_SERVER["HTTP_REFERER"];
+            $refererDomain = str_replace("https://", "", $refererDomain);
+            $refererDomain = str_replace("http://", "", $refererDomain);
+            $refererDomain = str_replace("/", "\/", $refererDomain);
 
-            return  !!preg_match($preg, $_SERVER["HTTP_REFERER"]);
+            return preg_match(CONF_REG["url"], $domain)
+                && preg_match(CONF_REG["url"], $refererDomain)
+                && preg_match("/^(" . $domain . ").*/i", $refererDomain);
         }
 
+        return false;
+    }
+
+    static function AddAccessControlAllowOrigin($domain = "")
+    {
+        if (preg_match(CONF_REG["url"], $domain)) {
+            $htaccess = file_get_contents(CONF_ACCESS["dir"]);
+            if ($htaccess) {
+                $headerEnd = 'Header add Access-Control-Allow-Origin "' . $domain . '"
+</IfModule>';
+
+                $htaccess = str_replace("</IfModule>", $headerEnd, $htaccess);
+
+                return file_put_contents(CONF_ACCESS["dir"], $htaccess);
+            }
+        }
+
+        return false;
+    }
+
+    static function RemoveAccessControlAllowOrigin($domain = "")
+    {
+        if (preg_match(CONF_REG["url"], $domain)) {
+            $htaccess = file_get_contents(CONF_ACCESS["dir"]);
+            if ($htaccess) {
+                $htaccess = str_replace('Header add Access-Control-Allow-Origin "' . $domain . '"', "", $htaccess);
+                return file_put_contents(CONF_ACCESS["dir"], $htaccess);
+            }
+        }
+
+        return false;
+    }
+
+    static function UpdateAccessControlAllowOrigin($old_domain, $new_domain)
+    {
+        if (preg_match(CONF_REG["url"], $new_domain)) {
+            if (preg_match(CONF_REG["url"], $old_domain)) {
+                Server::RemoveAccessControlAllowOrigin($old_domain);
+            }
+
+            return Server::AddAccessControlAllowOrigin($new_domain);
+        }
 
         return false;
     }

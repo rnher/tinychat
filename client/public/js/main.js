@@ -22,9 +22,14 @@ class ClientTinyChat {
         $("head").append(`<link rel="stylesheet" href="` + CONF_HOST + `/client/public/css/main.css">`);
         $("body").append($("#client-tiny-chat").createChatBubble());
 
-        $("#client-tiny-chat").ajaxForm({
-            method: "GET",
-            url: CONF_URL.clients + "?token=" + $("#client-tiny-chat-script").data("id"),
+        let token = $("#client-tiny-chat-script").data("id");
+
+        $("#client-tiny-chat").get({
+            url: CONF_URL.clients,
+            params: {
+                token,
+                ssid: localStorage.getItem(token)
+            },
             success: function (data) {
                 Chat.getInstance(data.ssid, function (chat) {
                     $("#client-tiny-chat").initChatBox({ data });

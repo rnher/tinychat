@@ -22,10 +22,9 @@ $view = function () {
         "isError" => false
     ];
 
-    $customer = Auth::Customer();
-
     $uri = App::GetURI();
 
+    $customer = Auth::Customer($uri[ssid]);
     $brand = Brand::Find_Not_Expired("token", $uri[token]);
 
     // Xác thực người dùng và tồn tại nhãn hàng
@@ -87,7 +86,7 @@ $view = function () {
             $response["data"]["items"] = [];
         }
 
-        $response["data"]["ssid"] = App::getEndcodeCookie("tinychat_client_ssid");
+        $response["data"]["ssid"] = $uri[ssid];
         $response["data"]["chatinfo_id"] = $chatinfo["id"];
         $response["data"]["is_seen"] = $chatinfo["is_seen_member"];
         $response["data"]["users"]["brand"] = Brand::ShortcutInfo($brand);
@@ -112,7 +111,7 @@ $create = function () {
 
         // Nhãn hàng đã tồn tại
         if (isset($brand)) {
-            $customer = Auth::Customer();
+            $customer = Auth::Customer($uri[ssid]);
 
             // Khách hàng đã tồn tại
             if (isset($customer)) {

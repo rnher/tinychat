@@ -5,7 +5,7 @@ export default class Socket extends WebSocket {
     ssid;
 
     constructor(ssid) {
-        super(CONF_SOCKET.url);
+        super(CONF_SOCKET.host);
 
         this.ssid = ssid;
 

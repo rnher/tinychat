@@ -3,7 +3,7 @@ import { getCookie } from "/public/js/util.js";
 
 export default class Socket extends WebSocket {
     constructor() {
-        super(CONF_SOCKET.url);
+        super(CONF_SOCKET.host);
 
         this.addEventListener("open", this.open);
         this.addEventListener("message", this.message);
