@@ -95,8 +95,8 @@ $view = function () {
                 "count_not_seen_msg" =>
                 Message::Count_Where(
                     "chatinfo_id",
-                    ["chatinfo_id",   "is_seen_member"],
-                    [$chatinfo["id"], "0"]
+                    ["chatinfo_id", "is_seen_member"],
+                    [$chatinfo["id"], 0]
                 )
             ];
         };
@@ -183,8 +183,8 @@ $update =  function () {
                     // App::UpdateAccessControlAllowOrigin($brand["domain"], $data["domain"]);
                     $data["token"] = Brand::Create_Token($data["name"]);
                 } else {
-                    $data["token"] = null;
-                    $data["domain"] = null;
+                    unset($data["token"]);
+                    unset($data["domain"]);
                 }
 
                 Brand::Update_Where("id", $member["brand_id"], $data);

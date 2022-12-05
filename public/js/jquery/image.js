@@ -35,17 +35,4 @@
 
         return _this.init();
     };
-
-    // $.fn.onClickChangeAvatar = function (options) {
-    //     let _this = this;
-
-    //     let defaults = {
-    //     };
-    //     let settings = $.extend({}, defaults, options);
-
-    //     _this.on("click", function (e) {
-    //         let target = _this.data("target");
-    //         $("#" + target).trigger("click");
-    //     });
-    // };
 })(jQuery);

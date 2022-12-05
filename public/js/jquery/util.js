@@ -42,22 +42,6 @@ import { uniqId } from "/public/js/util.js";
                         break;
                     case "close": {
                         $("#" + target).remove();
-
-                        switch (value) {
-                            case "alert": {
-                                let items = $("." + value);
-                                items.each(function (index, item) {
-                                    let _item = $(item);
-                                    _item.css(
-                                        "top",
-                                        (_item.height() * index + 5 * index) - _item.height() // 5px giãn cách
-                                    );
-                                });
-                            }
-                                break;
-                            default:
-                                break;
-                        }
                     }
                         break;
                     default:
@@ -148,7 +132,6 @@ import { uniqId } from "/public/js/util.js";
         $(location).attr("href", url);
     };
 
-    // FIXME: khi hiện alert thì form không thể submiy được
     $.fn.showAlert = function (options) {
         let _this = this;
 
@@ -159,11 +142,37 @@ import { uniqId } from "/public/js/util.js";
 
         let settings = $.extend({}, defaults, options);
 
+        _this.onClickClose = function () {
+            $(".alert-action").on("click", function (e) {
+                e.preventDefault();
+                let target = $(this).data("target");
+                let value = $(this).data("value");
+
+                $("#" + target).remove();
+
+                let items = $("." + value);
+                items.each(function (index, item) {
+                    let _item = $(item);
+                    _item.css(
+                        "top",
+                        (_item.height() * index + 5 * index) - _item.height() // 5px giãn cách
+                    );
+                });
+            });
+        }
+
         _this.init = function () {
             let alerts = $(".alert");
-            let exitAlert = $(".alert[id=" + settings.id + "]");
 
-            if (!exitAlert.length) {
+            let isAlert = false;
+            alerts.each(function (index, alert) {
+                if ($(alert).data("name") == settings.name) {
+                    isAlert = true;
+                    return;
+                }
+            });
+
+            if (!isAlert) {
                 let currentAlert = $(_this.createAlert(settings));
                 let heights = (alerts.length - 1) * alerts.height();
 
@@ -171,7 +180,7 @@ import { uniqId } from "/public/js/util.js";
                 currentAlert.css("top", heights + 5 * alerts.length);
                 _this.append(currentAlert);
 
-                $(".alert").onClickAction();
+                _this.onClickClose();
 
                 if (settings.autoClose) {
                     setTimeout(() => {
@@ -209,50 +218,31 @@ import { uniqId } from "/public/js/util.js";
         return _this.init();
     };
 
-    $.fn.onResetForm = function (options) {
+    $.fn.onClickClipboard = function (options) {
         let _this = this;
 
         let defaults = {
-            id: uniqId(),
-            autoClose: false
         };
 
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            // Nhãn lỗi
-            _this.find("label.label-error").empty();
-            // All input
-            _this.find("input").val("");
-            // Input imgae
-            _this.find(".review-image").find("img")
-                .prop("src", "")
-                .prop("alt", "")
-                .data("self", 0);
+            $(_this).on("click", function (e) {
+                e.preventDefault();
+
+                let target = $(this).data("target");
+                let text = $("#" + target).val();
+                navigator.clipboard.writeText(text);
+
+                $("#tiny-chat").showAlert({
+                    type: "success",
+                    content: "Đã sao chép",
+                    autoClose: true,
+                    name: "token-clipboard"
+                });
+            });
         };
 
         return _this.init();
     };
-
-    // $.fn.onClickClipboard = function () {
-    //     let _this = this;
-
-    //     let defaults = {
-    //         id: uniqId(),
-    //         autoClose: false
-    //     };
-
-    //     let settings = $.extend({}, defaults, options);
-
-    //     _this.init = function () {
-    //         $(_this).on(function (e) {
-    //             e.preventDefault();
-
-    //             $(this).val().select();
-    //             document.execCommand("copy");
-    //         });
-    //     };
-
-    //     return _this.init();
-    // };
 })(jQuery);

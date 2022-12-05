@@ -23,6 +23,13 @@ import { CONF_URL, CONF_SOCKET } from "/public/js/config.js";
                     },
                     reject: function (error) {
                         _this.endabaleInput();
+
+                        $("#tiny-chat").showAlert({
+                            type: "error",
+                            content: error.is,
+                            autoClose: true,
+                            name: "submitCreateBrand"
+                        });
                     }
                 });
             })

@@ -232,7 +232,7 @@ git clone release https://github.com/rnher/tinychat.git
 sudo chmod 777 /var/www/tinychat/.htaccess
 sudo chmod 777 -R /var/www/tinychat/public/images
 cd /var/www/tinychat
-php composer.phar update
+composer install
 
 *
 *Inport DB server

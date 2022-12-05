@@ -63,10 +63,10 @@ class Chat implements MessageComponentInterface
 
         if (isset($auth["auth"])) {
             switch ($data["actionKey"]) {
-                case CONF_SOCKET["actionKey"]["logout"]: {
-                        $this->logout($auth);
-                    }
-                    break;
+                    // case CONF_SOCKET["actionKey"]["logout"]: {
+                    //         $this->logout($auth);
+                    //     }
+                    //     break;
                 case CONF_SOCKET["actionKey"]["checkPingUsers"]: {
                         $this->checkPingUsers($auth, $data);
                     }
@@ -117,6 +117,7 @@ class Chat implements MessageComponentInterface
 
         return [
             "auth" => $auth,
+            "client" => $client
         ];;
     }
 
@@ -162,9 +163,7 @@ class Chat implements MessageComponentInterface
         }
 
         $this->send($client, [
-            "actionKey" => CONF_SOCKET["actionKey"]["login"],
-            // Test
-            "auth" => $_auth 
+            "actionKey" => CONF_SOCKET["actionKey"]["login"]
         ]);
     }
 
@@ -173,7 +172,7 @@ class Chat implements MessageComponentInterface
         if (isset($auth["auth"])) {
             $client = $auth["client"];
 
-            // Thông báo khách hàng off cho member cuar thương hiệu 
+            // Thông báo khách hàng off cho member của thương hiệu 
             if (!$client->isMember) {
                 $remainClient = false;
                 foreach ($this->clients as $c) {
@@ -483,13 +482,13 @@ class Chat implements MessageComponentInterface
             if (isset($chatInfo)) {
                 if (
                     $client->isMember
-                    && !$chatInfo["is_seen_member"]
+                    && $chatInfo["is_seen_member"] == 0
                 ) {
                     $dataUpdate["is_seen_member"] = 1;
                     $checkUpdate = true;
                 } else if (
                     !$client->isMember
-                    && !$chatInfo["is_seen_customer"]
+                    && $chatInfo["is_seen_customer"] == 0
                     && $chatInfo["customer_id"] == $_auth["id"]
                 ) {
                     $dataUpdate["is_seen_customer"] = 1;
@@ -501,13 +500,13 @@ class Chat implements MessageComponentInterface
 
                     ChatInfo::Update_Where(
                         ["id", "brand_id"],
-                        [$data["chatinfo_id"], $chatInfo["brand_id"]],
+                        [$chatInfo["id"], $chatInfo["brand_id"]],
                         $dataUpdate
                     );
 
                     Message::Update_Where(
-                        ["chatinfo_id", "is_brand"],
-                        [$chatInfo["id"], (int)($client->isMember)],
+                        ["chatinfo_id"],
+                        [$chatInfo["id"]],
                         $dataUpdate
                     );
                 }

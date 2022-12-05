@@ -25,6 +25,13 @@ import { CONF_URL, CONF_HOST } from "/public/js/config.js";
                     },
                     reject: (error) => {
                         form.endabaleInput();
+
+                        $("#tiny-chat").showAlert({
+                            type: "error",
+                            content: error.is,
+                            autoClose: true,
+                            name: "signup"
+                        });
                     },
                 });
             });
@@ -65,6 +72,13 @@ import { CONF_URL, CONF_HOST } from "/public/js/config.js";
                     },
                     reject: (error) => {
                         form.endabaleInput();
+
+                        $("#tiny-chat").showAlert({
+                            type: "error",
+                            content: error.is,
+                            autoClose: true,
+                            name: "signin"
+                        });
                     }
                 });
             });
@@ -204,8 +218,6 @@ import { CONF_URL, CONF_HOST } from "/public/js/config.js";
         _this.init = function () {
             $("#settings-user__form").loadProfileUser();
             $("#settings-brand__form").loadProfileBrand();
-            // $("#review-user-image").onClickChangeAvatar();
-            // $("#review-brand-image").onClickChangeAvatar();
         };
 
         return _this.init();
@@ -268,19 +280,30 @@ import { CONF_URL, CONF_HOST } from "/public/js/config.js";
 
                         reloadData(form, data);
 
-                        // $("#tiny-chat").showAlert({
-                        //     type: "success",
-                        //     content: "Cập nhật thành công"
-                        // });
+                        $("#tiny-chat").showAlert({
+                            type: "error",
+                            content: error.is,
+                            autoClose: true,
+                            name: "signin"
+                        });
+
+                        $("#tiny-chat").showAlert({
+                            type: "success",
+                            content: "Cập nhật thành công",
+                            autoClose: true,
+                            name: "submitProfileUser"
+                        });
                     },
                     reject: function (error) {
                         form.endabaleInput();
                         reloadData(form, error.data);
 
-                        // $("#tiny-chat").showAlert({
-                        //     type: "error",
-                        //     content: error.is
-                        // });
+                        $("#tiny-chat").showAlert({
+                            type: "error",
+                            content: error.is,
+                            autoClose: true,
+                            name: "submitProfileUser"
+                        });
                     }
                 });
             });
@@ -349,19 +372,23 @@ import { CONF_URL, CONF_HOST } from "/public/js/config.js";
                         form.endabaleInput();
                         reloadData(form, data);
 
-                        // $("#tiny-chat").showAlert({
-                        //     type: "success",
-                        //     content: "Cập nhật thành công"
-                        // });
+                        $("#tiny-chat").showAlert({
+                            type: "success",
+                            content: "Cập nhật thành công",
+                            autoClose: true,
+                            name: "submitProfileUser"
+                        });
                     },
                     reject: function (error) {
                         form.endabaleInput();
                         reloadData(form, error.data);
 
-                        // $("#tiny-chat").showAlert({
-                        //     type: "error",
-                        //     content: error.is
-                        // });
+                        $("#tiny-chat").showAlert({
+                            type: "error",
+                            content: error.is,
+                            autoClose: true,
+                            name: "submitProfileBrand"
+                        });
                     }
                 });
             });

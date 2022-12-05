@@ -149,19 +149,20 @@ import { formatNoticationNumber, getDate } from "/client/public/js/util.js";
                 break;
         }
 
-        return ` <div id="` + settings.id + `" class="alert ` + settings.type + `-alert">
+        return ` <div id="` + settings.id + `" class="alert ` + settings.type + `-alert" data-name="` + settings.name + `">
                     <div class="alert-icon">
                         `+ icon + `
                     </div>
                     <div class="alert-content">
                         `+ settings.content + `
                     </div>
-                    <div class="alert-action">
-                        <i class="fa-solid fa-xmark action-btn" 
+                    <div    class="alert-action"
                             data-target="`+ settings.id + `" 
                             data-action="close" 
                             data-value="alert" 
-                            title="Xóa thông báo">
+                            title="Xóa thông báo"
+                    >
+                        <i class="fa-solid fa-xmark">
                         </i>
                     </div>
                 </div>`;

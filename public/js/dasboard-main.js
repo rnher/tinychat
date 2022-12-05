@@ -36,7 +36,7 @@ function init() {
 
         // Common
         $("#tiny-chat").onClickAction({ selector: ".action-btn" });
-        // $("#tiny-chat .clipboard").onClickClipboard();
+        $(".clipboard-btn").onClickClipboard();
     });
 };
 

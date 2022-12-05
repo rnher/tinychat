@@ -87,7 +87,7 @@ $view = function () {
                 }
 
                 foreach ($messages as $index => $message) {
-                    $messages[$index] =  creatData($message);
+                    $messages[$index] = creatData($message);
                 }
 
                 $response["data"]["items"] =  $messages;

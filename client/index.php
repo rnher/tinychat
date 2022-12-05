@@ -12,7 +12,8 @@
 
     <!--Add script từ trang quản trị chat  -->
     <!-- Server  -->
-    <script id="client-tiny-chat-script" type="module" src="https://159.223.46.242/client/public/js/main.js" data-id="b372582769107590fe2be2aa9ec1fa54eaf23c5811638ac7972b8e2"></script>
+    <!-- <script id="client-tiny-chat-script" type="module" src="http://localhost/client/public/js/main.js" data-id="eef42a0feb783677895be249c83a20806eebf71522638d5bafcf3cd"></script> -->
+    <script id="client-tiny-chat-script" type="module" src="http://localhost/client/public/js/main.js" data-id="51f965e5a9730956739f541c528ea129c3c8467211638d58b8523bc"></script>
     <!-- Local  -->
 </body>
 

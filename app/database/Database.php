@@ -216,7 +216,7 @@ class Database
         if (is_array($column) && is_array($value)) {
             $where = "";
             foreach ($column as $index => $c) {
-                $where .= " `$column[$index]` " . ($value[$index] ? (" = " . "'$value[$index]' AND") : (" IS NULL AND"));
+                $where .= " `$column[$index]` " . (isset($value[$index]) ? (" = " . "'$value[$index]' AND") : (" IS NULL AND"));
             }
             $where = substr($where, 0, -3);
         } else {

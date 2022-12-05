@@ -43,6 +43,8 @@ $signup = function () {
             $response["isError"] = true;
             $response["error"]["is"] = "Thao tác bị từ chối";
         }
+    } else {
+        $response["error"]["is"] = "Đăng ký thất bại";
     }
 
     App::responseJson($response);
@@ -57,7 +59,7 @@ $signin = function () {
         if (!Auth::User()) {
 
             $user = User::Login($data);
-            if (isset($user)) {
+            if ($user) {
                 $update_session = [
                     "expire" => time() + CONF_SESSION["expire"],
                     "is_login" => 1
@@ -85,6 +87,8 @@ $signin = function () {
             $response["isError"] = true;
             $response["error"]["is"] = "Thao tác bị từ chối";
         }
+    } else {
+        $response["error"]["is"] = "Đăng nhập thất bại";
     }
 
     App::responseJson($response);
@@ -98,7 +102,7 @@ $signout = function () {
     ];
 
     $user = Auth::User();
-    if (isset($user)) {
+    if ($user) {
         $update_session = [
             "expire" => -1,
             "is_login" => 0,

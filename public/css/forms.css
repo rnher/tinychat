@@ -121,8 +121,27 @@
     display: inline;
 }
 
-
 /* signin-user */
 #tiny-chat .signup-user {
     display: none;
+}
+
+
+/* action__input-group  */
+#tiny-chat .action__input-group {
+    position: relative;
+}
+
+#tiny-chat .action__input-group input {
+    padding-right: 35px;
+}
+
+#tiny-chat .action__input-group button {
+    position: absolute;
+    right: 0px;
+    height: 100%;
+    font-size: 20px;
+    border: 0;
+    height: 40px;
+    padding: 0 10px;
 }

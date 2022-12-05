@@ -39,16 +39,14 @@
                 </div>
                 <div class="input-group">
                     <label class="label-title" for="token">Mã nhúng</label>
-                    <input class="clipboard" type="text" value="" placeholder="Mã nhúng" name="token" id="token" disabled>
+                    <div class="action__input-group">
+                        <input type="text" value="" placeholder="Mã nhúng" name="token" id="token" disabled>
+                        <button class="clipboard-btn" data-target="token" type="button" title="Sao chép mã"><i class="fa-regular fa-clipboard"></i></button>
+                    </div>
                     <label class="label-error" data-name="token" for="token"></label>
                     <label class="label-info" for="token">Mã của bạn hết hạn ngày:
                         <?= (new DateTime($brand["expired"]))->format("m-d-Y")  ?>.</label>
                 </div>
-
-                <!-- <div class="input-group token-input-group">
-                    <input type="text" value="" name="token" placeholder="Mã nhúng web" id="token" disabled>
-                    <button id="syn-token-btn" class="sub-btn" title="Tạo mã mới"><i class="fa-solid fa-rotate"></i></button>
-                </div> -->
 
                 <div class="input-group">
                     <label class="label-title">Mật khẩu hiện tại</label>

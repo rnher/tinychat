@@ -34,7 +34,7 @@ $update =  function () {
     $data = $response["data"];
 
     $user = Auth::User();
-    if (isset($user)) {
+    if ($user) {
         if (!$response["isError"]) {
             if (User::Login([
                 "username" => $user["username"],

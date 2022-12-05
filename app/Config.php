@@ -15,18 +15,18 @@ class Config
         define("token", "token");
         define("ssid", "ssid");
 
-        define("CONF_DOMAIN", "159.223.46.242");
-        define("CONF_PROTOCOl", "https");
-        // define("CONF_DOMAIN", "localhost");
-        // define("CONF_PROTOCOl", "http");
+        // define("CONF_DOMAIN", "159.223.46.242");
+        // define("CONF_PROTOCOl", "https");
+        define("CONF_DOMAIN", "localhost");
+        define("CONF_PROTOCOl", "http");
         define("CONF_HOST", CONF_PROTOCOl . "://" . CONF_DOMAIN);
 
         define("CONF_DB", [
             "dbname" => "tinychat",
             "hostname" => "localhost",
             "username" => "root",
-            "password" => "`1Tinychat",
-            // "password" => "",
+            // "password" => "`1Tinychat",
+            "password" => "",
         ]);
 
         define("CONF_SOCKET", [

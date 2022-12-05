@@ -50,12 +50,13 @@ class Auth
 
     static function Customer($tinychat_client_ssid = null)
     {
-        if (isset($tinychat_client_ssid)) {
-            $tinychat_client_ssid = base64_decode($tinychat_client_ssid );
-        } else {
-            $tinychat_client_ssid = Server::Cookie("tinychat_client_ssid");
-        }
+        // if (isset($tinychat_client_ssid)) {
+        //     $tinychat_client_ssid = base64_decode($tinychat_client_ssid);
+        // } else {
+        //     $tinychat_client_ssid = Server::Cookie("tinychat_client_ssid");
+        // }
 
-        return Customer::Find_Where("token", $tinychat_client_ssid);
+        // return Customer::Find_Where("token", $tinychat_client_ssid);
+        return Customer::Find_Where("token", base64_decode($tinychat_client_ssid));
     }
 }
