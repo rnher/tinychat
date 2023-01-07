@@ -3,7 +3,8 @@
         let _this = this;
 
         let defaults = {
-            url: ""
+            url: "",
+            params: {}
         };
 
         let settings = $.extend({}, defaults, options);
@@ -38,25 +39,57 @@
             data: {},
             params: {}
         };
-        
+
         let settings = $.extend({}, defaults, options);
 
-        _this.init = function () {
-            // Nạp dữ liệu
+        _this.getData = function (settings) {
             settings.fields.forEach(field => {
                 if (field == "avatar") {
                     settings.data[field] = _this
-                        .find(".review-image img[data-self=0]")
+                        .find(".review-avatar-image img[data-self=0]")
+                        .prop("src");
+                } else if (field == "banner") {
+                    settings.data[field] = _this
+                        .find(".review-banner-image img[data-self=0]")
                         .prop("src");
                 } else {
-                    settings.data[field] = _this
-                        .find("#" + field)
-                        .val();
+                    let input = this.find("#" + field);
+                    if (input.is(":checkbox")) {
+                        settings.data[field] = input.is(":checked") ? 1 : 0;
+                    } else if (input.val()) {
+                        settings.data[field] = input.val();
+                    }
                 }
             });
+        }
 
-            // Reset nhãn lỗi
-            _this.find(".label-error").text("");
+        _this.setData = function (datas = []) {
+            for (const [field, value] of Object.entries(datas)) {
+                if (field == "avatar") {
+                    this.find(".review-avatar-image img")
+                        .data("self", 1)
+                        .prop("src", value);
+                } else if (field == "banner") {
+                    this.find(".review-banner-image img")
+                        .data("self", 1)
+                        .prop("src", value);
+                } else {
+                    let input = this.find("#" + field);
+                    if (input.is(":checkbox")) {
+                        input.prop("checked", value == 1);
+                    } else {
+                        input.val(value);
+                    }
+                }
+            }
+        }
+
+        _this.init = function () {
+            // Nạp dữ liệu
+            _this.getData(settings);
+
+            // Disable input
+            _this.disabledInput();
 
             let url = settings.url + (settings.params ? ("?" + $.param(settings.params)) : "");
 
@@ -75,15 +108,27 @@
                     // Reset input
                     _this.emptyInput();
 
+                    // Enabale input
+                    _this.endabaleInput();
+
                     // Hiển thị lỗi
                     for (const [k, v] of Object.entries(response.error)) {
                         _this.find("[data-name=" + k + "]").text(v);
                     }
 
+                    // Hiển thị lại dữ liệu
+                    _this.setData(response.error.data);
+
                     if (typeof settings.reject == "function") {
                         settings.reject(response.error);
                     }
                 } else {
+                    // Reset input
+                    _this.emptyInput();
+
+                    // Enabale input
+                    _this.endabaleInput();
+
                     if (typeof settings.success == "function") {
                         settings.success(response.data);
                     }

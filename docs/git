@@ -1,0 +1,10 @@
+<!-- clone branch -->
+git clone --branch <branchname> <remote-repo-url>
+<!-- Lấy về nhưng không merge -->
+git fetch
+<!-- Lấy về merge. Có thể xung đột -->
+git pull
+<!-- . -->
+git add .
+git commit -am""
+git push

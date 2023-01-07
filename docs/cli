@@ -1,0 +1,19 @@
+==========================================
+==========================================Ubuntu
+==========================================
+*
+*Delete folder
+*
+sudo rm -rf folder-name
+
+*
+*Listening ports Numbers
+*
+**
+**To list all
+**
+sudo netstat --all
+**
+**Process responsible on each one. Terminate or kill the process to close port. (kill, pkill ...)
+**
+sudo netstat -lnp

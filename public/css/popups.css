@@ -1,0 +1,111 @@
+/* popup  */
+#tiny-chat .popup {
+    max-width: 900px;
+    position: absolute;
+    top: 0px;
+    background: var(--bg);
+    left: 0px;
+    right: 0px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+    margin: auto;
+    margin-top: 20px;
+    z-index: 5;
+    height: 700px;
+}
+
+#tiny-chat .popup .popup-head {
+    display: flex;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+#tiny-chat .popup .popup-head .head-title {
+    width: 90%;
+    text-align: left;
+    font-size: 30px;
+}
+
+#tiny-chat .popup .popup-head .head-title {
+    width: 90%;
+    text-align: left;
+    font-size: 30px;
+}
+
+#tiny-chat .popup.edit-layout-chat-popup .popup-head .head-title {
+    font-size: 12px;
+}
+
+#tiny-chat .popup .popup-head .head-action {
+    width: 10%;
+    text-align: right;
+}
+
+#tiny-chat .popup .popup-content {
+    height: 450px;
+    overflow-y: scroll;
+}
+
+#tiny-chat .popup .popup-content #add-member__form,
+#tiny-chat .popup .popup-content #create-brand__form {
+    width: 450px;
+}
+
+#tiny-chat .popup .popup-content form {
+    margin: auto;
+    width: 100%;
+}
+
+#tiny-chat .popup .popup-bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+#tiny-chat .popup .popup-bottom button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+#tiny-chat .popup .popup-bottom button.reject-btn {
+    background-color: var(--danger);
+    color: white;
+}
+
+#tiny-chat .popup .popup-bottom button.accept-btn {
+    background-color: var(--success);
+    color: white;
+}
+
+
+/* layout-review-chat  */
+#tiny-chat .layout-review-chat .popup {
+    height: initial;
+    width: 200px;
+    font-size: 12px;
+}
+
+#tiny-chat .layout-review-chat .popup-content {
+    display: block;
+    height: initial;
+    text-align: center;
+}
+
+#tiny-chat .layout-review-chat .popup-bottom button {
+    height: 30px;
+    padding: 0;
+    line-height: initial;
+    font-size: 12px;
+}
+
+/* select  */
+
+#tiny-chat .popup .select-box{
+}
+#tiny-chat .popup .options-view-button:checked~.options .label {
+    /* font-size: 12px; */
+}
+
+/* Banner  */

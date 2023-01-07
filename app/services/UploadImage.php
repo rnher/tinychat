@@ -9,10 +9,11 @@ class UploadImage
     private $folder_dir;
     private $isMutile;
 
-    function __construct($rawdata, $folder_dir = null, $isMutile = false)
+    function __construct($rawdata = null, $folder_dir = null, $isMutile = false)
     {
         $this->config = CONF_UPLOAD["image"];
         $this->rawdata = $rawdata;
+        // TODO: kiểm tra đường dẫn target_dir
         $this->folder_dir = $this->config["target_dir"] . "/" .  ($folder_dir ? $folder_dir : "");
         $this->isMutile = $isMutile;
 
@@ -21,7 +22,16 @@ class UploadImage
         }
     }
 
-    function saveOne($rawdata)
+    public function getBase64ImageSize($rawdata)
+    {
+        $size_in_bytes = (int) (strlen(rtrim($rawdata["data"], '=')) * 3 / 4);
+        $size_in_kb    = $size_in_bytes / 1024;
+        $size_in_mb    = $size_in_kb / 1024;
+
+        return $size_in_mb;
+    }
+
+    function validate($rawdata)
     {
         $splited = explode(",", substr($rawdata["data"], 5), 2);
         $mime = $splited[0];
@@ -33,12 +43,36 @@ class UploadImage
             if ($extension == "jpeg") {
                 $extension = "jpg";
             }
-            $output_file_with_extension = ($rawdata["name"] ? $rawdata["name"] : time())  . "." . $extension;
+
+            $is_truth_format = array_search($extension, $this->config["formats"]);
+            // $size = getimagesize($rawdata["data"]);
+            $size = $this->getBase64ImageSize($rawdata);
+            $is_truth_size =  $size  <= $this->config["size"];
+            if ($is_truth_format == false || !$is_truth_size) {
+                return false;
+            }
+
+            return [
+                "data" => $data,
+                "name" => ($rawdata["name"] ? $rawdata["name"] : time())  . "." . $extension
+            ];
         }
 
-        $link_image = $this->folder_dir . "/" . $output_file_with_extension;
-        file_put_contents($link_image, base64_decode($data));
+        return false;
+    }
 
+    function saveOne($rawdata)
+    {
+        $validate = $this->validate($rawdata);
+
+        if (!$validate) {
+            return false;
+        }
+
+        $link_image = $this->folder_dir . "/" . $validate["name"];
+        file_put_contents($link_image, base64_decode($validate["data"]));
+
+        // TODO: kiểm tra đường dẫn root_dir
         return $this->config["root_dir"] . $link_image;
     }
 
@@ -46,7 +80,11 @@ class UploadImage
     {
         $link_image = "";
         foreach ($this->rawdata as $key => $data) {
-            $link_image .=  $this->saveOne($data) . ",";
+            if ($image_name = $this->saveOne($data) != false) {
+                $link_image .=  $image_name . ",";
+            } else {
+                return false;
+            }
         }
 
         return substr($link_image, 0, -1);

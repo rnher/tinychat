@@ -1,87 +1,8 @@
+import "/client/public/js/services/rsa.js";
 import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
+import { formatNoticationNumber } from "/client/public/js/util.js";
 
 (function ($) {
-    $.fn.submitSendMessage = function (options) {
-        let _this = this;
-
-        let defaults = {
-        };
-
-        let settings = $.extend({}, defaults, options);
-
-        _this.init = function () {
-            // Fix xuất hiện khoảng trắng khi khởi tạo
-            _this.val("");
-
-            _this.on("keydown", function (e) {
-                let message = $(this);
-                let key = e.which || e.keyCode || 0;
-                let keyEnter = 13;
-
-                switch (key) {
-                    case keyEnter: {
-                        e.preventDefault();
-
-                        let content = message.val();
-                        let chatinfo_id = message.data("chatinfo");
-
-                        if (content.length) {
-                            Chat.getInstance().sendMessage({
-                                content,
-                                chatinfo_id
-                            });
-                        }
-
-                        // Reset textarea
-                        message.val("");
-                    }
-                        break;
-                    default: {
-                    }
-                        break;
-                }
-            });
-        };
-
-        return _this.init();
-    };
-
-    $.fn.loadMessages = function (options) {
-        let _this = this;
-
-        let defaults = {
-        };
-
-        let settings = $.extend({}, defaults, options);
-
-        _this.init = function () {
-            _this.get({
-                url: settings.url,
-                success: function (data) {
-                    let items = data.items;
-
-                    for (let i = 0; i < items.length; i++) {
-                        let chatBoxView = $(".chat-box__view[data-id=" + data.chatinfo_id + "]");
-                        chatBoxView
-                            .prepend($(chatBoxView).createMessageItem({ data: items[i] }))
-                            .data("next", data.next_page_url);
-                    }
-
-                    if (typeof settings.callback == "function") {
-                        settings.callback(data);
-                    }
-                },
-                reject: function (error) {
-                    if (typeof settings.callback == "function") {
-                        settings.callback(null, error);
-                    }
-                }
-            });
-        };
-
-        return _this.init();
-    }
-
     $.fn.updateScrollPreTopChatBoxView = function (options) {
         let _this = this;
 
@@ -105,78 +26,6 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
         return _this.init();
     }
 
-    $.fn.onScrollExtraMasegers = function (options) {
-        let _this = this;
-
-        let defaults = {
-        };
-        let settings = $.extend({}, defaults, options);
-
-        _this.init = function () {
-            let isSuccessLoad = true;
-            let chatinfoMessagesEnd = [];
-
-            _this.on("scroll", function (e) {
-                e.preventDefault();
-
-                let chatBoxView = $(this);
-
-                // Toggle button movedow
-                chatBoxView.checkBottomScrollMessage({
-                    success: () => {
-                        $("#chat-box__move-down").hide();
-                    },
-                    reject: () => {
-                        $("#chat-box__move-down").show();
-                    }
-                });
-
-                // Kiểm tra trước đó đã hết tin nhắn
-                let messagesEnd = chatinfoMessagesEnd.find((value) => {
-                    chatBoxView.data("id") == value;
-                });
-
-                // Hoàn thành load và vẫn còn tin nhắn chưa được load
-                if (isSuccessLoad && !messagesEnd) {
-                    let messages = chatBoxView.find(".message");
-                    let messageHeight = $(messages).first().outerHeight();
-
-                    // Top vừa tới itemHeight
-                    if (chatBoxView.scrollTop() <= messageHeight) {
-                        let url = chatBoxView.data("next");
-                        if (url) {
-                            isSuccessLoad = false;
-
-                            chatBoxView.loadMessages({
-                                url,
-                                callback: (data, error) => {
-                                    isSuccessLoad = true;
-
-                                    if (data) {
-                                        $("#client-tiny-chat").updateScrollPreTopChatBoxView({
-                                            extraLength: data.items.length
-                                        });
-
-                                        if (!data.next_page_url) {
-                                            let outOfData = chatBoxView.find(".out-of-data");
-                                            if (!outOfData.length) {
-                                                chatBoxView.prepend($("#client-tiny-chat").createOutOfData({ type: "message" }));
-                                                chatinfoMessagesEnd.push(chatBoxView.data("id"));
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                    }
-                }
-            })
-
-        };
-
-        return _this.init();
-    };
-
     $.fn.submitRegisterChat = function (options) {
         let _this = this;
 
@@ -194,7 +43,7 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
                 let token = $("#client-tiny-chat-script").data("id");
 
                 _this.ajaxForm({
-                    fields: ["name", "phone"],
+                    fields: ["name", "phone", "mail"],
                     url: CONF_URL.clients,
                     params: {
                         token
@@ -202,12 +51,19 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
                     success: function (data) {
                         _this.endabaleInput();
 
-                        // TODO: để chỗ khác
+                        let clientTinyChat = $("#client-tiny-chat");
+
                         // Lưu id để client truy cập lần sau
                         if (typeof (Storage) !== "undefined") {
-                            localStorage.setItem(token, data.ssid);
+                            if (window.remember) {
+                                window.remember = localStorage;
+                            } else {
+                                window.remember = sessionStorage;
+                            }
+
+                            window.remember.setItem(token, data.ssid);
                         } else {
-                            // Sorry! No Web Storage support..
+                            // TODO: Sorry! No Web Storage support..
                         }
 
                         // Lưu id để đăng nhập socket
@@ -218,45 +74,27 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
                             })
                         });
 
-                        $(".register-chat").remove();
+                        clientTinyChat.find(".register-chat").remove();
+
                         //TODO: add layout loading
 
-                        $("#client-tiny-chat").get({
+                        clientTinyChat.get({
                             url: CONF_URL.clients,
                             params: {
                                 token,
-                                ssid: localStorage.getItem(token)
+                                ssid: window.remember ? window.remember.getItem(token) : null
                             },
-                            success: function (data) {
-                                $("#client-tiny-chat").initChatBox({ data });
-                                $(".chat-box__view").onScrollExtraMasegers();
-                                $("#message-textarea").submitSendMessage();
-                                setInterval(
-                                    $("#client-tiny-chat").updateMSGTime
-                                    , CONF_SOCKET.pingTime
-                                );
-
-                                // Send seen and update croll
-                                $("#client-tiny-chat").onClickAction({
-                                    selector: ".chat-bubble",
-                                    callback: function () {
-                                        // Nếu chat hidden cần nhấn để hiển thị
-                                        $("#client-tiny-chat").updateScrollBottomChatBoxView();
-                                        $("#client-tiny-chat").seenMessage({
-                                            chatinfo_id: data.chatinfo_id
-                                        })
-
-                                        $("#client-tiny-chat #chat-box").toggle();
-                                    }
-                                });
-
+                            success: (data) => {
+                                clientTinyChat.startChat({ data });
 
                                 //TODO: remove layout loading
                             },
                             reject: function (error) {
-                                $("#client-tiny-chat")
-                                    .append($("#client-tiny-chat").createRegisterChat());
-                                $("#register-chat__form").submitRegisterChat();
+                                clientTinyChat
+                                    .append(clientTinyChat
+                                        .createRegisterChat({ data: error }));
+                                clientTinyChat.find("#register-chat__form").submitRegisterChat();
+
 
                                 //TODO: remove layout loading
                             }
@@ -264,9 +102,10 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
                     },
                     reject: function (error) {
                         _this.endabaleInput();
+                        let clientTinyChat = $("#client-tiny-chat");
 
                         // Brand không tồn tại hoặc hết hạn
-                        $(".register-content").showError({ error });
+                        clientTinyChat.find(".register-content").showError({ error });
                     }
                 })
             });
@@ -279,25 +118,51 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
         let _this = this;
 
         let defaults = {
+            isShow: false
         };
 
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            $("#client-tiny-chat").append($("#client-tiny-chat").createChatBox(settings.data));
+            let clientTinyChat = $("#client-tiny-chat");
+
+            // Display new smg
+            _this.updateMSGNotication({
+                value: settings.data.count_not_seen
+            });
+
+            let chatBox = clientTinyChat.createChatBox(settings.data);
+            clientTinyChat.append(chatBox);
 
             let messages = settings.data.items;
             for (let i = 0; i < messages.length; i++) {
-                let chatBoxView = $(".chat-box__view[data-id=" + settings.data.chatinfo_id + "]");
+                let chatBoxView = $(".chat-box__view[data-id=" + settings.data.chatinfo.id + "]");
                 chatBoxView.prepend($(chatBoxView).createMessageItem({ data: messages[i] }))
             }
 
+            clientTinyChat.uploadLayoutMessage({
+                chatinfo_id: settings.data.chatinfo.id
+            });
+
             // Ẩn nó khi mới khỏi tạo. Sẽ được hiển thị khi chạy updateScrollBottomChatBoxView
-            $("#chat-box__move-down").hide();
+            let chatBoxMoveDown = clientTinyChat.find("#chat-box__move-down");
+            chatBoxMoveDown.hide();
+            chatBoxMoveDown.onClickMoveDowMessage();
+
+            // Load customer đồ họa
+            _this.reloadLayoutChat({
+                data: settings.data.brand.settings,
+                isInit: true
+            });
+
+            if (settings.isShow) {
+                clientTinyChat.find(".chat-box").show()
+            } else {
+                clientTinyChat.find(".chat-box").hide()
+            }
 
             // Bât cái này Nếu chat hiển thị mặc định thì update scroll
-            $("#client-tiny-chat").updateScrollBottomChatBoxView();
-            $("#chat-box__move-down").onClickMoveDowMessage();
+            clientTinyChat.updateScrollBottomChatBoxView({ isAnimate: false });
         };
 
         return _this.init();
@@ -307,29 +172,244 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
         let _this = this;
 
         let defaults = {
+            isAnimate: true
         };
 
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let chatBoxView = $(".chat-box__view");
+            let chatBoxView = $(".chat-box__view:visible");
 
             let messages = chatBoxView.find(".message");
+            let outOfData = chatBoxView.find(".out-of-data");
+            let dateLabels = chatBoxView.find(".chat-box-view__date-label");
 
-            if (messages.length) {
-                chatBoxView.scrollTop((messages.length) * messages.first().outerHeight());
+            let scrollTop = 0;
+
+            dateLabels.each(function (index, value) {
+                scrollTop += $(value).outerHeight();
+            });
+
+            messages.each(function (index, value) {
+                scrollTop += $(value).outerHeight();
+            });
+
+            if (outOfData.length) {
+                scrollTop += outOfData.outerHeight();
+            }
+
+            if (settings.isAnimate) {
+                chatBoxView.animate({ scrollTop }, 200, "swing");
             } else {
-                chatBoxView.scrollTop(0);
+                chatBoxView.scrollTop(scrollTop);
             }
         };
 
         return _this.init();
     }
 
-    $.fn.onClickMoveDowMessage = function (options) {
+    $.fn.reloadLayoutChat = function (options) {
         let _this = this;
 
         let defaults = {
+            isInit: false,
+            isSelect: false,
+            isReload: false
+        };
+
+        let settings = $.extend({}, defaults, options);
+
+        _this.processReload = function (
+            data,
+            brand_name_color,
+            brand_text_color,
+            brand_chat_color,
+            brand_chat_bg,
+            client_chat_color,
+            client_chat_bg,
+            main_color,
+            main_bg,
+            // TODO:
+            // main_text,
+            // main_icon,
+            chat_bg
+        ) {
+            if (data.brand_name_color) {
+                brand_name_color;
+            }
+            if (data.brand_text_color) {
+                brand_text_color;
+            }
+
+            if (data.brand_chat_color) {
+                brand_chat_color;
+            }
+            if (data.brand_chat_bg) {
+                brand_chat_bg;
+            }
+
+            if (data.client_chat_color) {
+                client_chat_color;
+            }
+            if (data.client_chat_bg) {
+                client_chat_bg;
+            }
+
+            if (data.main_color) {
+                main_color;
+            }
+            if (data.main_bg) {
+                main_bg;
+            }
+            // TODO
+            // if (data.main_text) {
+            //     main_text;
+            // }
+            // if (data.main_icon) {
+            //     main_icon;
+            // }
+
+            if (data.chat_bg) {
+                chat_bg;
+            }
+        }
+        _this.init = function () {
+            let data = settings.data;
+            let client = $("#client-tiny-chat");
+
+            if (settings.isReload) {
+                data = {
+                    brand_name_color: client.find(".edit-brand-name-color")
+                        .data("selectcolor"),
+                    brand_text_color: client.find(".edit-brand-text-color")
+                        .data("selectcolor"),
+                    brand_chat_color: client.find(".edit-brand-content")
+                        .data("selectcolor"),
+                    brand_chat_bg: client.find(".edit-brand-content")
+                        .data("selectbg"),
+                    client_chat_color: client.find(".edit-customer-content")
+                        .data("selectcolor"),
+                    client_chat_bg: client.find(".edit-customer-content")
+                        .data("selectbg"),
+                    main_bg: client.find(".edit-main")
+                        .data("selectbg"),
+                    main_color: client.find(".edit-main")
+                        .data("selectcolor"),
+                    // TODO:
+                    // main_text: client.find(".edit-main")
+                    //     .data("selecttext"),
+                    // main_icon: client.find(".edit-main")
+                    //     .data("selecticon"),
+                    chat_bg: client.find(".edit-chat-bg")
+                        .data("selectbg"),
+                };
+            }
+
+            _this.processReload(
+                data,
+                client.find(".brand_name_color").css("color", data.brand_name_color),
+                client.find(".brand_text_color").css("color", data.brand_text_color),
+                client.find(".brand_chat_color").css("color", data.brand_chat_color),
+                client.find(".brand_chat_bg").css("background-color", data.brand_chat_bg),
+                client.find(".client_chat_color").css("color", data.client_chat_color),
+                client.find(".client_chat_bg").css("background-color", data.client_chat_bg),
+                client.find(".main_bg").css("background-color", data.main_bg),
+                client.find(".main_color").css("color", data.main_color),
+                // TODO:
+                // client.find(".main_text").text(data.main_text),
+                // client.find(".main_icon").empty().append($(data.main_icon)),
+                client.find(".chat_bg").css("background-color", data.chat_bg),
+            );
+
+            if (settings.isInit) {
+                _this.processReload(
+                    data,
+                    client.find(".edit-brand-name-color")
+                        .data("color", data.brand_name_color),
+                    client.find(".edit-brand-text-color")
+                        .data("color", data.brand_text_color),
+                    client.find(".edit-brand-content")
+                        .data("color", data.brand_chat_color),
+                    client.find(".edit-brand-content")
+                        .data("bg", data.brand_chat_bg),
+                    client.find(".edit-customer-content")
+                        .data("color", data.client_chat_color),
+                    client.find(".edit-customer-content")
+                        .data("bg", data.client_chat_bg),
+                    client.find(".edit-main")
+                        .data("color", data.main_color),
+                    client.find(".edit-main")
+                        .data("bg", data.main_bg),
+                    // TODO:
+                    // client.find(".edit-main")
+                    //     .data("text", data.main_text),
+                    // client.find(".edit-main")
+                    //     .data("icon", data.main_icon),
+                    client.find(".edit-chat-bg")
+                        .data("bg", data.chat_bg),
+                );
+            }
+
+            if (settings.isSelect || settings.isInit) {
+                _this.processReload(
+                    data,
+                    client.find(".edit-brand-name-color")
+                        .data("selectcolor", data.brand_name_color),
+                    client.find(".edit-brand-text-color")
+                        .data("selectcolor", data.brand_text_color),
+                    client.find(".edit-brand-content")
+                        .data("selectcolor", data.brand_chat_color),
+                    client.find(".edit-brand-content")
+                        .data("selectbg", data.brand_chat_bg),
+                    client.find(".edit-customer-content")
+                        .data("selectcolor", data.client_chat_color),
+                    client.find(".edit-customer-content")
+                        .data("selectbg", data.client_chat_bg),
+                    client.find(".edit-main")
+                        .data("selectcolor", data.main_color),
+                    client.find(".edit-main")
+                        .data("selectbg", data.main_bg),
+                    //TODO:
+                    // client.find(".edit-main")
+                    //     .data("selecttext", data.main_text),
+                    // client.find(".edit-main")
+                    //     .data("selecticon", data.main_icon),
+                    client.find(".edit-chat-bg")
+                        .data("selectbg", data.chat_bg),
+                );
+            }
+        };
+
+        return _this.init();
+    };
+
+    $.fn.updateMSGNotication = function (options) {
+        let _this = this;
+
+        let defaults = {
+        };
+
+        let settings = $.extend({}, defaults, options);
+
+        _this.init = function () {
+            if (settings.value != 0) {
+                let badgeNewMSG = $(".chat-bubble").find(".badge-new-msg");
+                let objNum = formatNoticationNumber(settings.value, 0);
+                badgeNewMSG.data("value", objNum.num);
+                badgeNewMSG.text(objNum.display);
+
+                badgeNewMSG.show();
+            }
+        };
+
+        return _this.init();
+    }
+
+    $.fn.onClickMiniSize = function (options) {
+        let _this = this;
+
+        let defaults = {
+            target: "#chat-box"
         };
 
         let settings = $.extend({}, defaults, options);
@@ -338,14 +418,15 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
             _this.on("click", function (e) {
                 e.preventDefault();
 
-                $(this).updateScrollBottomChatBoxView();
+                let chatBox = $(settings.target);
+                chatBox.hide();
             });
         };
 
         return _this.init();
     }
 
-    $.fn.checkBottomScrollMessage = function (options) {
+    $.fn.updateCountMSG = function (options) {
         let _this = this;
 
         let defaults = {
@@ -354,33 +435,31 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            // Thông báo hết tin
-            let outOfData = _this.find(".out-of-data");
-            let outOfDataHeight = outOfData.length ? $(outOfData).first().outerHeight() : 0;
+            let clientTinyChat = $("#client-tiny-chat");
+            let viewCountMessage = clientTinyChat.find(".view-count-message");
 
-            // Tin nhắn
-            let messages = _this.find(".message");
-            let messageHeight = $(messages).first().outerHeight();
+            let maxCount = viewCountMessage.find(".max-count-message");
+            let maxValue = maxCount.data("value");
+            // maxCount.empty().text(maxValue);
 
-            // Tổng
-            let scrollTopHieght = _this.innerHeight() + _this.scrollTop() + messageHeight;
-            let totalHeight = messages.length * messageHeight + outOfData.length * outOfDataHeight;
+            let currentLength = clientTinyChat.find("#message-textarea").val().length;
+            let curCount = viewCountMessage.find(".current-count-message");
+            curCount.data("value", currentLength);
+            curCount.empty().text(currentLength);
 
-            if (Math.round(scrollTopHieght) >= Math.round(totalHeight)) {
-                if (typeof settings.success == "function") {
-                    settings.success();
-                }
+            if (maxValue < currentLength) {
+                viewCountMessage.addClass("label-error");
+                return false;
             } else {
-                if (typeof settings.reject == "function") {
-                    settings.reject();
-                }
+                viewCountMessage.removeClass("label-error");
+                return true;
             }
         };
 
         return _this.init();
     }
 
-    $.fn.seenMessage = function (options) {
+    $.fn.onClickCheckRemember = function (options) {
         let _this = this;
 
         let defaults = {
@@ -389,17 +468,68 @@ import { CONF_URL, CONF_SOCKET } from "/client/public/js/config.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            // Gửi thông báo đã xem
-            Chat.getInstance().sendSeen({
-                chatinfo_id: settings.chatinfo_id
+            _this.find("#remember").on("change", function (e) {
+                e.preventDefault();
+
+                window.remember = this.checked;
+            });
+        };
+
+        return _this.init();
+    }
+
+    $.fn.startChat = function (options) {
+        let _this = this;
+
+        let defaults = {
+        };
+
+        let settings = $.extend({}, defaults, options);
+
+        _this.init = function () {
+            let data = settings.data;
+
+            let clientTinyChat = $("#client-tiny-chat");
+
+            clientTinyChat.find(".chat-bubble").removeClass("chat-bubble__register");
+
+            RSA.getInstance().add(
+                data.chatinfo.id,
+                data.chatinfo.public_key,
+                data.chatinfo.private_key
+            );
+
+            Chat.getInstance(data.ssid, (socket) => {
             });
 
-            // Cập nhật thông báo về 0 và ẩn
-            let badgeNewMSG = $(".chat-bubble")
-                .find(".badge-new-msg")
-                .data("value", 0)
-                .text(0)
-                .hide();
+            clientTinyChat.initChatBox({
+                data,
+                isShow: true
+            });
+            clientTinyChat.find(".chat-box__view").onScrollExtraMessagers();
+            clientTinyChat.find("#send-message__form").submitSendMessage();
+
+            clientTinyChat.find("#mini-size-chat").onClickMiniSize();
+            clientTinyChat.find("#notification-sound").onClickNotificationSound();
+
+            clientTinyChat.onClickAction({
+                selector: ".chat-bubble",
+                callback: () => {
+                    // Nếu chat hidden cần nhấn để hiển thị
+                    clientTinyChat.updateScrollBottomChatBoxView({ isAnimate: false });
+                    clientTinyChat.seenMessage({
+                        chatinfo_id: data.chatinfo.id,
+                        brand_id: data.brand.id,
+                    });
+                }
+            });
+
+            clientTinyChat.updateMSGTime()
+
+            setInterval(
+                clientTinyChat.updateMSGTime,
+                CONF_SOCKET.pingTime
+            );
         };
 
         return _this.init();

@@ -24,46 +24,81 @@ export function getUrlParameter(sParam) {
     return false;
 };
 
-export function getDate(data) {
+export function getDate(data, isRaw = false, isRelative = true) {
+    // TODO: check zone client
+    let localZone = "vi-VN";
+
     let options = {
         hour: "2-digit",
         minute: "2-digit",
-        second: "2-digit",
+        // second: "2-digit",
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     };
 
+    let hourOptions = {
+        hour: "2-digit",
+        minute: "2-digit",
+    };
+
+    let dayOptions = {
+        day: 'numeric'
+    };
+
+    let monthOptions = {
+        month: 'long',
+    };
+
     let date = new Date(data);
     let now = new Date();
 
-    if (date.getDate() == now.getDate()) {
-        options = {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-        };
+    const formatter = new Intl.RelativeTimeFormat(localZone, options);
 
-        let remainTime = now.getTime() - date.getTime();
-        let s = remainTime / 1000;
-        if (s > 60) {
-            let m = s / 60;
-            if (m > 60) {
-                let h = m / 60;
-                return parseInt(h) + " giờ " + "trước";
-            } else {
-                return parseInt(m) + " phút " + "trước";
-            }
-        } else {
-            if (s < 10) {
-                return "Mới đây";
-            }
-            return parseInt(s) + " giây " + "trước";
+    if (!isRaw) {
+        let relativeDate = null;
+        let hour = date.toLocaleString(localZone, hourOptions);
+        let day = " ngày " + date.toLocaleString(localZone, dayOptions);
+        let month = " tháng " + date.toLocaleString(localZone, monthOptions);
+
+        if (date.getFullYear() < now.getFullYear()) {
+            relativeDate = hour
+                + day
+                + month
+                + (isRelative ?
+                (" - " + formatter.format(date.getFullYear() - now.getFullYear(), "year"))
+                : "");
         }
+        else if (date.getMonth() < now.getMonth()) {
+            relativeDate = hour
+                + day
+                + (isRelative ?
+                (" - " + formatter.format(date.getMonth() - now.getMonth(), "month"))
+                : "");
+        }
+        else if (date.getDay() < now.getDay()) {
+            relativeDate = hour
+                + (isRelative ?
+                (" - " + formatter.format(date.getDay() - now.getDay(), "day"))
+                : "");
+        }
+        else if (date.getHours() < now.getHours()) {
+            relativeDate = formatter.format(date.getHours() - now.getHours(), "hour");
+        }
+        else if (date.getMinutes() < now.getMinutes()) {
+            relativeDate = formatter.format(date.getMinutes() - now.getMinutes(), "minute");
+        }
+        else if (date.getSeconds() < now.getSeconds()) {
+            relativeDate = formatter.format(date.getSeconds() - now.getSeconds(), "second");
+        } else {
+            relativeDate = "Mới đây";
+        }
+
+        return relativeDate;
     }
 
-    return date.toLocaleString(options);
+    return date.toLocaleString(localZone, options);
 };
 
 export function formatNoticationNumber(num, push = 1) {

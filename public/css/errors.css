@@ -1,14 +1,17 @@
 #tiny-chat .error-404 {
     text-align: center;
+    padding-bottom: 50px;
 }
 
 #tiny-chat .error-title h1 {
     font-size: 30px;
+    font-weight: 700;
 }
 
 #tiny-chat .error-title p {
     font-size: 20px;
     margin: 0;
+    font-weight: 500;
 }
 
 #tiny-chat .error-404 .error-content {
@@ -159,13 +162,9 @@
 /* mini-error-404  */
 
 #tiny-chat .error-404.mini-error-404 .error-content {
-    font-size: 80px;
+    font-size: 100px;
     font-weight: 800;
-}
-
-#tiny-chat .error-404.mini-error-404 .error-content {
-    font-size: 80px;
-    font-weight: 800;
+    height: 400px;
 }
 
 #tiny-chat .error-404.mini-error-404 .error-title h1 {
@@ -198,4 +197,58 @@
 
 #tiny-chat .tiny-chat .chat-info .chat-info__content .mini-error-404 .error-bottom {
     margin-top: 20px;
+}
+
+#tiny-chat .tiny-chat .chat-info .chat-info__content .chat-info__list-chatinfo {
+    display: none;
+}
+
+/* image  */
+#tiny-chat .error.error-image {
+    width: 100%;
+    position: relative;
+    padding: 0;
+}
+
+#tiny-chat .error.error-image .error-title {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+}
+
+#tiny-chat .error.error-image .error-content img {
+    width: 100%;
+    /* height: 100%; */
+    border-radius: 10px;
+}
+
+/* settings  */
+#tiny-chat .settings .error.error-image {
+    padding: 0;
+}
+
+#tiny-chat .settings .error.error-image .error-title {
+    top: 350px;
+}
+
+#tiny-chat .settings .error.error-image .error-title h1 {
+    margin: 0;
+}
+
+/* chat-box */
+#tiny-chat .chat-box .chat-box__content .chat-box__view .error .error-title {
+    top: 440px;
+}
+
+#tiny-chat .chat-box .chat-box__content .chat-box__view .error .error-title h1 {
+    margin: 0;
+}
+
+#tiny-chat .chat-box .chat-box__content .chat-box__view .error {
+    margin-top: 20px;
+}
+
+#tiny-chat .chat-box .chat-box__content .chat-box__view .error-image img {
+    width: 500px;
 }

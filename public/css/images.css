@@ -1,7 +1,50 @@
 #tiny-chat .logo {
-    width: 332px;
+    width: 100%;
 }
 
 #tiny-chat .user-avatar img {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+/* avatar-image */
+#tiny-chat .avatar-image {
+    text-align: center;
+}
+
+#tiny-chat .avatar-image .review-image {
+    box-shadow: rgb(0 0 0 / 16%) 0px 10px 36px 0px, rgb(0 0 0 / 6%) 0px 0px 0px 1px;
+    position: relative;
+}
+
+#tiny-chat .review-image,
+#tiny-chat .avatar-image label {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    border-radius: 50%;
+}
+
+#tiny-chat .review-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+#tiny-chat .review-image:hover {
+    opacity: 0.8;
+}
+
+#tiny-chat .review-image button.btn-delete-image {
+    font-size: 18px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50% !important;
+    width: 30px;
+    height: 30px;
+}
+
+#tiny-chat .review-image button.btn-delete-image i {
+    margin-top: 5px;
 }

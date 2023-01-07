@@ -37,12 +37,10 @@ class App extends Server
 
         Database::Singleton()->init();
         // STEP: RUN  SEED DATABASE
-        // Database::Singleton()->runMigrates();
+        Database::Singleton()->runMigrates();
         // Database::Singleton()->runSeeds(); 
 
         $this->config = CONF_APP;
-        $this->content_view = null;
-        $this->data_view = null;
 
         include_once "routers/app.router.php";
     }

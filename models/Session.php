@@ -61,7 +61,7 @@ class Session
         $where = Database::Singleton()->String_Where($column, $value);
         $now_date = time();
 
-        $sql = "SELECT * FROM `table_session` WHERE " . $where . " AND `expired` > '$now_date';";
+        $sql = "SELECT * FROM `table_session` WHERE " . $where . " AND `expire` > '$now_date';";
 
         return Database::Singleton()->query($sql);;
     }

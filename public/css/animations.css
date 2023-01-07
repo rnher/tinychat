@@ -1,0 +1,5 @@
+@keyframes breathe {
+    0% {
+        box-shadow: 0 0 0 15px rgba(188, 237, 243, 0.3)
+    }
+}

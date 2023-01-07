@@ -1,15 +1,17 @@
 <?php
 include_once "app/App.php";
 include_once "models/Brand.php";
+include_once "models/ChatSettings.php";
 
 use APP\App;
 use MODELS\Brand;
+use MODELS\ChatSettings;
 
 $brand_auth = function () {
     $response = [
         "data" => null,
         "error" => [],
-        "isError" => false
+        "isError" => true
     ];
 
     $uri = App::GetURI();
@@ -18,7 +20,7 @@ $brand_auth = function () {
         // Kiểm tra hết hạng token
         $brand = Brand::Find_Not_Expired("token", $uri[token]);
 
-        // Kiểm tra client từ domain nhãn hàng cho phép nhúng
+        // Kiểm tra client từ domain thương hiệu cho phép nhúng
         if (isset($brand)) {
             $is_referer = App::GetRequestReferer($brand["domain"]);
 
@@ -27,11 +29,14 @@ $brand_auth = function () {
             }
         }
 
-        $response["isError"] = true;
-        $response["error"]["is"] = "Kênh trò chuyện của nhãn hàng không có";
+        $response["error"]["is"] = "Kênh trò chuyện của thương hiệu không có";
         $response["error"]["not"] = "brand";
+        $response["error"]["brand"] = [
+            "name" => CONF_APP["name"],
+            "description" => CONF_APP["description"],
+            "settings" => ChatSettings::Get_Default("")
+        ];
     } else {
-        $response["isError"] = true;
         $response["error"]["is"] = "Thao tác bị từ chối";
     }
 

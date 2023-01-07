@@ -12,7 +12,7 @@ $runCreateRecordMessage = function ($data) {
         is_brand,
         type,
         content,
-        is_seen_member,
+        is_seen_brand,
         is_seen_customer,
         create_date,
         update_date
@@ -24,7 +24,7 @@ $runCreateRecordMessage = function ($data) {
         '{$data["is_brand"]}',
         '{$data["type"]}',
         '{$data["content"]}',
-        '{$data["is_seen_member"]}',
+        '{$data["is_seen_brand"]}',
         '{$data["is_seen_customer"]}',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
@@ -45,7 +45,7 @@ for ($i = 1; $i <= CONF_SEED["count_chatinfo"]; $i++) {
             "is_brand" => $is_brand,
             "type" => "text",
             "content" => $faker->paragraph,
-            "is_seen_member" => $faker->numberBetween(0, 1),
+            "is_seen_brand" => $faker->numberBetween(0, 1),
             "is_seen_customer" => $faker->numberBetween(0, 1),
         ];
     }

@@ -1,0 +1,158 @@
+#tiny-chat .brand-navigation-bar__item {
+    position: relative;
+}
+
+#tiny-chat .brand-navigation-bar__item .badge-danger {
+    position: absolute;
+    top: -10px;
+    left: 25px;
+}
+
+#tiny-chat .brand-navigation-bar__item-notifications {
+    margin-left: auto;
+}
+
+#tiny-chat .notifications .out-of-data {
+    font-size: 10px;
+}
+
+#tiny-chat .notifications .out-of-data::before,
+#tiny-chat .notifications .out-of-data::after {
+    width: 30%;
+}
+
+#tiny-chat .notifications {
+    position: absolute;
+    width: 320px;
+    top: 45px;
+    /* right: 0px; */
+    color: black;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    max-height: 399px;
+    overflow-y: scroll;
+    display: none;
+    background-color: var(--bg);
+    z-index: 1;
+    text-transform: initial;
+}
+
+#tiny-chat .notifications .notification-item {
+    height: 80px;
+    display: flex;
+    padding: 10px 5px;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__avatar-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    background-color: white;
+    width: 25px;
+    height: 25px;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__avatar-icon i {
+    font-size: 15px;
+    display: block;
+    position: absolute;
+    top: 6px;
+    left: 3px;
+}
+
+#tiny-chat .notifications .notification-item:hover .notification-item__avatar-icon i {
+    color: black;
+}
+
+#tiny-chat .notifications .notification-item.unread:hover,
+#tiny-chat .notifications .notification-item:hover {
+    background-color: var(--bg-active);
+    color: white;
+}
+
+#tiny-chat .notifications .notification-item.unread {
+    background-color: var(--bg-hover);
+    color: black;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__avatar {
+    width: 60px;
+    height: 60px;
+    justify-self: center;
+    border-radius: 50%;
+    position: relative;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__content {
+    padding: 0 10px;
+    position: relative;
+    width: calc(100% - 60px);
+}
+
+#tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-content {
+    display: flex;
+    justify-content: space-between;
+    height: 15px;
+    align-items: end;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-title {
+    font-size: 12px;
+    font-weight: 500;
+    height: 45px;
+    overflow: hidden;
+    line-height: 15px;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-date {
+    font-size: 10px;
+    color: var(--text-secondary);
+    align-items: end;
+    display: flex;
+    font-weight: 100;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions {
+    display: flex;
+    bottom: 18px;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions .notification-item__action-item {
+    padding: 0 5px;
+    font-size: 12px;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions .notification-item__action-item.notification-item__action-item__accept i {
+    color: var(--success);
+}
+
+#tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions .notification-item__action-item.notification-item__action-item__reject i {
+    color: var(--danger);
+}
+
+#tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions .notification-item__action-item i {
+    font-size: 12px;
+}
+
+#tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions .notification-item__action-item:hover i {
+    cursor: pointer;
+}
+
+/* loader  */
+
+#tiny-chat .notifications .loader-socket {
+    height: 20px;
+    font-size: 10px;
+}
+
+#tiny-chat .brand-navigation-bar__item-notifications .error.error-image .error-title {
+    margin-top: 220px;
+}

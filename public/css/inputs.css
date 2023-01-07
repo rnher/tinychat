@@ -9,20 +9,69 @@
 
 #tiny-chat .input-group_search .input-icon {
     position: absolute;
-    left: 20px;
+    right: 0px;
     font-size: 20px;
-    padding: 5px 10px 10px 10px;
+    padding: 7px 10px 3px 10px;
+    color: var(--bg-secondary);
 }
 
 #tiny-chat .input-group_search .search-input {
-    padding-left: 50px;
-}
-
-#tiny-chat .input-group_search {
-    padding: 10px;
-}
-
-#tiny-chat .input-group_search .search-input {
-    width: 100%;
+    width: 99.5%;
     padding-right: 40px;
+    border-radius: 0;
+    color: var(--bg-secondary);
+}
+
+/* toggle  */
+#tiny-chat input[type="checkbox"].toggle {
+    display: none;
+}
+
+#tiny-chat input[type="checkbox"].toggle+label {
+    display: block;
+    position: relative;
+    width: 3em;
+    height: 1.6em;
+    margin-bottom: 20px;
+    border-radius: 1em;
+    background: white;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-transition: background 0.1s ease-in-out;
+    transition: background 0.1s ease-in-out;
+}
+
+#tiny-chat input[type="checkbox"].toggle+label:before {
+    content: "";
+    display: block;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 1em;
+    background: #fff;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    left: 0.2em;
+    top: 0.2em;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+#tiny-chat input[type="checkbox"].toggle:checked+label {
+    background: #47cf73;
+}
+
+#tiny-chat input[type="checkbox"].toggle:checked+label:before {
+    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+    left: 1.6em;
+}
+
+/* Select  */
+#tiny-chat .select {
+    height: 40px;
+    border-radius: 5px;
+    color: var(--bg-secondary);
 }

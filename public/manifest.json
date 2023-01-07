@@ -1,0 +1,18 @@
+{
+    "short_name": "I-WEB Chat",
+    "name": "I-WEB Chat",
+    "icons": [
+      {
+        "src": "/public/images/app/icon.png",
+        "type": "image/png",
+        "sizes": "256x256"
+      }
+    ],
+    "id": "/",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#eab741",
+    "theme_color": "#eab741",
+    "description": "I-WEB Chat - Ứng dụng chat bảo mật giúp kết nối nhanh chóng vơi khách hàng tiềm năng của bạn"
+  }

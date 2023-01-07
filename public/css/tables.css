@@ -1,0 +1,108 @@
+#tiny-chat table {
+    border-spacing: 0;
+}
+
+#tiny-chat table tr:hover {
+    background-color: var(--bg-hover);
+}
+
+#tiny-chat .popup.nav-bar__popup-manager {
+    max-width: 100%;
+    margin-top: 60px;
+    height: calc(100vh - 60px);
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .popup-content {
+    height: calc(100% - 55px);
+    overflow-y: unset;
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .popup-content .table__wapper {
+    height: 100%;
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .popup-content .table__wapper .table-manager__wapper {
+    height: calc(100% - 85px);
+    overflow-y: scroll;
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .popup-content .table__wapper .table-manager__wapper .table-manager tr:first-child {
+    /* visibility: collapse; */
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .table-manager {
+    width: 100%;
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .table-manager__wapper .table-manager tr td:first-child,
+#tiny-chat .popup.nav-bar__popup-manager .table-manager tr th:first-child {
+    width: 20px;
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .table-manager__wapper .table-manager tr td:last-child,
+#tiny-chat .popup.nav-bar__popup-manager .table-manager tr th:last-child {
+    width: 70px;
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .table-bar {
+    display: flex;
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .table-bar .select-group {
+    display: flex;
+    width: calc(100% - 300px);
+    justify-content: end;
+}
+
+
+#tiny-chat .popup.nav-bar__popup-manager .table-bar .select-box {
+    width: 250px;
+    margin: 0;
+    margin-right: 10px;
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .table-bar .table-search {
+    width: 300px;
+    margin: 0;
+}
+
+#tiny-chat .popup.nav-bar__popup-manager .table-bar .table-search .search-input {
+    border-radius: 5px;
+    box-shadow: rgb(0 0 0 / 5%) 0px 0px 0px 1px;
+}
+
+
+#tiny-chat .table-manager__row {
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 50px;
+}
+
+#tiny-chat .table-manager__row td img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+#tiny-chat .table-manager__row td {
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 50px;
+}
+
+#tiny-chat .table-manager__row td .user-td {
+    display: flex;
+    align-items: center;
+}
+
+#tiny-chat .table-manager__row td .user-td .user-td__group {
+    padding-left: 5px;
+    width: 200px;
+}
+
+#tiny-chat .table-manager__row td .user-td .user-td__group .user-td__group-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

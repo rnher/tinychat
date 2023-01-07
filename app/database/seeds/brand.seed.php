@@ -13,7 +13,7 @@ $runCreateRecordBrand = function ($data) {
         domain,
         token,
         description,
-        expired,
+        expire,
         create_date,
         update_date
         )
@@ -25,7 +25,7 @@ $runCreateRecordBrand = function ($data) {
         '{$data["domain"]}',
         '{$data["token"]}',
         '{$data["description"]}',
-        '{$data["expired"]}',
+        '{$data["expire"]}',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     )";
@@ -45,6 +45,6 @@ for ($i = 1; $i <= CONF_SEED["count_brand"]; $i++) {
         "name_alias" =>  $name_alias,
         "avatar" =>  "public/images/temp/" . $faker->numberBetween(1, 15) . ".jpg",
         "description" => $faker->paragraph,
-        "expired" => time() + 1000 * 60 * 60 * 24, // 24h
+        "expire" => time() + 1000 * 60 * 60 * 24, // 24h
     ];
 }

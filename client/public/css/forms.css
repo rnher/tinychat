@@ -1,0 +1,66 @@
+#client-tiny-chat form {
+    padding: 0 20px;
+}
+
+/* remember  */
+#client-tiny-chat .input-group label[for="remember"] {
+    vertical-align: text-bottom;
+}
+
+#client-tiny-chat .input-group input#remember {
+    width: 15px !important;
+    height: 15px !important;
+    -webkit-appearance: auto;
+}
+
+#client-tiny-chat .customer-form .input-group.inline-input-group {
+    font-size: 12px;
+}
+
+#client-tiny-chat .customer-form .input-group .inline-input {
+    display: inline;
+    font-weight: unset;
+}
+
+#client-tiny-chat form .input-group button {
+    background-color: var(--bg-btn);
+    border-radius: 5px;
+    color: var(--color-btn);
+    font-weight: 700;
+    border-color: var(--bg-main);
+    padding: 10px 20px;
+}
+
+#client-tiny-chat form .input-group button:hover {
+    background-color: var(--color-hover__main);
+    color: var(--bg-hover__main);
+    cursor: pointer;
+    border: 2px solid var(--bg-hover__main);
+}
+
+#client-tiny-chat .register-chat .register-content form .input-group {
+    width: 100%;
+    margin-bottom: 7px;
+    text-align: start;
+}
+
+#client-tiny-chat .register-chat .register-content form .input-group.checkbox-input-group {
+    display: flex;
+    align-items: center;
+}
+
+#client-tiny-chat .register-chat .register-content form .input-group.submit-input {
+    text-align: center;
+}
+
+#client-tiny-chat .register-chat .register-content form input {
+    width: -webkit-fill-available;
+    height: 30px;
+    border-radius: 5px;
+    padding: 0 20px;
+    border-color: var(--bg-main);
+}
+
+#client-tiny-chat .register-chat .register-content form input:active {
+    border-color: var(--bg-hover__main);
+}

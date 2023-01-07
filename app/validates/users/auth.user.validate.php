@@ -5,24 +5,28 @@ $signup = function () {
     $typeRequiredNames = [
         "username" => "username",
         "name" => "name",
+        "mail" => "mail",
         "password" => "password",
         "repassword" => "repassword",
     ];
     $typeNames = [
         "username",
         "name",
+        "mail",
         "password",
         "repassword",
     ];
     $typePatterns = [
         "username" => "/^[a-zA-Z0-9]{1,25}$/i",
         "name" => "/^(.*){1,25}$/i",
-        "password" => "/^[a-zA-Z0-9]{1,25}$/i",
+        "mail" => "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i",
+        "password" => "/^(.*){1,25}$/i",
         "repassword" => "/^(.*){1,25}$/i",
     ];
     $typeError = [
         "username" => "Tên đăng nhập không hợp lệ",
         "name" => "Tên người dùng không hợp lệ",
+        "mail" => "Địa chỉ mail không hợp lệ",
         "password" => "Mật khẩu không hợp lệ",
         "repassword" => "Mật khẩu xác nhận không đúng",
     ];
@@ -55,7 +59,7 @@ $signin = function () {
     $typeNames = [
         "username",
         "password",
-        "remember"
+        "remember",
     ];
     $typePatterns = [
         "username" => "/^[a-zA-Z0-9]{1,25}$/i",

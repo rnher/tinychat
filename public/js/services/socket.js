@@ -1,21 +1,34 @@
-import { CONF_SOCKET } from "/public/js/config.js";
+import "/client/public/js/services/rsa.js";
+import { CONF_SOCKET, CONF_CHAT } from "/public/js/config.js";
 import { getCookie } from "/public/js/util.js";
 
 export default class Socket extends WebSocket {
+    messageCallbacks;
+    closeCallbacks;
+    openCallbacks;
+
     constructor() {
         super(CONF_SOCKET.host);
+
+        this.messageCallbacks = [];
+        this.closeCallbacks = [];
+        this.openCallbacks = [];
 
         this.addEventListener("open", this.open);
         this.addEventListener("message", this.message);
         this.addEventListener("close", this.close);
     }
 
-    isOpen() {
-        return this.OPEN == this.readyState;
+    addOpenCallbacks(cb) {
+        this.openCallbacks.push(cb);
     }
 
-    isClosed() {
-        return this.CLOSED == this.readyState;
+    addMessageCallbacks(cb) {
+        this.messageCallbacks.push(cb);
+    }
+
+    addCloseCallbacks(cb) {
+        this.closeCallbacks.push(cb);
     }
 
     enData(data) {
@@ -30,18 +43,32 @@ export default class Socket extends WebSocket {
         console.log("Đã thiết lập socket");
         // Đăng nhập socket
         this.sendLogin();
-        // // Ping lấy trạng thái người dùng online
-        // this.sendCheckPingUsers();
+
+        this.openCallbacks.forEach(cb => {
+            cb(e);
+        });
     }
 
     close(e) {
         console.log("Ngắt mất kết nối socket");
 
-        // $("#tiny-chat").showAlert({
-        //     type: "error",
-        //     content: "Mất kết nối với máy chủ. Nhấn F5 để kết nối lại",
-        //     id: "close-socket"
-        // });
+        this.closeCallbacks.forEach(cb => {
+            cb(e);
+        });
+
+        $("#tiny-chat").showAlert({
+            type: "error",
+            content: "Mất kết nối với máy chủ",
+            name: "close-socket"
+        });
+    }
+
+    message(e) {
+        let data = this.deData(e.data);
+
+        this.messageCallbacks.forEach(cb => {
+            cb(data);
+        });
     }
 
     send(data) {
@@ -50,13 +77,15 @@ export default class Socket extends WebSocket {
         console.log(data);
 
         if (this.OPEN == this.readyState) {
+
             super.send(this.enData(data));
         } else if (this.CLOSED == this.readyState) {
-            // $("#tiny-chat").showAlert({
-            //     type: "error",
-            //     content: "Mất kết nối với máy chủ. Nhấn F5 để kết nối lại",
-            //     id: "close-socket"
-            // });
+
+            $("#tiny-chat").showAlert({
+                type: "error",
+                content: "Không thể gửi dữ liệu",
+                name: "send-socket"
+            });
         }
     }
 
@@ -69,16 +98,54 @@ export default class Socket extends WebSocket {
     }
 
     sendMessage(data) {
+        switch (data.type) {
+            case CONF_CHAT.type.text: {
+                data.content = RSA
+                    .getInstance()
+                    .encrypt(
+                        data.chatinfo_id,
+                        data.content
+                    );
+
+                this.send({
+                    ...data,
+                    actionKey: CONF_SOCKET.actionKey.addMessage,
+                })
+            }
+                break;
+            case CONF_CHAT.type.img: {
+                data.content.forEach((c) => {
+                    let d = data;
+                    d.content = RSA
+                        .getInstance()
+                        .encryptImage(
+                            data.chatinfo_id,
+                            c
+                        );
+
+                    this.send({
+                        ...d,
+                        actionKey: CONF_SOCKET.actionKey.addMessage,
+                    });
+                });
+            }
+                break;
+            default:
+                break;
+        }
+    }
+
+    sendTyping(data) {
         this.send({
             ...data,
-            time: new Date(),
-            actionKey: CONF_SOCKET.actionKey.addMessage,
+            actionKey: CONF_SOCKET.actionKey.updateTyping,
         })
     }
 
-    sendCheckPingUsers() {
+    sendCheckPingChatinfos(data = {}) {
         this.send({
-            actionKey: CONF_SOCKET.actionKey.checkPingUsers
+            ...data,
+            actionKey: CONF_SOCKET.actionKey.checkPingChatinfos
         });
     }
 
@@ -93,6 +160,34 @@ export default class Socket extends WebSocket {
         this.send({
             ...data,
             actionKey: CONF_SOCKET.actionKey.updateSeen,
+        })
+    }
+
+    sendUpdateSeenChatinfo(data = {}) {
+        this.send({
+            ...data,
+            actionKey: CONF_SOCKET.actionKey.updateSeenChatinfo,
+        })
+    }
+
+    sendRemoveChatInfo(data = {}) {
+        this.send({
+            ...data,
+            actionKey: CONF_SOCKET.actionKey.removeChatInfo,
+        })
+    }
+
+    sendPushNotification(data = {}) {
+        this.send({
+            ...data,
+            actionKey: CONF_SOCKET.actionKey.pushNotification,
+        })
+    }
+
+    sendRemoveBrand(data = {}) {
+        this.send({
+            ...data,
+            actionKey: CONF_SOCKET.actionKey.removeBrand,
         })
     }
 }

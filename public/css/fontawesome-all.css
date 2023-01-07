@@ -7273,7 +7273,7 @@ readers do not read off random characters that represent icons */
 .fa-etsy:before {
   content: "\f2d7"; }
 
-.fa-facebook-messenger:before {
+.fa-facebook-message:before {
   content: "\f39f"; }
 
 .fa-audible:before {

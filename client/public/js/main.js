@@ -7,64 +7,70 @@ import "/client/public/js/services/chat.js";
 // jquery
 import "/client/public/js/jquery/ajax.js";
 import "/client/public/js/jquery/chat.js";
+import "/client/public/js/jquery/message.js";
 import "/client/public/js/jquery/create.js";
 import "/client/public/js/jquery/util.js";
+import "/client/public/js/jquery/layout.js";
+import "/client/public/js/jquery/image.js";
 
 // config
-import { CONF_URL, CONF_SOCKET, CONF_HOST } from "/client/public/js/config.js";
+import { CONF_URL, CONF_HOST } from "/client/public/js/config.js";
 
 class ClientTinyChat {
     constructor() {
-
     }
 
     run() {
-        $("head").append(`<link rel="stylesheet" href="` + CONF_HOST + `/client/public/css/main.css">`);
-        $("body").append($("#client-tiny-chat").createChatBubble());
+        window.notificationSound = true;
+        window.remember = false;
+
+        let clientTinyChat = $("#client-tiny-chat");
+
+        $("body").append(clientTinyChat.createChatBubble());
 
         let token = $("#client-tiny-chat-script").data("id");
+        let ssid = sessionStorage.getItem(token) || localStorage.getItem(token);
 
-        $("#client-tiny-chat").get({
+        clientTinyChat.get({
             url: CONF_URL.clients,
             params: {
                 token,
-                ssid: localStorage.getItem(token)
+                ssid
             },
             success: function (data) {
-                Chat.getInstance(data.ssid, function (chat) {
-                    $("#client-tiny-chat").initChatBox({ data });
-                    $("#client-tiny-chat .chat-box__view").onScrollExtraMasegers();
-                    $("#client-tiny-chat #message-textarea").submitSendMessage();
+                let clientTinyChat = $("#client-tiny-chat");
+                clientTinyChat.append(`<link rel="stylesheet" href="` + CONF_HOST + `/client/public/css/main.css">`);
 
-                    $("#client-tiny-chat").onClickAction({
-                        selector: ".chat-bubble",
-                        callback: function () {
-                            // Nếu chat hidden cần nhấn để hiển thị
-                            $("#client-tiny-chat").updateScrollBottomChatBoxView();
-                            $("#client-tiny-chat").seenMessage({
-                                chatinfo_id: data.chatinfo_id
-                            })
-                        }
-                    });
-
-                    setInterval(
-                        $("#client-tiny-chat").updateMSGTime,
-                        CONF_SOCKET.pingTime);
-                });
+                clientTinyChat.startChat({ data });
             },
             reject: function (error) {
-                $("#client-tiny-chat")
-                    .append($("#client-tiny-chat").createRegisterChat());
+                let clientTinyChat = $("#client-tiny-chat");
+                clientTinyChat.append(`<link rel="stylesheet" href="` + CONF_HOST + `/client/public/css/main.css">`);
+
+                clientTinyChat.find(".chat-bubble").addClass("chat-bubble__register");
+
+                let formRegisterChat = $(clientTinyChat.createRegisterChat({ data: error }));
+                formRegisterChat.onClickCheckRemember();
+                clientTinyChat.append(formRegisterChat);
+
+                clientTinyChat.find("#register-chat__form").submitRegisterChat();
+                clientTinyChat.find("#mini-size-chat").onClickMiniSize();
+                clientTinyChat.find("#notification-sound").onClickNotificationSound();
+
+                // Load customer đồ họa
+                clientTinyChat.reloadLayoutChat({
+                    data: error.brand.settings,
+                    isInit: true
+                });
 
                 if (error.not == "brand") {
                     // Brand không tồn tại hoặc hết hạn
-                    $(".register-content").showError({ error });
-                } else {
-                    $("#client-tiny-chat #register-chat__form").submitRegisterChat();
+                    clientTinyChat.find(".register-content").showError({ error });
                 }
 
-                $("#client-tiny-chat").onClickAction({ selector: ".chat-bubble" });
-
+                clientTinyChat.onClickAction({
+                    selector: ".chat-bubble__register"
+                });
             }
         });
     }

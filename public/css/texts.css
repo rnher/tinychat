@@ -14,6 +14,16 @@
     font-size: 12px;
 }
 
+#tiny-chat .alert-error {
+    background-color: var(--danger) !important;
+    color: white !important;
+}
+
+#tiny-chat .alert-success {
+    background-color: var(--success) !important;
+    color: white !important;
+}
+
 /* badge-danger */
 
 #tiny-chat div[class^=badge-] {
@@ -24,6 +34,16 @@
     font-size: 12px;
     text-align: center;
     padding-top: 1px;
+    font-weight: 600;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+}
+
+#tiny-chat .badge-new {
+    border-radius: 5px !important;
+    background-color: yellow;
+    width: 30px !important;
+    color: black !important;
+    float: right;
 }
 
 #tiny-chat .badge-danger {
@@ -35,15 +55,15 @@
 }
 
 /* label */
-
 #tiny-chat .label-title {
-    font-weight: 500;
+    font-weight: 700;
     text-align: start;
+    margin-bottom: 7px;
 }
 
 /* alert  */
 #tiny-chat .alert {
-    z-index: 999;
+    z-index: 999999;
     color: white;
     width: 500px;
     height: 50px;
@@ -79,6 +99,10 @@
 
 #tiny-chat .alert .alert-icon {
     text-align: start;
+}
+
+#tiny-chat .alert .alert-content {
+    font-size: 13px;
 }
 
 #tiny-chat .alert .alert-action {
@@ -125,6 +149,7 @@
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    padding: 5px 0;
 }
 
 #tiny-chat .out-of-data::after,
@@ -148,4 +173,58 @@
 
 #tiny-chat .tooltip:hover .tooltipisseen {
     display: contents;
+}
+
+/* tooltip */
+#tiny-chat .tooltip .tooltiptext {
+    visibility: hidden;
+    /* width: 120px; */
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    font-size: 15px;
+}
+
+#tiny-chat .tooltip .tooltiptext.tooltiptext-table {
+    text-align: start;
+    padding: 5px 10px;
+}
+
+#tiny-chat .tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+#tiny-chat .divid {
+    width: 0.1px;
+    height: 50%;
+    background-color: var(--bg-secondary);
+}
+
+/* Status  */
+#tiny-chat .status {
+    font-size: 10px;
+    color: white;
+    border-radius: 5px;
+    background-color: var(--primary);
+    padding: 2px 5px;
+    font-weight: 500;
+    width: fit-content;
+}
+
+#tiny-chat .status.status-active {
+    background-color: var(--success);
+}
+
+#tiny-chat .status.status-not-active {
+    background-color: var(--danger);
+}
+
+#tiny-chat .status.status-pendding {
+    background-color: var(--warning);
 }

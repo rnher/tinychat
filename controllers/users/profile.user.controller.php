@@ -1,14 +1,16 @@
 <?php
 
-include_once "app/services/Auth.php";
-include_once "models/User.php";
-include_once "app/services/UploadImage.php";
 include_once "app/App.php";
+include_once "app/services/UploadImage.php";
+include_once "app/libraries/Security.php";
+include_once "app/libraries/Auth.php";
+include_once "models/User.php";
 
 use APP\App;
-use MODELS\User;
-use APP\SERVICES\Auth;
+use APP\LIBRARIES\Auth;
 use APP\SERVICES\UploadImage;
+use APP\LIBRARIES\Security; 
+use MODELS\User;
 
 $view = function () {
     $response = [
@@ -20,6 +22,7 @@ $view = function () {
     $user = Auth::User();
     if (isset($user)) {
         $response["data"] = User::DetailInfo($user);
+        $response["data"]["csrf"] = Security::CreateCSRF($user);
     } else {
         $response["isError"] = true;
         $response["error"]["is"] = "Không có thông tin";
@@ -30,12 +33,16 @@ $view = function () {
 
 $update =  function () {
     $validater = include_once "app/validates/users/profile.user.validate.php";
+
     $response = $validater["update"]();
     $data = $response["data"];
 
     $user = Auth::User();
     if ($user) {
-        if (!$response["isError"]) {
+        if (
+            !$response["isError"]
+            && Security::CheckCSRF($user)
+        ) {
             if (User::Login([
                 "username" => $user["username"],
                 "password" =>  $data["password"]
@@ -62,21 +69,30 @@ $update =  function () {
 
                 User::Update_Where("id", $user["id"], $data);
 
-                $response["data"] = Auth::User();
+                // TODO: kiểm tra tính duy nhất của mail
+                $user = Auth::User();
+                $response["data"] = User::DetailInfo($user);
+                $response["data"]["csrf"] = Security::CreateCSRF($user);
             } else {
                 $response["error"]["data"] = $user;
+                $response["error"]["data"]["csrf"] = Security::CreateCSRF($user);
                 $response["isError"] = true;
                 $response["error"]["password"] = "Mật khẩu không chính xác";
                 $response["error"]["is"] = "Cập nhật không thành công";
             }
         } else {
             $response["error"]["data"] = $user;
+            $response["error"]["data"]["csrf"] = Security::CreateCSRF($user);
             $response["isError"] = true;
             $response["error"]["is"] = "Cập nhật không thành công";
         }
     } else {
         $response["isError"] = true;
         $response["error"]["is"] = "Thao tác bị từ chối";
+    }
+
+    if ($response["isError"]) {
+        $response["data"] = null;
     }
 
     App::responseJson($response);

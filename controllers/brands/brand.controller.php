@@ -1,59 +1,22 @@
 <?php
-include_once "app/services/Auth.php";
 include_once "app/App.php";
-include_once "models/User.php";
-include_once "models/Member.php";
-include_once "models/Brand.php";
-include_once "models/Message.php";
-include_once "models/ChatInfo.php";
+include_once "app/libraries/Auth.php";
+include_once "app/libraries/Security.php";
 include_once "app/utils/util.php";
-include_once "app/services/UploadImage.php";
+include_once "models/Brand.php";
+include_once "models/Member.php";
+include_once "models/ChatInfo.php";
+include_once "models/Customer.php";
+include_once "models/RelativeMessage.php";
 
 use APP\App;
-use MODELS\User;
+use APP\LIBRARIES\Auth;
+use APP\LIBRARIES\Security; 
 use MODELS\Brand;
 use MODELS\Member;
 use MODELS\ChatInfo;
-use MODELS\Message;
-use APP\SERVICES\Auth;
-use APP\SERVICES\UploadImage;
 use MODELS\Customer;
-
-$create = function () {
-    $validater = include_once "app/validates/brands/brand.validate.php";
-    $response = $validater["create"]();
-
-    $user = Auth::User();
-    if (!$response["isError"] && isset($user)) {
-        $member = Member::Find_Where(["user_id", "role"], [$user["id"], "admin"]);
-
-        if (!isset($member)) {
-
-            $brand = Brand::Find_Where("name", $response["data"]["name"]);
-            if (isset($brand)) {
-                $response["isError"] = true;
-                $response["error"]["name"] = "Tên thương hiệu đã tồn tại";
-            } else {
-                $response["data"]["expired"] = Brand::Create_Date_Next("m", 1); // Mặt định 1 tháng dùng thử
-                $response["data"]["avatar"] = Brand::Get_Default_Avatar();
-
-                $brand_id = Brand::Save($response["data"]);
-                $member_id = Member::Save([
-                    "brand_id" => $brand_id,
-                    "user_id" => $user["id"],
-                    "role" => "admin"
-                ]);
-            }
-        } else {
-            $response["isError"] = true;
-            $response["error"]["name"] = "Tài khoản đã là thành viên của nhãn hàng " . $brand["name"];
-        }
-    } else {
-        $response["error"]["is"] = "Tạo thương hiệu không thành công";
-    }
-
-    App::responseJson($response);
-};
+use MODELS\RelativeMessage;
 
 $view = function () {
     $response = [
@@ -62,80 +25,103 @@ $view = function () {
         "isError" => false
     ];
 
-    $member = Auth::Member();
+    $user = Auth::User();
+    $brand = Brand::Find_Where("id", App::MethodGet("id"));
+    if (isset($user) && isset($brand)) {
+        $member = Member::Find_Where(
+            ["user_id", "brand_id", "status"],
+            [$user["id"], $brand["id"], Member::Status("active")]
 
-    $id = null;
-    if (
-        isset($member)
-        && isset($id)
-        && $id != -1
-    ) {
-        $id = App::MethodGet("id");
-    } else if (isset($member)) {
-        $id =  $member["brand_id"];
-    }
+        );
 
-    $brand = Brand::Find_Where("id", $id);
+        if (isset($member)) {
+            $per_page  = CONF_PAGINATION["chatinfo"];
+            $total = ChatInfo::Count_Where("id", "brand_id", $brand["id"]);
+            $page_url = CONF_URL["brands"] . "?id=" . $brand["id"] . "&";
 
-    if (isset($brand) &&  isset($member)) {
-        $per_page  = CONF_PAGINATION["chatinfo"];
-        $total = ChatInfo::Count_Where("id", "brand_id", $brand["id"]);
-        $page_url = CONF_URL["brands"] . "?id=" . $brand["id"] . "&";
+            $response["data"] = initPaginationMeta($page_url, $total, $per_page);
+            $chatsinfos = ChatInfo::Get_With_Page(
+                $response["data"],
+                ["brand_id", "is_deleted_brand"],
+                [$brand["id"], 0]
+            );
+            $response["data"]["brandID"] = $brand["id"];
 
-        $response["data"] = initPaginationMeta($page_url, $total, $per_page);
-        $chatsinfos = ChatInfo::Get_With_Page($response["data"], "brand_id", $brand["id"]);
-        $response["data"]["brandID"] = $brand["id"];
+            function creatData($chatinfo, $brand)
+            {
+                $brand_relative_message = RelativeMessage::Find_Where(
+                    ["someone_id", "someone_type", "relative_id", "relative_type"],
+                    [$brand["id"], RelativeMessage::Type("brand"), $chatinfo["id"], RelativeMessage::Type("chatinfo")]
+                );
 
-        function creatData($chatinfo)
-        {
-            $customer = Customer::Find_Where("id", $chatinfo["customer_id"]);
-            return  [
-                "chatinfo" => ChatInfo::ShortcutInfo($chatinfo),
-                "customer" => Customer::ShortcutInfo($customer),
-                "count_not_seen_msg" =>
-                Message::Count_Where(
-                    "chatinfo_id",
-                    ["chatinfo_id", "is_seen_member"],
-                    [$chatinfo["id"], 0]
-                )
-            ];
-        };
+                $customer = Customer::Find_Where("id", $chatinfo["customer_id"]);
+                $customer_relative_message = RelativeMessage::Find_Where(
+                    ["someone_id", "someone_type", "relative_id", "relative_type"],
+                    [$customer["id"], RelativeMessage::Type("customer"), $chatinfo["id"], RelativeMessage::Type("chatinfo")]
+                );
 
-        if (isset($chatsinfos) && isset($chatsinfos[0])) {
-            foreach ($chatsinfos as $index => $chatinfo) {
-                $chatsinfos[$index] = creatData($chatinfo);
+                return  [
+                    "chatinfo" => ChatInfo::ShortcutInfo($chatinfo),
+                    "customer" => Customer::ShortcutInfo($customer),
+                    "re_message" => RelativeMessage::ShortcutInfo($brand_relative_message)
+                ];
+            };
+
+            if (isset($chatsinfos) && isset($chatsinfos[0])) {
+                foreach ($chatsinfos as $index => $chatinfo) {
+                    $chatsinfos[$index] = creatData($chatinfo, $brand);
+                }
+
+                $response["data"]["brand_id"] = $brand["id"];
+                $response["data"]["items"] = $chatsinfos;
+            } else if (isset($chatsinfos)) {
+                $response["data"]["brand_id"] = $brand["id"];
+                $response["data"]["items"] = [creatData($chatsinfos, $brand)];
+            } else {
+                $response["isError"] = true;
+                $response["error"]["is"] = "Không có cuộc trò chuyện";
             }
-
-            $response["data"]["items"] = $chatsinfos;
-        } else if (isset($chatsinfos)) {
-            $response["data"]["items"] = [creatData($chatsinfos, $member)];
         } else {
             $response["isError"] = true;
-            $response["error"]["is"] = "Không có cuộc trò chuyện";
+            $response["error"]["is"] = "Thao tác bị từ chối";
         }
     } else {
         $response["isError"] = true;
         $response["error"]["is"] = "Thương hiệu không tồn tại";
     }
 
+    if ($response["isError"]) {
+        $response["error"]["brand_id"] = App::MethodGet("id");
+    }
+
     App::responseJson($response);
 };
 
-$profile = function () {
+$views = function () {
     $response = [
         "data" => null,
         "error" => [],
         "isError" => false
     ];
 
-    $member = Auth::Member();
-    if (isset($member) && $member["role"] == "admin") {
-        $brand =  Brand::Find_Where("id", $member["brand_id"]);
-        if (isset($brand)) {
-            $response["data"] = Brand::DetailInfo($brand);
-        } else {
+    $members = Auth::Members();
+    if (isset($members) && count($members)) {
+        $brands = [];
+
+        foreach ($members as $member) {
+            if ($member["status"] != Member::Status("not_active")) {
+                $brand = Brand::Find_Where("id", $member["brand_id"]);
+                if (isset($brand)) {
+                    $brands[] = Brand::ShortcutInfo($brand);
+                }
+            }
+        }
+
+        if (!count($brands)) {
             $response["isError"] = true;
-            $response["error"]["is"] = "Chưa có nhãn hiệu";
+            $response["error"]["is"] = "Chưa có thương hiệu";
+        } else {
+            $response["data"] =  $brands;
         }
     } else {
         $response["isError"] = true;
@@ -145,80 +131,7 @@ $profile = function () {
     return App::responseJson($response);
 };
 
-$update =  function () {
-    $validater = include_once "app/validates/brands/brand.validate.php";
-    $response = $validater["update"]();
-    $data = $response["data"];
-
-    $member = Auth::Member();
-    if (isset($member) && $member["role"] == "admin") {
-        if (!$response["isError"]) {
-            if (User::Login([
-                "username" => Auth::User()["username"],
-                "password" => $data["password"]
-            ])) {
-                if (isset($data["avatar"])) {
-                    $image = new UploadImage(
-                        [
-                            "name" => "avatar",
-                            "data" => $data["avatar"]
-                        ],
-                        "brands/" . $member["brand_id"]
-                    );
-                    $data["avatar"] =  $image->save();
-                } else {
-                    unset($data["avatar"]);
-                }
-
-                unset($data["password"]);
-
-                $brand = Brand::Find_Where("id", $member["brand_id"]);
-                if (
-                    isset($data["domain"])
-                    && $data["domain"] != ""
-                    && $data["domain"] != $brand["domain"]
-                ) {
-
-                    // CORS
-                    // App::UpdateAccessControlAllowOrigin($brand["domain"], $data["domain"]);
-                    $data["token"] = Brand::Create_Token($data["name"]);
-                } else {
-                    unset($data["token"]);
-                    unset($data["domain"]);
-                }
-
-                Brand::Update_Where("id", $member["brand_id"], $data);
-                $brand = Brand::Find_Where("id", $member["brand_id"]);
-                $response["data"] = Brand::DetailInfo($brand);
-            } else {
-                $response["isError"] = true;
-                $response["error"]["is"] = "Cập nhật không thành công";
-                $response["error"]["password"] = "Mật khẩu không đúng";
-
-                $brand = Brand::Find_Where("id", $member["brand_id"]);
-                $response["data"] = Brand::DetailInfo($brand);
-                $response["error"]["data"] = $brand;
-            }
-        } else {
-            $response["isError"] = true;
-            $response["error"]["is"] = "Cập nhật không thành công";
-
-            $brand = Brand::Find_Where("id", $member["brand_id"]);
-            $response["data"] = Brand::DetailInfo($brand);
-            $response["error"]["data"] = $brand;
-        }
-    } else {
-        $response["isError"] = true;
-        $response["error"]["is"] = "Thao tác bị từ chối";
-    }
-
-    App::responseJson($response);
-};
-
-
 return [
-    "create" => $create,
     "view" => $view,
-    "profile" => $profile,
-    "update" => $update
+    "views" => $views,
 ];

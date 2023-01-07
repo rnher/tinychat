@@ -5,6 +5,8 @@
 @import "buttons.css";
 @import "chats.css";
 @import "users.css";
+@import "loadings.css";
+@import "forms.css";
 
 :root {
     --primary: #1877f2;
@@ -26,7 +28,8 @@
     --bg-hover: #e6e9ec;
     --color-hover: black;
 
-    --bg-message: #f6faff;
+    --bg-message-secondary: #f6faff;
+    --bg-message-primary: #4b88d8;
 
     --bg-active: #1877f2;
     --color-active: #f5f8fd;
@@ -38,21 +41,24 @@
 
     --text-secondary: #9fa4a8;
     --text-primary: #f5f8fd;
+    --bg-secondary: #6e757a;
+
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 /* #client-tiny-chat */
 #client-tiny-chat {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: var(--font-family);
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
     color: var(--dark);
     text-align: left;
     background-color: var(--bg);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    width: 120px;
+    height: 40px;
+    border-radius: 6px 6px 0 0;
     background-color: var(--bg-btn);
     display: block;
     position: fixed;
@@ -60,6 +66,7 @@
     right: 20px;
     z-index: 99999;
     text-align: center;
+    bottom: 0;
 }
 
 #client-tiny-chat .chat-box .chat-box__move-down:hover,
@@ -81,22 +88,22 @@
     display: table;
 }
 
+#client-tiny-chat button {
+    border: none;
+}
+
 /* scrollbar */
 #client-tiny-chat ::-webkit-scrollbar {
     width: 2px;
 }
 
-#client-tiny-chat ::-webkit-scrollbar-track {
-    background: var(--bg);
-}
+#client-tiny-chat ::-webkit-scrollbar-track {}
 
 #client-tiny-chat ::-webkit-scrollbar-thumb {
-    background: var(--color-link);
+    background-color: var(--bg-main);
 }
 
-#client-tiny-chat ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-link);
-}
+#client-tiny-chat ::-webkit-scrollbar-thumb:hover {}
 
 #client-tiny-chat input::-webkit-outer-spin-button,
 #client-tiny-chat input::-webkit-inner-spin-button {
@@ -106,4 +113,31 @@
 
 #client-tiny-chat input[type=number] {
     -moz-appearance: textfield;
+}
+
+#client-tiny-chat textarea,
+#client-tiny-chat input {
+    font-family: var(--font-family);
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+/* input  */
+/* button  */
+#client-tiny-chat input:focus,
+#client-tiny-chat button:focus {
+    border: none;
+    outline: none;
+}
+
+#client-tiny-chat button:hover {
+    border: none !important;
+}
+
+#client-tiny-chat input:focus {
+    /* border: 1px solid var(--bg-hover__main); */
+}
+
+#client-tiny-chat button:focus {
+    /* box-shadow: var(--bg-hover__main) 0px 0px 0px 1px; */
 }

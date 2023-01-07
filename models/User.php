@@ -2,6 +2,8 @@
 
 namespace MODELS;
 
+include_once "app/utils/util.php";
+
 use APP\DATABASE\Database;
 
 class User
@@ -32,19 +34,27 @@ class User
 
         return "INSERT INTO table_user (
             id,
+            status,
+            role,
             username,
             name,
+            mail,
             password,
             avatar,
+            is_active,
             create_date,
             update_date
             )
         VALUES (
             NULL,
+            1,
+            '{$data["role"]}',
             '{$data["username"]}',
             '{$data["name"]}',
+            '{$data["mail"]}',
             '{$data["password"]}',
             '{$data["avatar"]}',
+            0,
             CURRENT_TIMESTAMP,
             CURRENT_TIMESTAMP
         )";
@@ -52,12 +62,18 @@ class User
 
     static function Find_Where($column, $value)
     {
-        return Database::Singleton()->Find_From_Where(
+
+        $user =  Database::Singleton()->Find_From_Where(
             "table_user",
             $column,
-            $value,
-            "id, name, username, avatar"
+            $value
         );
+
+        if ($user) {
+            unset($user["password"]);
+        }
+
+        return $user;
     }
 
     static function Login($data)
@@ -83,7 +99,12 @@ class User
 
     static function Get_Default_Avatar()
     {
-        return CONF_APP["defaults"]["user_avatar"];
+        $index = random_int(1, CONF_APP["defaults"]["max_user_avatar"]);
+        return str_replace(
+            "[index]",
+            $index,
+            CONF_APP["defaults"]["user_avatar"]
+        );
     }
 
     static function ShortcutInfo($data)
@@ -91,21 +112,58 @@ class User
         return isset($data) ? [
             "username" => $data["username"],
             "name" => $data["name"],
-            "avatar" => $data["avatar"],
+            "avatar" => CONF_HOST .  $data["avatar"],
+            "mail" => $data["mail"],
         ] : null;
     }
 
-    static function DetailInfo($data)
+    static function DetailInfo($data = null)
     {
-        return isset($data) ? [
-            "username" => $data["username"],
-            "name" => $data["name"],
-            "avatar" => $data["avatar"],
-        ] : null;
+        if (isset($data)) {
+            $data["password"] = null;
+            $data["avatar"] = CONF_HOST .  $data["avatar"];
+        };
+
+        return $data;
     }
 
     static function Create_Token($data)
     {
         return create_random_bytes(to_alias($data["username"]));
+    }
+
+    static function Role($role)
+    {
+        switch ($role) {
+            case "admin": {
+                    return "1";
+                }
+                break;
+            case "user": {
+                    return "0";
+                }
+                break;
+            default: {
+                }
+                break;
+        }
+    }
+
+    static function Count_Where($col, $column, $value)
+    {
+        return Database::Singleton()->Count_From_Where("table_user", $col, $column, $value);
+    }
+
+
+    static function Get_With_Page($pagination, $column, $value)
+    {
+        $users = Database::Singleton()->Get_Page_From_Where(
+            "table_user",
+            $pagination,
+            $column,
+            $value
+        );
+
+        return $users;
     }
 }

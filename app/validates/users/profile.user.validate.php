@@ -7,6 +7,7 @@ $update = function () {
     ];
     $typeNames = [
         "name",
+        "mail",
         "password",
         "avatar",
         "newpassword",
@@ -14,10 +15,12 @@ $update = function () {
     ];
     $typePatterns = [
         "name" =>  "/^(.*){1,25}/i",
-        "newpassword" =>  "/^[a-zA-Z0-9]{1,25}$/i",
+        "mail" => "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i",
+        "newpassword" =>  "/^[.*]{1,25}$/i",
     ];
     $typeError = [
         "name" => "Tên người dùng không hợp lệ",
+        "mail" => "Địa chỉ mail không hợp lệ",
         "password" => "Mật khẩu hiện tại không đúng",
         "newpassword" => "Mật khẩu mới không hợp lệ",
         "repassword" => "Mật khẩu xác nhận không không trùng khớp",
@@ -34,8 +37,10 @@ $update = function () {
     if (
         (isset($validate["data"]["newpassword"])
             && !isset($validate["data"]["repassword"]))
-        || ($validate["data"]["newpassword"]
-            != $validate["data"]["repassword"])
+        || (isset($validate["data"]["newpassword"])
+            && isset($validate["data"]["repassword"])
+            && ($validate["data"]["newpassword"]
+                != $validate["data"]["repassword"]))
     ) {
         $validate["error"]["repassword"] =  $typeError["repassword"];
     }

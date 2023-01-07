@@ -9,11 +9,7 @@
 </head>
 
 <body>
-
     <!--Add script từ trang quản trị chat  -->
-    <!-- Server  -->
-    <script id="client-tiny-chat-script" type="module" src="http://localhost/client/public/js/main.js" data-id="1460438973b244cf38ef2c321f34fe91910ec94e11638d776b01386"></script>
-    <!-- Local  -->
 </body>
 
 </html>

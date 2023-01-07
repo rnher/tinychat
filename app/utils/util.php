@@ -24,7 +24,11 @@ function to_latin($str)
 
 function to_alias($str)
 {
-    return str_replace(" ", "-",  strtolower(to_latin(($str))));
+    $str = strtolower(to_latin(($str)));
+    $str =  str_replace(" ", "-", $str);
+    $str =  str_replace(":", "-",  $str);
+
+    return $str;
 }
 
 function create_random_bytes($prefix = "", $byte = 20)
@@ -52,12 +56,12 @@ function initPaginationMeta($page_url, $total, $per_page, $default_order_by = "c
     return [
         "per_page" => $per_page,
         "total" => $total,
-        "current_page" =>  $current_page,
+        "current_page" => $current_page,
         "last_page" => $last_page,
         "page_url" => CONF_HOST . $page_url,
-        "first_page_url" => CONF_HOST . $page_url . 1,
-        "last_page_url" => CONF_HOST .  $page_url . $last_page,
-        "next_page_url" => $current_page == $last_page ? null : (CONF_HOST . $page_url . $current_page + 1),
+        "first_page_url" => $total == 0 ? null : (CONF_HOST . $page_url . 1),
+        "last_page_url" => $last_page == 0  ?  null : (CONF_HOST .  $page_url . $last_page),
+        "next_page_url" => $current_page >= $last_page ? null : (CONF_HOST . $page_url . $current_page + 1),
         "prev_page_url" =>   $current_page == 1 ? null : (CONF_HOST . $page_url . $current_page - 1),
         "from" => $per_page * $current_page - $per_page,
         "to" => $per_page * $current_page,
@@ -72,13 +76,17 @@ function get_time()
     return intval(strtotime('now')) * 1000;
 }
 
-function validate($typeNames, $typePatterns, $typeError, $typeRequiredNames = [])
+function validate($typeNames, $typePatterns, $typeError, $typeRequiredNames = [], $raw_data = null)
 {
     $data = [];
     $error = [];
 
     foreach ($typeNames as $name) {
-        $data[$name] = App::MethodPost($name);
+        if ($raw_data) {
+            $data[$name] = $raw_data[$name];
+        } else {
+            $data[$name] = App::MethodPost($name);
+        }
 
         if (
             isset($typeRequiredNames[$name])
@@ -95,6 +103,8 @@ function validate($typeNames, $typePatterns, $typeError, $typeRequiredNames = []
             ) {
                 $error[$name] = $typeError[$name];
             }
+        } else {
+            unset($data[$name]);
         }
     }
 

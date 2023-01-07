@@ -5,9 +5,8 @@ use APP\App;
 <div id="signin-user" class="signin-user">
     <div class="customer-form">
         <div class="form-header">
-            <img class="logo" src="/public/images/app/logo.svg"
-                alt="<?= App::Singleton()->getConfig()["name"] ?>">
-            <label class="label-error text-center" data-name="is"></label>
+            <img class="logo" src="<?= CONF_APP["logo"]  ?>" alt="<?= CONF_APP["name"] ?>">
+            <!-- <label class="label-error text-center" data-name="is"></label> -->
         </div>
         <div class="form-content">
             <form id="signin-user__form" method="post">
@@ -23,7 +22,7 @@ use APP\App;
                 </div>
                 <div class="input-group inline-input-group text-center">
                     <input class="inline-input" id="remember" type="checkbox" name="remember"
-                        value="<?= App::Singleton()->Cookie("remember") ?>">
+                        <?= App::Singleton()->Cookie("remember") ?  "checked" : "" ?>>
                     <label class="inline-input" for="remember">Ghi nhớ tài khoản</label>
                 </div>
                 <div class="input-group submit-input">

@@ -2,6 +2,8 @@
 
 namespace MODELS;
 
+include_once "app/utils/util.php";
+
 use APP\DATABASE\Database;
 
 class Customer
@@ -27,27 +29,34 @@ class Customer
 
     static function Create($data)
     {
+        $phone = isset($data["phone"]) ? "'{$data["phone"]}'" : 'NULL';
+        $mail = isset($data["mail"]) ? "'{$data["mail"]}'" : 'NULL';
+
         return "INSERT INTO table_customer (
             id,
-            token,
             brand_id,
+            status,
+            token,
             name,
-            phone,
-            is_active,
             avatar,
+            is_active,
             create_date,
-            update_date
+            update_date,
+            phone,
+            mail
             )
         VALUES (
             NULL,
-            '{$data["token"]}',
             '{$data["brand_id"]}',
+            '{$data["status"]}',
+            '{$data["token"]}',
             '{$data["name"]}',
-            '{$data["phone"]}',
-            '{$data["is_active"]}',
             '{$data["avatar"]}',
+            '{$data["is_active"]}',
             CURRENT_TIMESTAMP,
-            CURRENT_TIMESTAMP
+            CURRENT_TIMESTAMP,
+            $phone,
+            $mail
         )";
     }
 
@@ -82,7 +91,12 @@ class Customer
 
     static function Get_Default_Avatar()
     {
-        return CONF_APP["defaults"]["customer_avatar"];
+        $index = random_int(1, CONF_APP["defaults"]["max_customer_avatar"]);
+        return str_replace(
+            "[index]",
+            $index,
+            CONF_APP["defaults"]["customer_avatar"]
+        );
     }
 
     static function ShortcutInfo($data)
@@ -91,12 +105,19 @@ class Customer
             "name" => $data["name"],
             "avatar" => $data["avatar"],
             "phone" => $data["phone"],
+            "mail" => $data["mail"],
+            "create_date" => $data["create_date"],
             "is_active" => $data["is_active"],
         ] : null;
     }
 
-    static function Create_Token($data)
+    static function Create_Token($name, $refix)
     {
-        return create_random_bytes(to_alias($data["name"]) . to_alias($data["phone"]));
+        return create_random_bytes(to_alias($name) . to_alias($refix));
+    }
+
+    static function Delete_Where($column, $value)
+    {
+        return Database::Singleton()->Delete_From_Where("table_customer", $column, $value);
     }
 }

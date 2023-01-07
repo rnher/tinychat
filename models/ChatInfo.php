@@ -33,8 +33,11 @@ class ChatInfo
             id,
             brand_id,
             customer_id,
-            is_seen_member,
-            is_seen_customer,
+            status,
+            is_seen_brand,
+            is_deleted_brand,
+            public_key,
+            private_key,
             create_date,
             update_date
             )
@@ -42,8 +45,11 @@ class ChatInfo
             NULL,
             '{$data["brand_id"]}',
             '{$data["customer_id"]}',
-            '{$data["is_seen_member"]}',
-            '{$data["is_seen_customer"]}',
+            1,
+            0,
+            0,
+            '{$data["public_key"]}',
+            '{$data["private_key"]}',
             CURRENT_TIMESTAMP,
             CURRENT_TIMESTAMP
         )";
@@ -82,9 +88,14 @@ class ChatInfo
             "id" => $data["id"],
             "brand_id" => $data["brand_id"],
             "customer_id" => $data["customer_id"],
-            "is_seen_member" => $data["is_seen_member"],
-            "is_seen_customer" => $data["is_seen_customer"],
+            "is_seen_brand" => $data["is_seen_brand"],
+            "public_key" => $data["public_key"],
+            "private_key" => $data["private_key"],
         ] : null;
     }
 
+    static function Delete_Where($column, $value)
+    {
+        return Database::Singleton()->Delete_From_Where("table_chat_info", $column, $value);
+    }
 }

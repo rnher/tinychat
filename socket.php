@@ -18,19 +18,17 @@ use React\Socket\SocketServer;
 use React\EventLoop\Loop;
 use React\Socket\SecureServer;
 
+session_start();
+
 $loop = Loop::get();
 
 $server = new SocketServer(CONF_SOCKET["host"], array(), $loop);
 
 // https
-// $secureServer = new SecureServer($server, $loop, [
-//     "local_cert"  => "app/ssl/certificate.crt",
-//     "local_pk" => "app/ssl/private.key",
-//     "verify_peer" => false,
-//     "allow_self_signed" => false
-// ]);
+// $secureServer = new SecureServer($server, $loop, CONF_APP["ssl"]);
 
 // https
+// http://socketo.me/docs/deploy
 // $limitingServer = new LimitingServer($secureServer, CONF_SOCKET["max_connect"]);
 // http
 $limitingServer = new LimitingServer($server, CONF_SOCKET["max_connect"]);

@@ -1,4 +1,4 @@
 /vendor/*
 /public/uploads/*
-/app/logs/*
 /app/database/data/*
+/app/logs/*

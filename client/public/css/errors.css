@@ -1,14 +1,17 @@
 #client-tiny-chat .error-404 {
     text-align: center;
+    padding-bottom: 10px;
 }
 
 #client-tiny-chat .error-title h1 {
     font-size: 30px;
+    font-weight: 700;
 }
 
 #client-tiny-chat .error-title p {
     font-size: 20px;
     margin: 0;
+    font-weight: 500;
 }
 
 #client-tiny-chat .error-404 .error-content {
@@ -157,11 +160,6 @@
 
 
 /* mini-error-404  */
-
-#client-tiny-chat .error-404.mini-error-404 .error-content {
-    font-size: 80px;
-    font-weight: 800;
-}
 
 #client-tiny-chat .error-404.mini-error-404 .error-content {
     font-size: 80px;
