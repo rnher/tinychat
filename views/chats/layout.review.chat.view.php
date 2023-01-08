@@ -42,6 +42,25 @@
             <div class="status-badge badge-danger badge-new-msg">1</div>
         </div>
         <div class="chat-box">
+            <div class="nav-top">
+                <div class="register-coppyright">
+                    <span>
+                        Bản quyền thuộc về
+                    </span>
+                    <a href="<?= CONF_APP["main_host"] ?>" target="_blank">
+                        <img class="logo" src="<?= CONF_APP["logo"] ?>" alt="logo">
+                    </a>
+                </div>
+                <button title="Xóa cuộc trò chuyện">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+                <button title="Thông báo">
+                    <i class="fa-regular fa-bell"></i>
+                </button>
+                <button title="Thu nhỏ">
+                    <i class="fa-solid fa-minus"></i>
+                </button>
+            </div>
             <!-- main_bg -->
             <div class="chat-box__head main_bg">
                 <div class="chatinfo chatinfo-avatar">
@@ -123,10 +142,10 @@
                 </div>
                 <div class="chat-box__input">
                     <div class="chat-box__bar">
-                        <button disabled class="item-bar" title="Cảm xúc">
+                        <button class="item-bar" title="Cảm xúc">
                             <i class="fa-regular fa-face-smile"></i>
                         </button>
-                        <button disabled class="item-bar" title="Hình ảnh đính kèm">
+                        <button class="item-bar" title="Hình ảnh đính kèm">
                             <i class="fa-regular fa-image"></i>
                         </button>
                         <div class="view-count-message" title="Giới hạn ký tự">
@@ -139,9 +158,13 @@
                             </span>
                         </div>
                     </div>
-                    <textarea disabled class="message-textarea edit-message-textarea" value="" type="text"
-                        placeholder="Nhập nội dung tin nhắn">
-                    </textarea>
+                    <div class="send-message__form">
+                        <textarea class="message-textarea" type="text" placeholder="Nhập nội dung tin nhắn">
+                            </textarea>
+                        <button class="btn btn-submit main_bg main_color" title="Gửi">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

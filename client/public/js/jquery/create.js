@@ -187,14 +187,10 @@ import { CONF_HOST, CONF_CHAT, CONF_APP } from "/client/public/js/config.js";
                             <span>
                                 Bản quyền thuộc về 
                             </span>
-                        <!-- <a href="http://localhost"  target="_blank"> -->
-                        <a href="${CONF_APP.main_host}" target="_blank">
-                            <img class="logo" src="${CONF_HOST + "/public/images/app/logo.png"}" alt="logo">
-                        </a>
+                            <a href="${CONF_APP.main_host}" target="_blank">
+                                <img class="logo" src="${CONF_HOST + "/public/images/app/logo.png"}" alt="logo">
+                            </a>
                         </div>
-                        <button title="Thông báo" id="notification-sound">
-                            <i title="Đã bật tiếng" class="fa-regular fa-bell"></i>
-                        </button>
                         <button title="Thu nhỏ" id="mini-size-chat">
                             <i class="fa-solid fa-minus"></i>
                         </button>
@@ -234,14 +230,6 @@ import { CONF_HOST, CONF_CHAT, CONF_APP } from "/client/public/js/config.js";
                             </div>
                         </div>
                     </div>
-                <!--<div class="register-coppyright">
-                        <span>
-                            Bản quyền thuộc về 
-                        </span>
-                       <a href="${CONF_APP.main_host}"  target="_blank">
-                            <img class="logo" src="${CONF_HOST + "/public/images/app/logo.png"}" alt="logo">
-                        </a>
-                    </div> -->
                 </div>`;
     }
 
@@ -261,13 +249,13 @@ import { CONF_HOST, CONF_CHAT, CONF_APP } from "/client/public/js/config.js";
                             <span>
                                 Bản quyền thuộc về 
                             </span>
-                        <a href="${CONF_APP.main_host}" target="_blank">
-                            <img class="logo" src="${CONF_HOST + "/public/images/app/logo.png"}" alt="logo">
-                        </a>
+                            <a href="${CONF_APP.main_host}" target="_blank">
+                                <img class="logo" src="${CONF_HOST + "/public/images/app/logo.png"}" alt="logo">
+                            </a>
                         </div>
-                        <!--  <button title="Xóa cuộc trò chuyện" id="delete-chat">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button> -->
+                        <button title="Xóa cuộc trò chuyện" id="delete-chat">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </button>
                         <button title="Thông báo" id="notification-sound">
                             <i class="fa-regular fa-bell"></i>
                         </button>
@@ -298,9 +286,9 @@ import { CONF_HOST, CONF_CHAT, CONF_APP } from "/client/public/js/config.js";
                             </div>
 
                             <div class="info-action">
-                                <div class="action-icon info-action__item" title="Thao tác">
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </div>
+                                <button class="action-icon info-action__item" title="Thao tác">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -338,7 +326,7 @@ import { CONF_HOST, CONF_CHAT, CONF_APP } from "/client/public/js/config.js";
                                     </span>
                                 </div>
                             </div>
-                            <form id="send-message__form" method="post">
+                            <form id="send-message__form" class="send-message__form" method="post">
                                 <textarea 
                                     id="message-textarea" 
                                     class="message-textarea" 
@@ -346,7 +334,9 @@ import { CONF_HOST, CONF_CHAT, CONF_APP } from "/client/public/js/config.js";
                                     data-chatinfo="`+ settings.chatinfo.id + `"
                                     >
                                 </textarea>
-                                <button class="btn btn-submit" type="submit" title="Gửi"><i class="fa-solid fa-paper-plane"></i></button>
+                                <button class="btn btn-submit main_bg main_color" type="submit" title="Gửi">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
                             </form>
                         </div>
                     </div>

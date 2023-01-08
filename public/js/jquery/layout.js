@@ -48,11 +48,19 @@ import "/public/js/libraries/jquery-3.6.1.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            $("#tiny-chat").blurBlackground().on("click", function (e) {
+            $("#tiny-chat .blur-bg_layout").on("click", function (e) {
                 e.preventDefault();
 
-                $(this).hide();
-                $(settings.target).hide();
+                let blur_bg_layout = $(this);
+                let target = $(settings.target);
+
+                if (blur_bg_layout.data("targetname") == settings.targetname) {
+                    blur_bg_layout.hide();
+                }
+
+                if (target.length) {
+                    target.hide();
+                }
             })
         };
 
@@ -66,13 +74,20 @@ import "/public/js/libraries/jquery-3.6.1.js";
         let defaults = {
             isShow: true,
             type: "water",
-            target: null
+            target: null,
+            targetname: "",
+            isLoading: true
         };
 
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            return $("#tiny-chat .blur-bg_layout");
+            let blur_bg_layout = $("#tiny-chat .blur-bg_layout");
+            blur_bg_layout.data("targetname", settings.targetname);
+            let loading = blur_bg_layout.find(".loading");
+            settings.isLoading ? loading.show() : loading.hide();
+
+            return blur_bg_layout;
         };
 
         return _this.init();

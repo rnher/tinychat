@@ -13,7 +13,7 @@ $user = User::DetailInfo(Auth::User());
             </a>
         </div>
         <div class="news-ticker">
-            Chào mừng bạn đến với ứng dụng chat của I-WEB. Đây là nơi đặt thông báo của I-WEB dành cho khách hàng
+            Chào mừng bạn đến với ứng dụng chat của I-WEB
         </div>
         <div class="
         navigation-bar-item 
@@ -117,9 +117,14 @@ $user = User::DetailInfo(Auth::User());
     </div>
     <div class="chat-container">
         <div class="chat-menu">
-            <button id="chat-menu__btn" class="chat-menu__btn btn">
-                <i class="fa-solid fa-angles-right"></i>
-            </button>
+            <div class="chat-menu__head">
+                <div class="chat-menu__head-title">
+                    <i class="fa-solid fa-house-fire"></i> Thương hiệu
+                </div>
+                <button id="chat-menu__btn" class="chat-menu__btn btn">
+                    <i class="fa-solid fa-angles-right"></i>
+                </button>
+            </div>
             <div class="chat-menu__list-brand">
                 <!-- Dữ liệu brand load ở đây -->
             </div>
@@ -140,6 +145,27 @@ $user = User::DetailInfo(Auth::User());
         </div>
         <div class="chat-view">
             <div class="chat-box">
+                <!-- chat-box__banner ở đây -->
+                <div class="banner chat-box__banner">
+                    <div class="owl-carousel owl-theme chat-box__banner">
+                        <div class="item">
+                            <img src="<?= CONF_APP["defaults"]["data_empty"]  ?>" alt="<?= CONF_APP["name"] ?>">
+                        </div>
+                        <div class="item">
+                            <img src="<?= CONF_APP["defaults"]["data_empty"]  ?>" alt="<?= CONF_APP["name"] ?>">
+                        </div>
+                        <div class="item">
+                            <img src="<?= CONF_APP["defaults"]["data_empty"]  ?>" alt="<?= CONF_APP["name"] ?>">
+                        </div>
+                        <div class="item">
+                            <img src="<?= CONF_APP["defaults"]["data_empty"]  ?>" alt="<?= CONF_APP["name"] ?>">
+                        </div>
+                        <div class="item">
+                            <img src="<?= CONF_APP["defaults"]["data_empty"]  ?>" alt="<?= CONF_APP["name"] ?>">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="chat-box__content">
                     <!-- Dữ liệu messages load ở đây -->
                     <div id="chat-box__move-down" class="chat-box__move-down" title="Tới tin nhắn mới nhất">
@@ -170,7 +196,7 @@ $user = User::DetailInfo(Auth::User());
                                 </span>
                             </div>
                         </div>
-                        <form id="send-message__form" method="post">
+                        <form id="send-message__form" class="send-message__form" method="post">
                             <textarea id="message-textarea" class="message-textarea" type="text" placeholder="Nhập nội dung tin nhắn" data-chatinfo data-brand autofocus></textarea>
                             <button class="btn btn-submit" type="submit">Gửi</button>
                         </form>

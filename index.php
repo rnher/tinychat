@@ -5,3 +5,4 @@ use APP\App;
 
 $app = App::Singleton();
 $app->start();
+

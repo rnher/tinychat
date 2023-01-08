@@ -12,6 +12,14 @@
     margin-left: auto;
 }
 
+#tiny-chat .brand-navigation-bar__item-notifications i {
+    color: var(--bg-active);
+}
+
+#tiny-chat .brand-navigation-bar__item-notifications:hover i {
+    color: var(--bg-hover__main);
+}
+
 #tiny-chat .notifications .out-of-data {
     font-size: 10px;
 }
@@ -33,7 +41,7 @@
     overflow-y: scroll;
     display: none;
     background-color: var(--bg);
-    z-index: 1;
+    z-index: 2;
     text-transform: initial;
 }
 
@@ -60,6 +68,7 @@
     position: absolute;
     top: 6px;
     left: 3px;
+    color: black;
 }
 
 #tiny-chat .notifications .notification-item:hover .notification-item__avatar-icon i {
@@ -128,6 +137,7 @@
 #tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions .notification-item__action-item {
     padding: 0 5px;
     font-size: 12px;
+    text-align: center;
 }
 
 #tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions .notification-item__action-item.notification-item__action-item__accept i {
@@ -138,12 +148,23 @@
     color: var(--danger);
 }
 
+#tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions .notification-item__action-item.notification-item__action-item__view i {
+    color: var(--text-secondary);
+}
+
 #tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions .notification-item__action-item i {
     font-size: 12px;
+    margin: auto;
+    padding: 5px;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
 }
 
 #tiny-chat .notifications .notification-item .notification-item__content .notification-item__content-actions .notification-item__action-item:hover i {
     cursor: pointer;
+    background-color: var(--bg-hover__main);
+
 }
 
 /* loader  */

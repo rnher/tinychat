@@ -420,7 +420,7 @@ import { getDate } from "/public/js/util.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            _this.get({
+            _this.getAjax({
                 url: settings.url,
                 params: settings.params,
                 success: function (data) {

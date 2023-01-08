@@ -27,33 +27,33 @@ window.Chat = (function () {
             }
 
             open(e) {
-                let clientTinyChat = $("#client-tiny-chat");
+                let client_tiny_chat = $("#client-tiny-chat");
 
-                clientTinyChat.find(".chat-box__head").find(".loader-blur").remove();
+                client_tiny_chat.find(".chat-box__head").find(".loader-blur").remove();
 
-                clientTinyChat.find(".chat-box__head").append(
-                    clientTinyChat.createLoader({
+                client_tiny_chat.find(".chat-box__head").append(
+                    client_tiny_chat.createLoader({
                         type: "socket",
                         color: "success"
                     }));
 
                 // setTimeout(() => {
-                clientTinyChat.find(".chat-box__head").find(".loader-blur").slideUp("slow", function (e) {
+                client_tiny_chat.find(".chat-box__head").find(".loader-blur").slideUp("slow", function (e) {
                     $(this).remove();
                 });
                 // }, 2000);
             }
 
             close(e) {
-                let clientTinyChat = $("#client-tiny-chat");
+                let client_tiny_chat = $("#client-tiny-chat");
 
-                if (!clientTinyChat.find(".chat-box__head .loader-blur").length) {
-                    let loading = $(clientTinyChat.createLoader({
+                if (!client_tiny_chat.find(".chat-box__head .loader-blur").length) {
+                    let loading = $(client_tiny_chat.createLoader({
                         type: "socket",
                         color: "error"
                     })).hide();
 
-                    clientTinyChat.find(".chat-box__head").append(loading);
+                    client_tiny_chat.find(".chat-box__head").append(loading);
                     loading.slideDown("slow");
                 }
 
@@ -106,9 +106,9 @@ window.Chat = (function () {
             }
 
             addMessageItem(data) {
-                let clientTinyChat = $("#client-tiny-chat");
+                let client_tiny_chat = $("#client-tiny-chat");
 
-                let chatBoxView = clientTinyChat.find(".chat-box__view[data-id=" + data.chatinfo_id + "]");
+                let chatBoxView = client_tiny_chat.find(".chat-box__view[data-id=" + data.chatinfo_id + "]");
 
                 chatBoxView.append(chatBoxView.createMessageItem({ data }));
 
@@ -116,15 +116,15 @@ window.Chat = (function () {
                     chatinfo_id: data.chatinfo_id
                 });
 
-                if ((clientTinyChat.find("#message-textarea").data("chatinfo") == data.chatinfo_id)) {
+                if ((client_tiny_chat.find("#message-textarea").data("chatinfo") == data.chatinfo_id)) {
                     chatBoxView.checkBottomScrollMessage({
                         success: () => {
-                            clientTinyChat.updateScrollBottomChatBoxView();
+                            client_tiny_chat.updateScrollBottomChatBoxView();
                         },
                         reject: () => {
-                            if (!clientTinyChat.find(".chat-box__content .new-msg-badge").length) {
-                                clientTinyChat.find(".chat-box__content")
-                                    .append(clientTinyChat.createNewMSGBadge());
+                            if (!client_tiny_chat.find(".chat-box__content .new-msg-badge").length) {
+                                client_tiny_chat.find(".chat-box__content")
+                                    .append(client_tiny_chat.createNewMSGBadge());
                             }
                         }
                     });
@@ -140,9 +140,9 @@ window.Chat = (function () {
 
             updateTyping(data) {
                 if (!data.isSelf) {
-                    let clientTinyChat = $("#client-tiny-chat");
+                    let client_tiny_chat = $("#client-tiny-chat");
 
-                    let chatBoxView = clientTinyChat.find(".chat-box__view[data-id=" + data.chatinfo_id + "]");
+                    let chatBoxView = client_tiny_chat.find(".chat-box__view[data-id=" + data.chatinfo_id + "]");
                     // If chat box view is visible
                     if (chatBoxView) {
                         if (data.typing) {
@@ -151,10 +151,10 @@ window.Chat = (function () {
                                 // Add typing
                                 chatBoxView.append(chatBoxView.createTypingMessage({ data }));
 
-                                if ((clientTinyChat.find("#message-textarea").data("chatinfo") == data.chatinfo_id)) {
+                                if ((client_tiny_chat.find("#message-textarea").data("chatinfo") == data.chatinfo_id)) {
                                     chatBoxView.checkBottomScrollMessage({
                                         success: () => {
-                                            clientTinyChat.updateScrollBottomChatBoxView();
+                                            client_tiny_chat.updateScrollBottomChatBoxView();
                                         },
                                         reject: () => {
                                         }
@@ -171,10 +171,10 @@ window.Chat = (function () {
             };
 
             addMSGNotication(data) {
-                let clientTinyChat = $("#client-tiny-chat");
+                let client_tiny_chat = $("#client-tiny-chat");
 
-                if (clientTinyChat.find(".chat-box").is(":hidden")) {
-                    let badgeNewMSG = clientTinyChat.find(".chat-bubble").find(".badge-new-msg");
+                if (client_tiny_chat.find(".chat-box").is(":hidden")) {
+                    let badgeNewMSG = client_tiny_chat.find(".chat-bubble").find(".badge-new-msg");
                     let value = badgeNewMSG.data("value");
                     if (!value) {
                         badgeNewMSG.data("value", 1);
@@ -216,24 +216,24 @@ window.Chat = (function () {
             }
 
             updateSeen(data) {
-                let clientTinyChat = $("#client-tiny-chat");
+                let client_tiny_chat = $("#client-tiny-chat");
 
                 if (data.isSelf) {
-                    let badgeNewMSG = clientTinyChat.find(".chatinfo[data-id=" + data.chatinfo_id + "]")
+                    let badgeNewMSG = client_tiny_chat.find(".chatinfo[data-id=" + data.chatinfo_id + "]")
                         .find(".badge-new-msg")
                         .data("value", 0)
                         .text(0)
                         .hide();
                 } else {
-                    let chatBoxView = clientTinyChat.find(".chat-box__view[data-id=" + data.chatinfo_id + "]");
+                    let chatBoxView = client_tiny_chat.find(".chat-box__view[data-id=" + data.chatinfo_id + "]");
                     chatBoxView.find(".message-right .content-isseen").hide();
                     chatBoxView.find(".message-right:last-child .content-isseen").show();
                 }
             }
 
             _hideTyping(chatinfo_id, brand_id = null) {
-                let clientTinyChat = $("#client-tiny-chat");
-                let chat_box_view = clientTinyChat.find(`.chat-box__view[data-id="${chatinfo_id}"]`);
+                let client_tiny_chat = $("#client-tiny-chat");
+                let chat_box_view = client_tiny_chat.find(`.chat-box__view[data-id="${chatinfo_id}"]`);
 
                 if (chat_box_view.length) {
                     let typing_messages = chat_box_view.find(`.typing-message`);

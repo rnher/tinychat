@@ -100,7 +100,7 @@
 #client-tiny-chat ::-webkit-scrollbar-track {}
 
 #client-tiny-chat ::-webkit-scrollbar-thumb {
-    background-color: var(--bg-main);
+    background-color: var(--bg);
 }
 
 #client-tiny-chat ::-webkit-scrollbar-thumb:hover {}

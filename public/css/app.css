@@ -103,10 +103,25 @@
 }
 
 /* chat-menu  */
-#tiny-chat .chat-container .chat-menu .chat-menu__btn {
+#tiny-chat .chat-container .chat-menu .chat-menu__head {
+    height: 40px;
     position: absolute;
     top: 0;
     text-align: end;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+}
+
+#tiny-chat .chat-container .chat-menu .chat-menu__head .chat-menu__head-title {
+    display: none;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+#tiny-chat .chat-container .chat-menu .chat-menu__btn {
+    width: 40px;
     height: 40px;
 }
 

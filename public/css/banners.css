@@ -1,0 +1,10 @@
+#tiny-chat .banner.chat-box__banner {
+    width: 100%;
+    position: absolute;
+    margin-top: 40px;
+}
+
+#tiny-chat .banner.chat-box__banner .owl-carousel {
+    width: 500px;
+    margin: auto;
+}

@@ -292,6 +292,9 @@
     display: block;
     margin-top: 6px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
 
 #tiny-chat .label {
@@ -493,7 +496,7 @@
 }
 
 #tiny-chat .layout-review-chat #client-tiny-chat .chat-box .client-chat-box__content {
-    height: calc(100% - 145px);
+    height: calc(100% - 165px);
     display: block;
     border-radius: 0 0 5px 5px;
     width: 100%;
@@ -561,7 +564,7 @@
 
 /* brand */
 #tiny-chat .layout-review-chat .picker-edit-layout-review-chat .edit.edit-brand-name-color::before {
-    right: -150px;
+    right: -110px;
     top: 25px;
     transform: translate(-50%, -50%);
     animation: breathe 3s linear infinite;
@@ -569,11 +572,11 @@
 }
 
 #tiny-chat .layout-review-chat .picker-edit-layout-review-chat .edit.edit-brand-name-color::after {
-    width: 300px;
+    width: 250px;
 }
 
 #tiny-chat .layout-review-chat .picker-edit-layout-review-chat .edit.edit-brand-name-color {
-    top: 0px;
+    top: 22px;
 }
 
 #tiny-chat .layout-review-chat .picker-edit-layout-review-chat .edit.edit-brand-text-color::after {
@@ -645,7 +648,7 @@
 /* customer */
 
 #tiny-chat .layout-review-chat .picker-edit-layout-review-chat .edit.edit-customer-content::before {
-    right: -180px;
+    right: -210px;
     top: 25px;
     transform: translate(-50%, -50%);
     animation: breathe 3s linear infinite;
@@ -653,7 +656,7 @@
 }
 
 #tiny-chat .layout-review-chat .picker-edit-layout-review-chat .edit.edit-customer-content::after {
-    width: 320px;
+    width: 350px;
 }
 
 #tiny-chat .layout-review-chat .picker-edit-layout-review-chat .edit.edit-customer-content {
@@ -662,6 +665,7 @@
 
 #tiny-chat .layout-review-chat #client-tiny-chat .chat-box .chat-box__input {
     position: unset;
+    height: 85px;
 }
 
 /* settings .customer-form  */

@@ -181,6 +181,20 @@
 #tiny-chat .profile-item .info-action .info-action__item,
 #tiny-chat .chatinfo .info-action .info-action__item {
     margin-top: 5px;
+    position: absolute;
+    top: 0;
+    right: 10px;
+}
+
+#tiny-chat .chatinfo .info-action .info-action__item.action-icon {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 0;
+}
+
+#tiny-chat .chatinfo .info-action .info-action__item.action-icon:hover {
+    background-color: var(--bg-hover__main);
 }
 
 #tiny-chat .chatinfo .info-action .info-action__item.badge-danger {
@@ -202,13 +216,27 @@
     color: var(--bg-main);
 }
 
-#tiny-chat .profile-item.active:hover .action-icon,
-#tiny-chat .chatinfo.active:hover .action-icon {
+#tiny-chat .profile-item:hover .action-icon,
+#tiny-chat .chatinfo:hover .action-icon {
     display: block;
 }
 
-#tiny-chat .chatinfo.active:hover .action-icon {
-    padding: 0;
+#tiny-chat .profile-item.active:hover .action-icon i,
+#tiny-chat .chatinfo.active:hover .action-icon i {
+    color: var(--color-hover__main);
+}
+
+#tiny-chat .profile-item .action-icon i,
+#tiny-chat .chatinfo .action-icon i {
+    color: black;
+}
+
+#tiny-chat .profile-item .action-icon:hover i,
+#tiny-chat .chatinfo .action-icon:hover i {
+    color: var(--color-hover__main);
+}
+
+#tiny-chat .chatinfo:hover .action-icon {
     background-color: unset;
     color: white;
     position: absolute;

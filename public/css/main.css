@@ -15,6 +15,7 @@
 @import "popups.css";
 @import "app.css";
 @import "tables.css";
+@import "banners.css";
 
 /* client */
 @import "../../client/public/css/main.css";
@@ -22,6 +23,8 @@
 /* libraries */
 @import "libraries/coloris.css";
 @import "libraries/eocjs-newsticker.css";
+@import "libraries/owl.carousel.css";
+@import "libraries/owl.theme.default.css";
 
 :root {
     --primary: #1877f2;
@@ -145,8 +148,7 @@ a {
 }
 
 /* Track */
-::-webkit-scrollbar-track {
-}
+::-webkit-scrollbar-track {}
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
@@ -154,8 +156,7 @@ a {
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-}
+::-webkit-scrollbar-thumb:hover {}
 
 #tiny-chat input::-webkit-outer-spin-button,
 #tiny-chat input::-webkit-inner-spin-button {

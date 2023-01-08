@@ -63,7 +63,7 @@ import "/public/js/jquery/chatinfo.js";
 
                         form.loadReLoadBrandSettings({ data });
 
-                        if (data.token) {
+                        if (data.is_edit_token) {
                             $("#clipboard-btn__token").trigger("click");
                         }
 
@@ -171,7 +171,7 @@ import "/public/js/jquery/chatinfo.js";
             // Add layout loading
             let loading = $().loadingWaterLayout();
 
-            _this.get({
+            _this.getAjax({
                 url: CONF_URL.brands,
                 success: function (data) {
                     loading.hide();
@@ -344,7 +344,7 @@ import "/public/js/jquery/chatinfo.js";
         _this.init = function () {
             $(settings.elements).on("click", settings.selector, function (e) {
                 e.preventDefault();
-                let tinyChat = $("#tiny-chat");
+                let tiny_chat = $("#tiny-chat");
 
                 let brand = $(this);
 
@@ -356,7 +356,7 @@ import "/public/js/jquery/chatinfo.js";
                     $(".brand").removeClass("active");
                     brand.addClass("active");
 
-                    tinyChat.resetClickBrand({ brand_id })
+                    tiny_chat.resetClickBrand({ brand_id })
                 }
             })
         };
@@ -373,7 +373,7 @@ import "/public/js/jquery/chatinfo.js";
 
         _this.init = function () {
 
-            _this.get({
+            _this.getAjax({
                 url: CONF_URL.brands,
                 params: {
                     id: settings.id,
@@ -761,9 +761,10 @@ import "/public/js/jquery/chatinfo.js";
 
             _this.callbackSuccessCreateBrand = function (popup) {
                 return function (data) {
+                    let tiny_chat = $("#tiny-chat");
                     _this.loadDataBrand({ data });
 
-                    $("#tiny-chat").showAlert({
+                    tiny_chat.showAlert({
                         type: "success",
                         content: "Tạo kênh chat thương hiệu thành công",
                         autoClose: true,
@@ -771,6 +772,11 @@ import "/public/js/jquery/chatinfo.js";
                     });
 
                     popup.remove();
+
+                    tiny_chat.find("#select-brand")
+                        .find(`.option[data-id="${data.id}"]`)
+                        .find("input").first()
+                        .trigger("click");
                 };
             }
 
@@ -1196,15 +1202,15 @@ import "/public/js/jquery/chatinfo.js";
         _this.init = function () {
             let brand = settings.data;
 
-            let tinyChat = $("#tiny-chat");
+            let tiny_chat = $("#tiny-chat");
 
-            let option = tinyChat.find(`.select-brand .option[data-id="${brand.id}"]`);
+            let option = tiny_chat.find(`.select-brand .option[data-id="${brand.id}"]`);
             option.find(".label").text(brand.name);
             option.find(".opt-val").text(brand.name);
             option.find("img").prop("src", brand.avatar);
             option.find("img").prop("alt", brand.name);
 
-            let brandActive = tinyChat.find(`.brand[data-id="${brand.id}"]`);
+            let brandActive = tiny_chat.find(`.brand[data-id="${brand.id}"]`);
             brandActive.find(".chat-menu__item").prop("title", brand.name);
             brandActive.find("img").prop("src", brand.avatar);
             brandActive.find("img").prop("alt", brand.name);

@@ -17,7 +17,7 @@ include_once "models/ChatSettings.php";
 use APP\App;
 use APP\LIBRARIES\Auth;
 use APP\SERVICES\UploadImage;
-use APP\LIBRARIES\Security; 
+use APP\LIBRARIES\Security;
 use MODELS\Room;
 use MODELS\User;
 use MODELS\Brand;
@@ -135,9 +135,11 @@ $update =  function () {
 
                     unset($data["password"]);
 
+                    $is_edit_token = false;
                     if (isset($data["domain"])) {
                         if ($data["domain"] != $brand["domain"]) {
                             $data["token"] = Brand::Create_Token($data["name"]);
+                            $is_edit_token = true;
                         } else {
                             unset($data["domain"]);
                             unset($data["token"]);
@@ -168,6 +170,7 @@ $update =  function () {
                         ...ChatSettings::DetailInfo($chat_settings),
                     ];
                     $response["data"]["csrf"] = Security::CreateCSRF($user);
+                    $response["data"]["is_edit_token"] = $is_edit_token;
                 } else {
                     $response["isError"] = true;
                     $response["error"]["is"] = "Mật khẩu không đúng";

@@ -11,7 +11,7 @@ import { CONF_URL } from "/public/js/config.js";
 
         _this.init = function () {
 
-            _this.get({
+            _this.getAjax({
                 url: CONF_URL.members,
                 params: {
                     id: settings.id,
@@ -54,7 +54,7 @@ import { CONF_URL } from "/public/js/config.js";
                 let memberID = _this.data("id");
                 let brandID = _this.data("brandid");
 
-                _this.delete({
+                _this.deleteAjax({
                     url: CONF_URL.members,
                     params: {
                         id: brandID,

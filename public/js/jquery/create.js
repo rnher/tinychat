@@ -63,9 +63,9 @@ import "/public/js/services/rsa.js";
                         <div `+ (notication.num ? "" : "hidden") + ` class="badge-danger badge-new-msg info-action__item" data-value="` + notication.num + `" title="Tin nhắn chưa đọc">
                             `+ notication.display + `
                         </div>
-                        <div class="action-icon info-action__item" title="Thao tác">
-                            <i class="fa-solid fa-ellipsis"></i>
-                        </div>
+                        <button class="action-icon info-action__item" title="Thao tác">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
                     </div>
                 </div>`;
     }
@@ -351,7 +351,6 @@ import "/public/js/services/rsa.js";
 
         let settings = $.extend({}, defaults, options);
 
-        console.log(settings);
         let tooltiptextView = `<div class="tooltiptext tooltiptext-table">
                                 <div>Tên : <span>${settings.name != "null" ? settings.name : "Không được cung cấp"}<span></div>
                                 <div>Email : <span>${settings.mail != "null" ? settings.mail : "Không được cung cấp"}<span></div>

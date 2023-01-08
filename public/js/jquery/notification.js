@@ -240,7 +240,7 @@ import "/public/js/jquery/create.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            _this.get({
+            _this.getAjax({
                 url: settings.url,
                 params: settings.params,
                 success: function (data) {
@@ -355,7 +355,7 @@ import "/public/js/jquery/create.js";
 
                 let noti = $(`.notifications .notification-item[data-id=${settings.notification_id}]`);
 
-                _this.get({
+                _this.getAjax({
                     url: CONF_URL.notifications,
                     params: {
                         id: settings.notification_id,
@@ -387,7 +387,7 @@ import "/public/js/jquery/create.js";
             _this.on("click", function (e) {
                 e.stopPropagation();
 
-                _this.post({
+                _this.postAjax({
                     url: CONF_URL.notifications,
                     params: settings.params,
                     success: function (data) {

@@ -11,9 +11,9 @@ import "/public/js/libraries/jquery-3.6.1.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let tinyChat = $("#tiny-chat");
+            let tiny_chat = $("#tiny-chat");
 
-            let chatBoxView = tinyChat.find(".chat-box__view:visible");
+            let chatBoxView = tiny_chat.find(".chat-box__view:visible");
 
             let messages = chatBoxView.find(".message");
             let outOfData = chatBoxView.find(".out-of-data");
@@ -39,7 +39,7 @@ import "/public/js/libraries/jquery-3.6.1.js";
                 chatBoxView.scrollTop(scrollTop);
             }
 
-            tinyChat.find("#chat-box__move-down").hide();
+            tiny_chat.find("#chat-box__move-down").hide();
         };
 
         return _this.init();
@@ -77,14 +77,14 @@ import "/public/js/libraries/jquery-3.6.1.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let tinyChat = $("#tiny-chat");
-            let viewCountMessage = tinyChat.find(".view-count-message");
+            let tiny_chat = $("#tiny-chat");
+            let viewCountMessage = tiny_chat.find(".view-count-message");
 
             let maxCount = viewCountMessage.find(".max-count-message");
             let maxValue = maxCount.data("value");
             // maxCount.empty().text(maxValue);
 
-            let currentLength = tinyChat.find("#message-textarea").val().length;
+            let currentLength = tiny_chat.find("#message-textarea").val().length;
             let curCount = viewCountMessage.find(".current-count-message");
             curCount.data("value", currentLength);
             curCount.empty().text(currentLength);

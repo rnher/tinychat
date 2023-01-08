@@ -51,7 +51,7 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
                     success: function (data) {
                         _this.endabaleInput();
 
-                        let clientTinyChat = $("#client-tiny-chat");
+                        let client_tiny_chat = $("#client-tiny-chat");
 
                         // Lưu id để client truy cập lần sau
                         if (typeof (Storage) !== "undefined") {
@@ -74,26 +74,26 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
                             })
                         });
 
-                        clientTinyChat.find(".register-chat").remove();
+                        client_tiny_chat.find(".register-chat").remove();
 
                         //TODO: add layout loading
 
-                        clientTinyChat.get({
+                        client_tiny_chat.getAjax({
                             url: CONF_URL.clients,
                             params: {
                                 token,
                                 ssid: window.remember ? window.remember.getItem(token) : null
                             },
                             success: (data) => {
-                                clientTinyChat.startChat({ data });
+                                client_tiny_chat.startChat({ data });
 
                                 //TODO: remove layout loading
                             },
                             reject: function (error) {
-                                clientTinyChat
-                                    .append(clientTinyChat
+                                client_tiny_chat
+                                    .append(client_tiny_chat
                                         .createRegisterChat({ data: error }));
-                                clientTinyChat.find("#register-chat__form").submitRegisterChat();
+                                client_tiny_chat.find("#register-chat__form").submitRegisterChat();
 
 
                                 //TODO: remove layout loading
@@ -102,10 +102,10 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
                     },
                     reject: function (error) {
                         _this.endabaleInput();
-                        let clientTinyChat = $("#client-tiny-chat");
+                        let client_tiny_chat = $("#client-tiny-chat");
 
                         // Brand không tồn tại hoặc hết hạn
-                        clientTinyChat.find(".register-content").showError({ error });
+                        client_tiny_chat.find(".register-content").showError({ error });
                     }
                 })
             });
@@ -124,15 +124,15 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let clientTinyChat = $("#client-tiny-chat");
+            let client_tiny_chat = $("#client-tiny-chat");
 
             // Display new smg
             _this.updateMSGNotication({
                 value: settings.data.count_not_seen
             });
 
-            let chatBox = clientTinyChat.createChatBox(settings.data);
-            clientTinyChat.append(chatBox);
+            let chatBox = client_tiny_chat.createChatBox(settings.data);
+            client_tiny_chat.append(chatBox);
 
             let messages = settings.data.items;
             for (let i = 0; i < messages.length; i++) {
@@ -140,12 +140,12 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
                 chatBoxView.prepend($(chatBoxView).createMessageItem({ data: messages[i] }))
             }
 
-            clientTinyChat.uploadLayoutMessage({
+            client_tiny_chat.uploadLayoutMessage({
                 chatinfo_id: settings.data.chatinfo.id
             });
 
             // Ẩn nó khi mới khỏi tạo. Sẽ được hiển thị khi chạy updateScrollBottomChatBoxView
-            let chatBoxMoveDown = clientTinyChat.find("#chat-box__move-down");
+            let chatBoxMoveDown = client_tiny_chat.find("#chat-box__move-down");
             chatBoxMoveDown.hide();
             chatBoxMoveDown.onClickMoveDowMessage();
 
@@ -156,13 +156,13 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
             });
 
             if (settings.isShow) {
-                clientTinyChat.find(".chat-box").show()
+                client_tiny_chat.find(".chat-box").show()
             } else {
-                clientTinyChat.find(".chat-box").hide()
+                client_tiny_chat.find(".chat-box").hide()
             }
 
             // Bât cái này Nếu chat hiển thị mặc định thì update scroll
-            clientTinyChat.updateScrollBottomChatBoxView({ isAnimate: false });
+            client_tiny_chat.updateScrollBottomChatBoxView({ isAnimate: false });
         };
 
         return _this.init();
@@ -435,14 +435,14 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let clientTinyChat = $("#client-tiny-chat");
-            let viewCountMessage = clientTinyChat.find(".view-count-message");
+            let client_tiny_chat = $("#client-tiny-chat");
+            let viewCountMessage = client_tiny_chat.find(".view-count-message");
 
             let maxCount = viewCountMessage.find(".max-count-message");
             let maxValue = maxCount.data("value");
             // maxCount.empty().text(maxValue);
 
-            let currentLength = clientTinyChat.find("#message-textarea").val().length;
+            let currentLength = client_tiny_chat.find("#message-textarea").val().length;
             let curCount = viewCountMessage.find(".current-count-message");
             curCount.data("value", currentLength);
             curCount.empty().text(currentLength);
@@ -489,9 +489,9 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
         _this.init = function () {
             let data = settings.data;
 
-            let clientTinyChat = $("#client-tiny-chat");
+            let client_tiny_chat = $("#client-tiny-chat");
 
-            clientTinyChat.find(".chat-bubble").removeClass("chat-bubble__register");
+            client_tiny_chat.find(".chat-bubble").removeClass("chat-bubble__register");
 
             RSA.getInstance().add(
                 data.chatinfo.id,
@@ -502,34 +502,55 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
             Chat.getInstance(data.ssid, (socket) => {
             });
 
-            clientTinyChat.initChatBox({
+            client_tiny_chat.initChatBox({
                 data,
                 isShow: true
             });
-            clientTinyChat.find(".chat-box__view").onScrollExtraMessagers();
-            clientTinyChat.find("#send-message__form").submitSendMessage();
+            client_tiny_chat.find(".chat-box__view").onScrollExtraMessagers();
+            client_tiny_chat.find("#send-message__form").submitSendMessage();
 
-            clientTinyChat.find("#mini-size-chat").onClickMiniSize();
-            clientTinyChat.find("#notification-sound").onClickNotificationSound();
+            client_tiny_chat.find("#mini-size-chat").onClickMiniSize();
+            client_tiny_chat.find("#notification-sound").onClickNotificationSound();
+            client_tiny_chat.find("#delete-chat").onClickDeleteChat();
 
-            clientTinyChat.onClickAction({
+            client_tiny_chat.onClickAction({
                 selector: ".chat-bubble",
                 callback: () => {
                     // Nếu chat hidden cần nhấn để hiển thị
-                    clientTinyChat.updateScrollBottomChatBoxView({ isAnimate: false });
-                    clientTinyChat.seenMessage({
+                    client_tiny_chat.updateScrollBottomChatBoxView({ isAnimate: false });
+                    client_tiny_chat.seenMessage({
                         chatinfo_id: data.chatinfo.id,
                         brand_id: data.brand.id,
                     });
                 }
             });
 
-            clientTinyChat.updateMSGTime()
+            client_tiny_chat.updateMSGTime()
 
             setInterval(
-                clientTinyChat.updateMSGTime,
+                client_tiny_chat.updateMSGTime,
                 CONF_SOCKET.pingTime
             );
+        };
+
+        return _this.init();
+    }
+
+    $.fn.onClickDeleteChat = function (options) {
+        let _this = this;
+
+        let defaults = {
+            token: $("#client-tiny-chat-script").data("id")
+        };
+        let settings = $.extend({}, defaults, options);
+
+        _this.init = function () {
+            _this.on("click", function (e) {
+                e.preventDefault();
+
+                localStorage.clear(settings.token);
+                window.reloadchat();
+            });
         };
 
         return _this.init();

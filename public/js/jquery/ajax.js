@@ -1,8 +1,7 @@
 import "/public/js/libraries/jquery-3.6.1.js";
-import "/public/js/libraries/coloris.js";
 
 (function ($) {
-    $.fn.get = function (options) {
+    $.fn.getAjax = function (options) {
         let _this = this;
 
         let defaults = {
@@ -138,7 +137,7 @@ import "/public/js/libraries/coloris.js";
         return _this.init();
     }
 
-    $.fn.delete = function (options) {
+    $.fn.deleteAjax = function (options) {
         let _this = this;
 
         let defaults = {
@@ -173,7 +172,7 @@ import "/public/js/libraries/coloris.js";
         return _this.init();
     }
 
-    $.fn.post = function (options) {
+    $.fn.postAjax = function (options) {
         let _this = this;
 
         let defaults = {

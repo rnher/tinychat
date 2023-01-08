@@ -195,7 +195,8 @@ import "/public/js/jquery/create.js";
 
         let defaults = {
             id: uniqId(),
-            autoClose: false
+            autoClose: false,
+            hideTimeout: 4000
         };
 
         let settings = $.extend({}, defaults, options);
@@ -243,7 +244,7 @@ import "/public/js/jquery/create.js";
                 if (settings.autoClose) {
                     setTimeout(() => {
                         currentAlert.hide("slow").remove();
-                    }, 4000); // 1s chờ, 3s animation css
+                    }, settings.hideTimeout); // 1s chờ, 3s animation css
                 }
             }
         };
@@ -302,8 +303,9 @@ import "/public/js/jquery/create.js";
                 $("#tiny-chat").showAlert({
                     type: settings.type,
                     content: settings.content,
-                    autoClose: false,
-                    name: "token-clipboard"
+                    autoClose: true,
+                    name: "token-clipboard",
+                    hideTimeout: 10000
                 });
             });
         };

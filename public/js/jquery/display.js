@@ -10,13 +10,13 @@ import { CONF_APP } from "/public/js/config.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let tinyChat = $("#tiny-chat");
+            let tiny_chat = $("#tiny-chat");
 
             let brand_id = settings.brand_id;
 
             let pre_chatinfo = $(".chatinfo.active");
 
-            tinyChat.resetClickChatInfo({
+            tiny_chat.resetClickChatInfo({
                 brand_id,
                 chatinfo_id: null,
                 re_chatinfo_id: pre_chatinfo.data("id")
@@ -24,7 +24,7 @@ import { CONF_APP } from "/public/js/config.js";
 
 
             // chatBoxContent
-            let chatBoxContent = tinyChat.find(".chat-box__content");
+            let chatBoxContent = tiny_chat.find(".chat-box__content");
             chatBoxContent.hide();
             let chatBoxView = chatBoxContent.find(".chat-box__content-list");
             chatBoxView.removeClass("active");
@@ -37,7 +37,7 @@ import { CONF_APP } from "/public/js/config.js";
 
 
             // listChatinfo 
-            let listChatinfo = tinyChat.find(".chat-info__list-chatinfo");
+            let listChatinfo = tiny_chat.find(".chat-info__list-chatinfo");
             listChatinfo.removeClass("active").hide();
             listChatinfo.find(".chatinfo")
                 .removeClass("active")
@@ -46,7 +46,9 @@ import { CONF_APP } from "/public/js/config.js";
             let currentListChatinfo = $(`.chat-info__list-chatinfo[data-id="${brand_id}"]`);
             currentListChatinfo.addClass("active").scrollTop(0).show();
 
-            tinyChat.find("#search-chatinfo").val("");
+            tiny_chat.find("#search-chatinfo").val("");
+
+            tiny_chat.find(".chat-box__banner").show();
         };
 
         return _this.init();
@@ -60,7 +62,7 @@ import { CONF_APP } from "/public/js/config.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let tinyChat = $("#tiny-chat");
+            let tiny_chat = $("#tiny-chat");
 
             let re_chatinfo_id = settings.re_chatinfo_id;
             let chatinfo_id = settings.chatinfo_id;
@@ -79,11 +81,11 @@ import { CONF_APP } from "/public/js/config.js";
             let currentChatBoxView = chatBoxContent.find(`.chat-box__content-list[data-id="${brand_id}"]`);
             currentChatBoxView.show();
 
-            tinyChat.find(".chat-box__view")
+            tiny_chat.find(".chat-box__view")
                 .removeClass("active")
                 .hide();
 
-            let currentchatBoxView = tinyChat.find(`.chat-box__view[data-id="${chatinfo_id}"]`);
+            let currentchatBoxView = tiny_chat.find(`.chat-box__view[data-id="${chatinfo_id}"]`);
             let messages = currentchatBoxView.find(".message");
             if (!messages.length) {
                 let empty = _this.add404({
@@ -102,7 +104,7 @@ import { CONF_APP } from "/public/js/config.js";
             currentchatBoxView.addClass("active").show();
 
             // Cập nhật lại thông báo cho thương hiệu
-            if (tinyChat.checkNotSeen({
+            if (tiny_chat.checkNotSeen({
                 chatinfo_id,
                 brand_id
             })) {
@@ -113,7 +115,7 @@ import { CONF_APP } from "/public/js/config.js";
             }
 
             // Cập nhật lại thông báo cho thương hiệu
-            if (tinyChat.checkNewMSG({
+            if (tiny_chat.checkNewMSG({
                 chatinfo_id,
                 brand_id
             })) {
@@ -123,16 +125,15 @@ import { CONF_APP } from "/public/js/config.js";
                 });
             }
 
-            tinyChat.updateBrandNotification({
+            tiny_chat.updateBrandNotification({
                 brandID: brand_id,
             })
 
             // Cập nhật scroll chat box
-            tinyChat.updateScrollBottomChatBoxView({ isAnimate: false });
-            tinyChat.updateMSGTime();
+            tiny_chat.updateScrollBottomChatBoxView({ isAnimate: false });
+            tiny_chat.updateMSGTime();
 
-
-            tinyChat.setMessageTextarea({
+            tiny_chat.setMessageTextarea({
                 brand_id,
                 chatinfo_id,
                 re_chatinfo_id

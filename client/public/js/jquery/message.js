@@ -211,7 +211,7 @@ import { CONF_CHAT } from "/client/public/js/config.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            _this.get({
+            _this.getAjax({
                 url: settings.url,
                 success: function (data) {
                     let items = data.items;
@@ -255,18 +255,18 @@ import { CONF_CHAT } from "/client/public/js/config.js";
 
             _this.on("scroll", function (e) {
                 e.preventDefault();
-                let clientTinyChat = $("#client-tiny-chat");
+                let client_tiny_chat = $("#client-tiny-chat");
 
                 let chatBoxView = $(this);
 
                 // Toggle button movedow
                 chatBoxView.checkBottomScrollMessage({
                     success: () => {
-                        clientTinyChat.find("#chat-box__move-down").hide();
-                        clientTinyChat.find(".chat-box__content .new-msg-badge").remove();
+                        client_tiny_chat.find("#chat-box__move-down").hide();
+                        client_tiny_chat.find(".chat-box__content .new-msg-badge").remove();
                     },
                     reject: () => {
-                        clientTinyChat.find("#chat-box__move-down").show();
+                        client_tiny_chat.find("#chat-box__move-down").show();
                     }
                 });
 
@@ -287,7 +287,7 @@ import { CONF_CHAT } from "/client/public/js/config.js";
                             isSuccessLoad = false;
 
                             // Add loader-blur message
-                            chatBoxView.prepend(clientTinyChat.createLoader({
+                            chatBoxView.prepend(client_tiny_chat.createLoader({
                                 type: "message",
                                 color: "success"
                             }));
@@ -301,20 +301,20 @@ import { CONF_CHAT } from "/client/public/js/config.js";
                                     chatBoxView.find(".loader-blur").remove();
 
                                     if (data) {
-                                        clientTinyChat.updateScrollPreTopChatBoxView({
+                                        client_tiny_chat.updateScrollPreTopChatBoxView({
                                             extraLength: data.items.length
                                         });
 
                                         if (!data.next_page_url) {
                                             let outOfData = chatBoxView.find(".out-of-data");
                                             if (!outOfData.length) {
-                                                chatBoxView.prepend(clientTinyChat.createOutOfData({ type: "message" }));
+                                                chatBoxView.prepend(client_tiny_chat.createOutOfData({ type: "message" }));
                                                 chatinfoMessagesEnd.push(chatBoxView.data("id"));
                                             }
                                         }
 
-                                        clientTinyChat.updateMSGTime();
-                                        clientTinyChat.reloadLayoutChat({
+                                        client_tiny_chat.updateMSGTime();
+                                        client_tiny_chat.reloadLayoutChat({
                                             isReload: true
                                         });
                                     }
@@ -432,7 +432,7 @@ import { CONF_CHAT } from "/client/public/js/config.js";
             // let brand_id = settings.brand_id;
             let chatinfo_id = settings.chatinfo_id;
 
-            let clientTinyChat = $("#client-tiny-chat");
+            let client_tiny_chat = $("#client-tiny-chat");
 
             let chat_box_view = $(`.chat-box__view[data-id="${chatinfo_id}"]`);
             let messages = chat_box_view.find(".message");

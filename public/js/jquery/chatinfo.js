@@ -85,7 +85,7 @@ import { getDate } from "/public/js/util.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            _this.get({
+            _this.getAjax({
                 url: settings.url,
                 params: settings.params,
                 success: function (data) {
@@ -179,17 +179,20 @@ import { getDate } from "/public/js/util.js";
         _this.init = function () {
             $(settings.elements).on("click", settings.selector, function (e) {
                 e.preventDefault();
+                let tiny_chat = $("#tiny-chat");
 
                 let chatinfo = $(this);
+
+                tiny_chat.find(".chat-box__banner").hide();
 
                 // Kiểm tra active đã có hay chưa
                 if (!chatinfo.hasClass("active")) {
                     let brand_id = chatinfo.parent().data("id");
                     let chatinfo_id = chatinfo.data("id");
 
-                    let pre_chatinfo = $(".chatinfo.active");
+                    let pre_chatinfo = tiny_chat.find(".chatinfo.active");
                     // Active
-                    $(".chatinfo").removeClass("active");
+                    tiny_chat.find(".chatinfo").removeClass("active");
                     chatinfo.addClass("active");
 
                     chatinfo.resetClickChatInfo({
@@ -203,7 +206,7 @@ import { getDate } from "/public/js/util.js";
                     }
 
                     settings.intervalUpdateMSGTime = setInterval(
-                        $("#tiny-chat").updateMSGTime
+                        tiny_chat.updateMSGTime
                         , CONF_SOCKET.pingTime
                     );
                 }
@@ -264,10 +267,16 @@ import { getDate } from "/public/js/util.js";
                     chatinfoID,
                     brandID
                 });
+
+                $(menu).find(".chatinfo-menu__item").on("click", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
             };
 
             _this.on("click", function (e) {
                 e.preventDefault();
+                e.stopPropagation();
                 let chatinfoAction = $(this);
 
                 let target = $(settings.target);
@@ -286,14 +295,21 @@ import { getDate } from "/public/js/util.js";
 
                 let wPadd = chatinfoAction.outerWidth() - chatinfoAction.width();
                 let wPaddTarget = target.outerWidth() - target.width();
-                let left = target.outerWidth() + chatinfoAction.outerWidth() + wPadd * 2 + wPaddTarget * 2 + 10;
-                let top = positionTarget.top + target.outerHeight() * 2 + wPadd * 2 + 10;
+                let left = target.outerWidth() + chatinfoAction.outerWidth() + wPadd * 2;
+                let top = positionTarget.top + target.outerHeight() * 2 + wPadd;
 
                 target.find(menu).css("left", `${left}px`);
                 target.find(menu).css("top", `${top}px`);
 
-                chatinfoAction.blurBlackground().show();
-                chatinfoAction.onClickBlurBackgound({ target: menu });
+                chatinfoAction.blurBlackground({
+                    targetname: "chatinfoAction",
+                    isLoading: false
+                })
+                    .show();
+                chatinfoAction.onClickBlurBackgound({
+                    target: menu,
+                    targetname: "chatinfoAction"
+                });
 
                 _this.initEventMenu(menu, target.data("id"), target.parent().data("id"))
             });
@@ -310,18 +326,18 @@ import { getDate } from "/public/js/util.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let chatTiny = $("#tiny-chat");
+            let tiny_chat = $("#tiny-chat");
 
-            chatTiny.find(`.chatinfo[data-id=${settings.id}]`).remove();
-            chatTiny.find(`.chat-box__view[data-id=${settings.id}]`).remove();
-            chatTiny.find(".chat-box__move-down").hide();
-            chatTiny.find(".chat-box__input").hide();
+            tiny_chat.find(`.chatinfo[data-id=${settings.id}]`).remove();
+            tiny_chat.find(`.chat-box__view[data-id=${settings.id}]`).remove();
+            tiny_chat.find(".chat-box__move-down").hide();
+            tiny_chat.find(".chat-box__input").hide();
 
-            let inputSendMessage = chatTiny.messageTextarea();
+            let inputSendMessage = tiny_chat.messageTextarea();
             inputSendMessage.data("chatinfo", "")
             inputSendMessage.val("");
 
-            chatTiny.checkEmptyChatinfos();
+            tiny_chat.checkEmptyChatinfos();
         };
 
         return _this.init();
@@ -339,8 +355,9 @@ import { getDate } from "/public/js/util.js";
 
             _this.on("click", function (e) {
                 e.preventDefault();
+                e.stopPropagation();
 
-                _this.delete({
+                _this.deleteAjax({
                     url: CONF_URL.chats,
                     params: {
                         id: settings.chatinfoID,
@@ -375,20 +392,22 @@ import { getDate } from "/public/js/util.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let chatTiny = $("#tiny-chat");
-            let chatInfoListChatinfo = null;
+            let tiny_chat = $("#tiny-chat");
+            let chatinfo_list = null;
 
             if (settings.brand_id) {
-                chatInfoListChatinfo = chatTiny.find(`.chat-info__list-chatinfo[data-id=${settings.brand_id}]`);
+                chatinfo_list = tiny_chat.find(`.chat-info__list-chatinfo[data-id=${settings.brand_id}]`);
             } else {
-                chatInfoListChatinfo = chatTiny.find(".chat-info__list-chatinfo.active");
+                chatinfo_list = tiny_chat.find(".chat-info__list-chatinfo.active");
             }
 
             // Chatinfo empty
-            if (!chatInfoListChatinfo.find(".chatinfo").length) {
-                chatInfoListChatinfo.append(chatTiny.createMini404({
+            if (!chatinfo_list.find(".chatinfo").length) {
+                chatinfo_list.append(tiny_chat.createMini404({
                     type: "chatinfo"
                 }));
+
+                tiny_chat.find(".chat-box__banner").show();
             }
         };
 
@@ -490,8 +509,8 @@ import { getDate } from "/public/js/util.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let tinyChat = $("#tiny-chat");
-            let chatinfo = tinyChat.find(".chat-info__list-chatinfo .chatinfo[data-id=" + settings.chatinfo_id + "]");
+            let tiny_chat = $("#tiny-chat");
+            let chatinfo = tiny_chat.find(".chat-info__list-chatinfo .chatinfo[data-id=" + settings.chatinfo_id + "]");
 
             let userText = chatinfo.find(".info-content .user-text");
 
@@ -514,8 +533,8 @@ import { getDate } from "/public/js/util.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
-            let tinyChat = $("#tiny-chat");
-            let chatinfo = tinyChat.find(".chat-info__list-chatinfo .chatinfo[data-id=" + settings.chatinfo_id + "]");
+            let tiny_chat = $("#tiny-chat");
+            let chatinfo = tiny_chat.find(".chat-info__list-chatinfo .chatinfo[data-id=" + settings.chatinfo_id + "]");
 
             let userText = chatinfo.find(".info-content .user-text");
             userText.find(".typing-bubble").remove();

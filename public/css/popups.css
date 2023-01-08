@@ -38,9 +38,14 @@
     font-size: 12px;
 }
 
+#tiny-chat .popup.edit-layout-chat-popup .popup-head .head-action button {
+    font-size: 18px;
+}
+
 #tiny-chat .popup .popup-head .head-action {
     width: 10%;
-    text-align: right;
+    display: flex;
+    justify-content: end;
 }
 
 #tiny-chat .popup .popup-content {
@@ -102,8 +107,8 @@
 
 /* select  */
 
-#tiny-chat .popup .select-box{
-}
+#tiny-chat .popup .select-box {}
+
 #tiny-chat .popup .options-view-button:checked~.options .label {
     /* font-size: 12px; */
 }

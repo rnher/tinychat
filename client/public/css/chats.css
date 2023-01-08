@@ -231,6 +231,12 @@
 #client-tiny-chat .chat-box .chat-box__head .chatinfo:hover .info-action .info-action__item {
     display: block;
     margin-left: auto;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    background-color: transparent;
+    color: var(--bg);
 }
 
 #client-tiny-chat .chat-box .chat-box__head .loader-socket {
@@ -266,6 +272,7 @@
     justify-content: start;
     align-items: center;
     padding: 0 3%;
+    height: 40px;
 }
 
 #client-tiny-chat .chat-box .chat-box__input .chat-box__bar .view-count-message {
@@ -285,47 +292,47 @@
     margin: 5px 0;
 }
 
-#client-tiny-chat .chat-box .chat-box__input .chat-box__bar .item-bar:hover {
+#client-tiny-chat .chat-box__input .chat-box__bar .item-bar:hover {
     background-color: var(--bg-hover);
 }
 
 /* message-textarea  */
-#client-tiny-chat .chat-box .chat-box__input .message-textarea {
-    resize: none;
-    outline: none;
-    border: 0;
-    border-radius: 0px 0px 0px 5px;
-    height: 45px;
-    box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
-    width: 90%;
-    position: absolute;
-    left: 0px;
-    padding: 12px 15px 12px 15px;
-    box-sizing: border-box;
-    overflow-y: scroll;
-    width: calc(100% - 45px);
+#client-tiny-chat .chat-box__input .message-textarea {
+    resize: none !important;
+    outline: none !important;
+    border: 0 !important;
+    border-radius: 0px 0px 0px 5px !important;
+    height: 45px !important;
+    box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px !important;
+    width: 90% !important;
+    position: absolute !important;
+    left: 0px !important;
+    padding: 12px 15px 12px 15px !important;
+    box-sizing: border-box !important;
+    overflow-y: scroll !important;
+    width: calc(100% - 45px) !important;
 }
 
 /* send-message__form  */
-#client-tiny-chat .chat-box .chat-box__input #send-message__form .btn-submit {
-    height: 45px;
+#client-tiny-chat .chat-box__input .send-message__form .btn-submit {
+    height: 45px !important;
     font-weight: 500;
     position: absolute;
-    width: 45px;
+    width: 45px !important;
     right: 0px;
     z-index: 1;
-    border-radius: 0 0 5px 0;
+    border-radius: 0 0 5px 0 !important;
     background-color: var(--bg-btn);
     color: var(--color-btn);
     box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
 }
 
-#client-tiny-chat .chat-box .chat-box__input #send-message__form .btn-submit:disabled {
+#client-tiny-chat .chat-box__input .send-message__form .btn-submit:disabled {
     background-color: var(--bg-secondary);
 }
 
-#client-tiny-chat .chat-box .chat-box__input #send-message__form .btn-submit i {
-    font-size: 15px;
+#client-tiny-chat .chat-box__input .send-message__form .btn-submit i {
+    font-size: 15px !important;
 }
 
 /* chat-box__move-down  */

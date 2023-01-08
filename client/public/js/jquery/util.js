@@ -15,7 +15,7 @@ import { CONF_HOST } from "/client/public/js/config.js";
             $(settings.elements).on("click", settings.selector, function (e) {
                 e.preventDefault();
 
-                let clientTinyChat = $(settings.elements);
+                let client_tiny_chat = $(settings.elements);
 
                 let target = $(this).data("target");
                 let prevtarget = $(this).data("prevtarget");
@@ -26,7 +26,6 @@ import { CONF_HOST } from "/client/public/js/config.js";
                     case "toggle": {
                         $("#" + prevtarget).toggle();
                         $("#" + target).toggle();
-                        clientTinyChat.blurBlackground().toggle();
                     }
                         break;
                     case "show": {
@@ -38,7 +37,7 @@ import { CONF_HOST } from "/client/public/js/config.js";
                     }
                         break;
                     case "link": {
-                        clientTinyChat.go(target);
+                        client_tiny_chat.go(target);
                     }
                         break;
                     case "close": {
@@ -373,25 +372,5 @@ import { CONF_HOST } from "/client/public/js/config.js";
 
         return _this.init();
     }
-
-
-    // $.fn.onClickDeleteChat = function (options) {
-    //     let _this = this;
-
-    //     let defaults = {
-    //         token: $("#client-tiny-chat-script").data("id")
-    //     };
-    //     let settings = $.extend({}, defaults, options);
-
-    //     _this.init = function () {
-    //         _this.on("click", function (e) {
-    //             e.preventDefault();
-
-    //             sessionStorage.clear(settings.toke);
-    //         });
-    //     };
-
-    //     return _this.init();
-    // }
 
 })(jQuery);

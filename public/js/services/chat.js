@@ -117,9 +117,9 @@ window.Chat = (function () {
             }
 
             addMessageItem(data) {
-                let tinyChat = $("#tiny-chat");
+                let tiny_chat = $("#tiny-chat");
 
-                let chatBoxView = tinyChat.find(".chat-box__view[data-id=" + data.chatinfo_id + "]");
+                let chatBoxView = tiny_chat.find(".chat-box__view[data-id=" + data.chatinfo_id + "]");
                 // Xóa bg không có tin nhắn
                 chatBoxView.add404({
                     target: chatBoxView,
@@ -141,15 +141,15 @@ window.Chat = (function () {
                     chatinfo_id: data.chatinfo_id
                 });
 
-                if ((tinyChat.find("#message-textarea").data("chatinfo") == data.chatinfo_id)) {
+                if ((tiny_chat.find("#message-textarea").data("chatinfo") == data.chatinfo_id)) {
                     chatBoxView.checkBottomScrollMessage({
                         success: () => {
-                            tinyChat.updateScrollBottomChatBoxView();
+                            tiny_chat.updateScrollBottomChatBoxView();
                         },
                         reject: () => {
-                            if (!tinyChat.find(".chat-box__content .new-msg-badge").length) {
-                                tinyChat.find(".chat-box__content")
-                                    .append(tinyChat.createNewMSGBadge());
+                            if (!tiny_chat.find(".chat-box__content .new-msg-badge").length) {
+                                tiny_chat.find(".chat-box__content")
+                                    .append(tiny_chat.createNewMSGBadge());
                             }
                         }
                     });
@@ -165,9 +165,9 @@ window.Chat = (function () {
 
             updateTyping(data) {
                 if (!data.isSelf || (!data.isSelf && data.isBrandSelf)) {
-                    let tinyChat = $("#tiny-chat");
+                    let tiny_chat = $("#tiny-chat");
 
-                    let chatBoxView = tinyChat.find(".chat-box__view[data-id=" + data.chatinfo_id + "]");
+                    let chatBoxView = tiny_chat.find(".chat-box__view[data-id=" + data.chatinfo_id + "]");
                     // If chat box view is visible
                     if (chatBoxView) {
                         if (data.typing) {
@@ -178,10 +178,10 @@ window.Chat = (function () {
                             // Add typing
                             chatBoxView.append(chatBoxView.createTypingMessage({ data }));
 
-                            if ((tinyChat.find("#message-textarea").data("chatinfo") == data.chatinfo_id)) {
+                            if ((tiny_chat.find("#message-textarea").data("chatinfo") == data.chatinfo_id)) {
                                 chatBoxView.checkBottomScrollMessage({
                                     success: () => {
-                                        tinyChat.updateScrollBottomChatBoxView();
+                                        tiny_chat.updateScrollBottomChatBoxView();
                                     },
                                     reject: () => {
                                     }
@@ -292,8 +292,10 @@ window.Chat = (function () {
             };
 
             removeChatInfo(data) {
-                $("#tiny-chat").removeChatinfo({ id: data.chatinfo_id });
-                $("#tiny-chat").updateBrandNotification({ brandID: data.brand_id });
+                let tiny_chat = $("#tiny-chat");
+
+                tiny_chat.removeChatinfo({ id: data.chatinfo_id });
+                tiny_chat.updateBrandNotification({ brandID: data.brand_id });
             };
 
             updateSeen(data) {

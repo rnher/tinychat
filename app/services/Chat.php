@@ -330,18 +330,20 @@ class Chat implements MessageComponentInterface
 
                     if (isset($chatinfos)) {
                         foreach ($chatinfos as $chatinfo) {
-                            $this->sendToChatinfo(
-                                $auth,
-                                $chatinfo,
-                                [
-                                    "actionKey" => CONF_SOCKET["actionKey"]["noticationPing"],
-                                    "pings" => [[
-                                        "ping" => $ping,
-                                        "chatinfo_id" => $chatinfo["id"],
-                                        "type" => "brand"
-                                    ]]
-                                ]
-                            );
+                            if (isset($chatinfo)) {
+                                $this->sendToChatinfo(
+                                    $auth,
+                                    $chatinfo,
+                                    [
+                                        "actionKey" => CONF_SOCKET["actionKey"]["noticationPing"],
+                                        "pings" => [[
+                                            "ping" => $ping,
+                                            "chatinfo_id" => $chatinfo["id"],
+                                            "type" => "brand"
+                                        ]]
+                                    ]
+                                );
+                            }
                         }
                     }
                 }
@@ -540,7 +542,7 @@ class Chat implements MessageComponentInterface
             [$chatinfo["id"], Room::Type("chatinfo")]
         );
         if (!isset($rooms[0])) {
-            $rooms  = [$rooms];
+            $rooms = [$rooms];
         }
 
         $brand = Brand::Find_Where(["id"], [$chatinfo["brand_id"]]);

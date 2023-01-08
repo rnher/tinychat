@@ -1,5 +1,5 @@
 (function ($) {
-    $.fn.get = function (options) {
+    $.fn.getAjax = function (options) {
         let _this = this;
 
         let defaults = {

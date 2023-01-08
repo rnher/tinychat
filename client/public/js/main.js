@@ -10,7 +10,6 @@ import "/client/public/js/jquery/chat.js";
 import "/client/public/js/jquery/message.js";
 import "/client/public/js/jquery/create.js";
 import "/client/public/js/jquery/util.js";
-import "/client/public/js/jquery/layout.js";
 import "/client/public/js/jquery/image.js";
 
 // config
@@ -20,61 +19,68 @@ class ClientTinyChat {
     constructor() {
     }
 
-    run() {
+    init() {
         window.notificationSound = true;
         window.remember = false;
+        window.reloadchat = () => {
+            let client_tiny_chat = $("#client-tiny-chat");
+            client_tiny_chat.find(".chat-box").remove();
 
-        let clientTinyChat = $("#client-tiny-chat");
+            let token = $("#client-tiny-chat-script").data("id");
+            let ssid = sessionStorage.getItem(token) || localStorage.getItem(token);
 
-        $("body").append(clientTinyChat.createChatBubble());
+            client_tiny_chat.getAjax({
+                url: CONF_URL.clients,
+                params: {
+                    token,
+                    ssid
+                },
+                success: function (data) {
+                    let client_tiny_chat = $("#client-tiny-chat");
+                    client_tiny_chat.append(`<link rel="stylesheet" href="` + CONF_HOST + `/client/public/css/main.css">`);
 
-        let token = $("#client-tiny-chat-script").data("id");
-        let ssid = sessionStorage.getItem(token) || localStorage.getItem(token);
+                    client_tiny_chat.startChat({ data });
+                },
+                reject: function (error) {
+                    let client_tiny_chat = $("#client-tiny-chat");
+                    client_tiny_chat.append(`<link rel="stylesheet" href="` + CONF_HOST + `/client/public/css/main.css">`);
 
-        clientTinyChat.get({
-            url: CONF_URL.clients,
-            params: {
-                token,
-                ssid
-            },
-            success: function (data) {
-                let clientTinyChat = $("#client-tiny-chat");
-                clientTinyChat.append(`<link rel="stylesheet" href="` + CONF_HOST + `/client/public/css/main.css">`);
+                    client_tiny_chat.find(".chat-bubble").addClass("chat-bubble__register");
 
-                clientTinyChat.startChat({ data });
-            },
-            reject: function (error) {
-                let clientTinyChat = $("#client-tiny-chat");
-                clientTinyChat.append(`<link rel="stylesheet" href="` + CONF_HOST + `/client/public/css/main.css">`);
+                    let formRegisterChat = $(client_tiny_chat.createRegisterChat({ data: error }));
+                    formRegisterChat.onClickCheckRemember();
+                    client_tiny_chat.append(formRegisterChat);
 
-                clientTinyChat.find(".chat-bubble").addClass("chat-bubble__register");
+                    client_tiny_chat.find("#register-chat__form").submitRegisterChat();
+                    client_tiny_chat.find("#mini-size-chat").onClickMiniSize();
+                    client_tiny_chat.find("#notification-sound").onClickNotificationSound();
 
-                let formRegisterChat = $(clientTinyChat.createRegisterChat({ data: error }));
-                formRegisterChat.onClickCheckRemember();
-                clientTinyChat.append(formRegisterChat);
+                    // Load customer đồ họa
+                    client_tiny_chat.reloadLayoutChat({
+                        data: error.brand.settings,
+                        isInit: true
+                    });
 
-                clientTinyChat.find("#register-chat__form").submitRegisterChat();
-                clientTinyChat.find("#mini-size-chat").onClickMiniSize();
-                clientTinyChat.find("#notification-sound").onClickNotificationSound();
+                    if (error.not == "brand") {
+                        // Brand không tồn tại hoặc hết hạn
+                        client_tiny_chat.find(".register-content").showError({ error });
+                    }
 
-                // Load customer đồ họa
-                clientTinyChat.reloadLayoutChat({
-                    data: error.brand.settings,
-                    isInit: true
-                });
-
-                if (error.not == "brand") {
-                    // Brand không tồn tại hoặc hết hạn
-                    clientTinyChat.find(".register-content").showError({ error });
+                    client_tiny_chat.onClickAction({
+                        selector: ".chat-bubble__register"
+                    });
                 }
+            });
+        }
+    }
 
-                clientTinyChat.onClickAction({
-                    selector: ".chat-bubble__register"
-                });
-            }
-        });
+    start() {
+        let client_tiny_chat = $("#client-tiny-chat");
+        $("body").append(client_tiny_chat.createChatBubble());
+        window.reloadchat();
     }
 }
 
-const clientTinyChat = new ClientTinyChat();
-clientTinyChat.run();
+const TinyChat = new ClientTinyChat();
+TinyChat.init();
+TinyChat.start();
