@@ -388,6 +388,13 @@ import "/public/js/services/rsa.js";
                         <div class="user-name" title="${brand.name}">
                         ${brand.name}
                         </div>
+                        ${brand.count_chatinfo != null ? `  <div class="user-text">
+                            Tổng trò chuyện:        
+                            <span class="content" data-value="${brand.count_chatinfo}">
+                                ${brand.count_chatinfo}
+                                </span>
+                            </div>`
+                : ""}
                     </div>
                 </div>`;
     }

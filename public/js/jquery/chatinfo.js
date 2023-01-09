@@ -329,14 +329,18 @@ import { getDate } from "/public/js/util.js";
             let tiny_chat = $("#tiny-chat");
 
             tiny_chat.find(`.chatinfo[data-id=${settings.id}]`).remove();
-            tiny_chat.find(`.chat-box__view[data-id=${settings.id}]`).remove();
-            tiny_chat.find(".chat-box__move-down").hide();
-            tiny_chat.find(".chat-box__input").hide();
 
-            let inputSendMessage = tiny_chat.messageTextarea();
-            inputSendMessage.data("chatinfo", "")
-            inputSendMessage.val("");
+            let chat_box_view = tiny_chat.find(`.chat-box__view[data-id=${settings.id}]`);
+            if (chat_box_view.is(":visible") || chat_box_view.hasClass("active")) {
+                tiny_chat.find(".chat-box__move-down").hide();
+                tiny_chat.find(".chat-box__input").hide();
 
+                let inputSendMessage = tiny_chat.messageTextarea();
+                inputSendMessage.data("chatinfo", "")
+                inputSendMessage.val("");
+            }
+
+            chat_box_view.remove();
             tiny_chat.checkEmptyChatinfos();
         };
 
@@ -364,7 +368,7 @@ import { getDate } from "/public/js/util.js";
                         brand_id: settings.brandID,
                     },
                     success: (data) => {
-                        // _this.removeChatinfo({ id: data.chatinfo_id });
+                        _this.removeChatinfo({ id: data.chatinfo_id });
                         _this.blurBlackground().hide();
 
                         Chat.getInstance().sendRemoveChatInfo(data);

@@ -72,7 +72,7 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
                             chat.sendAddChatInfo({
                                 customer_id: data.customer_id
                             })
-                        });
+                        }, true);
 
                         client_tiny_chat.find(".register-chat").remove();
 
@@ -499,8 +499,7 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
                 data.chatinfo.private_key
             );
 
-            Chat.getInstance(data.ssid, (socket) => {
-            });
+            Chat.getInstance(data.ssid, (socket) => { });
 
             client_tiny_chat.initChatBox({
                 data,
@@ -547,6 +546,8 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
         _this.init = function () {
             _this.on("click", function (e) {
                 e.preventDefault();
+
+                Chat.getInstance().sendLogout();
 
                 localStorage.clear(settings.token);
                 sessionStorage.clear(settings.token);

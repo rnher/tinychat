@@ -199,6 +199,7 @@ import "/public/js/jquery/chatinfo.js";
                                 }
                             });
                         }
+
                         _this.loadDataBrand({ data: brand });
                     }
                 },

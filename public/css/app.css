@@ -115,9 +115,13 @@
 }
 
 #tiny-chat .chat-container .chat-menu .chat-menu__head .chat-menu__head-title {
-    display: none;
+    display: block;
     font-size: 15px;
     font-weight: 700;
+    overflow: hidden;
+    width: 100%;
+    text-align: start;
+    height: 20px;
 }
 
 #tiny-chat .chat-container .chat-menu .chat-menu__btn {

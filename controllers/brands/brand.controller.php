@@ -11,7 +11,7 @@ include_once "models/RelativeMessage.php";
 
 use APP\App;
 use APP\LIBRARIES\Auth;
-use APP\LIBRARIES\Security; 
+use APP\LIBRARIES\Security;
 use MODELS\Brand;
 use MODELS\Member;
 use MODELS\ChatInfo;
@@ -40,7 +40,7 @@ $view = function () {
             $page_url = CONF_URL["brands"] . "?id=" . $brand["id"] . "&";
 
             $response["data"] = initPaginationMeta($page_url, $total, $per_page);
-            $chatsinfos = ChatInfo::Get_With_Page(
+            $chatinfos = ChatInfo::Get_With_Page(
                 $response["data"],
                 ["brand_id", "is_deleted_brand"],
                 [$brand["id"], 0]
@@ -67,16 +67,16 @@ $view = function () {
                 ];
             };
 
-            if (isset($chatsinfos) && isset($chatsinfos[0])) {
-                foreach ($chatsinfos as $index => $chatinfo) {
-                    $chatsinfos[$index] = creatData($chatinfo, $brand);
+            if (isset($chatinfos) && isset($chatinfos[0])) {
+                foreach ($chatinfos as $index => $chatinfo) {
+                    $chatinfos[$index] = creatData($chatinfo, $brand);
                 }
 
                 $response["data"]["brand_id"] = $brand["id"];
-                $response["data"]["items"] = $chatsinfos;
-            } else if (isset($chatsinfos)) {
+                $response["data"]["items"] = $chatinfos;
+            } else if (isset($chatinfos)) {
                 $response["data"]["brand_id"] = $brand["id"];
-                $response["data"]["items"] = [creatData($chatsinfos, $brand)];
+                $response["data"]["items"] = [creatData($chatinfos, $brand)];
             } else {
                 $response["isError"] = true;
                 $response["error"]["is"] = "Không có cuộc trò chuyện";
@@ -112,7 +112,18 @@ $views = function () {
             if ($member["status"] != Member::Status("not_active")) {
                 $brand = Brand::Find_Where("id", $member["brand_id"]);
                 if (isset($brand)) {
-                    $brands[] = Brand::ShortcutInfo($brand);
+                    $chatinfos = ChatInfo::Find_Where(
+                        ["brand_id", "is_deleted_brand"],
+                        [$brand["id"], 0]
+                    );
+
+                    $brand =  Brand::ShortcutInfo($brand);
+                    $brand["count_chatinfo"] = 0;
+                    if (isset($chatinfos) && isset($chatinfos[0])) {
+                        $brand["count_chatinfo"] = count($chatinfos);
+                    }
+
+                    $brands[] = $brand;
                 }
             }
         }
@@ -121,7 +132,7 @@ $views = function () {
             $response["isError"] = true;
             $response["error"]["is"] = "Chưa có thương hiệu";
         } else {
-            $response["data"] =  $brands;
+            $response["data"] = $brands;
         }
     } else {
         $response["isError"] = true;

@@ -13,11 +13,7 @@
 
 #tiny-chat .chat-menu__list-brand .brand:hover {
     background-color: var(--color-hover__main);
-}
-
-#tiny-chat .chat-menu__list-brand .brand:hover {
-    background-color: var(--color-hover__main);
-    color: var(--text-secondary);
+    color: black;
     cursor: pointer;
 }
 
@@ -41,9 +37,17 @@
     display: none;
 }
 
-#tiny-chat .chat-menu__list-brand .brand .info-content .user-name{
+#tiny-chat .chat-menu__list-brand .brand .info-content .user-name,
+#tiny-chat .chat-menu__list-brand .brand .info-content .user-text {
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 150px;
     overflow: hidden;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#tiny-chat .chat-menu__list-brand .brand .info-content .user-text {
+    font-size: 12px;
+    font-weight: unset;
 }

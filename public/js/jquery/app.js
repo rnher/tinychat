@@ -240,10 +240,10 @@ import { CONF_URL } from "/public/js/config.js";
                     }
                         break;
                     case "nav-bar__settings": {
-                        tiny_chat.find("#navigation-bar-item__settings").trigger("click");
-                        tiny_chat.find("#setting-item__btn-brand").trigger("click", [false]);
                         let brand_id = tiny_chat.find(".brand.active").data("id");
                         if (brand_id) {
+                            tiny_chat.find("#navigation-bar-item__settings").trigger("click");
+                            tiny_chat.find("#setting-item__btn-brand").trigger("click", [false]);
                             tiny_chat.find("#select-brand")
                                 .find(`.option[data-id="${brand_id}"]`)
                                 .find("input").first()
@@ -263,6 +263,10 @@ import { CONF_URL } from "/public/js/config.js";
                             content: "Đang được dây dựng",
                             className: "nav-bar__popup"
                         }));
+                    }
+                        break;
+                    case "nav-bar__user": {
+                        tiny_chat.find("#navigation-bar-item__settings").trigger("click");
                     }
                         break;
                     default:
@@ -323,7 +327,6 @@ import { CONF_URL } from "/public/js/config.js";
                 let tiny_chat = $("#tiny-chat");
                 let chat_menu = tiny_chat.find(".chat-menu");
                 let chat_menu_btn = chat_menu.find("#chat-menu__btn");
-                let chat_menu_title = chat_menu.find(".chat-menu__head-title");
                 chat_menu_btn.empty();
 
                 if (settings.is_min) {
@@ -334,7 +337,6 @@ import { CONF_URL } from "/public/js/config.js";
                         top: -10
                     });
                     chat_menu_btn.append(`<i class="fa-solid fa-angles-left"></i>`);
-                    chat_menu_title.show("slow");
                 } else {
                     chat_menu.animate({ width: settings.width.min });
                     chat_menu.find(".brand .info-content").hide();
@@ -343,7 +345,6 @@ import { CONF_URL } from "/public/js/config.js";
                         top: 0
                     });
                     chat_menu_btn.append(`<i class="fa-solid fa-angles-right"></i>`);
-                    chat_menu_title.slideUp();
                 }
 
                 settings.is_min = !settings.is_min;

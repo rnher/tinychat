@@ -59,8 +59,7 @@ class Chat implements MessageComponentInterface
 
     function onClose($conn)
     {
-        $this->logout($this->auth($conn));
-        $this->conns->detach($conn);
+        $this->logout($conn, $this->auth($conn));
     }
 
     function onError($conn, $e)
@@ -79,6 +78,10 @@ class Chat implements MessageComponentInterface
             switch ($data["actionKey"]) {
                 case CONF_SOCKET["actionKey"]["login"]: {
                         $this->login($from, $data, $auth);
+                    }
+                    break;
+                case CONF_SOCKET["actionKey"]["logout"]: {
+                        $this->logout($from, $auth);
                     }
                     break;
                 case CONF_SOCKET["actionKey"]["checkPingChatinfos"]: {
@@ -236,7 +239,7 @@ class Chat implements MessageComponentInterface
         ]);
     }
 
-    function logout($auth)
+    function logout($conn, $auth)
     {
         if (isset($auth["auth"])) {
             $client = $auth["client"];
@@ -271,6 +274,8 @@ class Chat implements MessageComponentInterface
 
             $this->clients->detach($client);
         }
+
+        $this->conns->detach($conn);
     }
 
     function noticationPing($auth, $ping)

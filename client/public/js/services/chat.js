@@ -251,14 +251,13 @@ window.Chat = (function () {
             }
         }
 
-
         // Create chat
         return new Chat(ssid, listen);
     }
 
     return {
-        getInstance: function (ssid, listen = null) {
-            if (!instance) {
+        getInstance: function (ssid, listen = null, is_create_new = false) {
+            if (!instance || is_create_new) {
                 instance = init(ssid, listen);
             }
             return instance.socket;

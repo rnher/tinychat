@@ -152,7 +152,7 @@ $delete = function () {
                     foreach ($chatinfo_list as $chatinfo) {
                         Room::Delete_Where(
                             ["type", "room_id", "user_id"],
-                            [Room::Type("chatinfo"), $chatinfo["id"], $member_id]
+                            [Room::Type("chatinfo"), $chatinfo["id"], $otherMember["user_id"]]
                         );
                     }
                 }

@@ -86,6 +86,12 @@ export default class Socket extends WebSocket {
         })
     }
 
+    sendLogout() {
+        this.send({
+            actionKey: CONF_SOCKET.actionKey.logout
+        })
+    }
+
     sendMessage(data) {
         switch (data.type) {
             case CONF_CHAT.type.text: {
