@@ -33,6 +33,7 @@
     width: 15px;
     height: 15px;
     display: none;
+    padding-top: 0;
 }
 
 #tiny-chat .chat-menu__list-brand .brand .info-content {

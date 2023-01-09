@@ -15,6 +15,16 @@
     font-size: 18px;
 }
 
+#tiny-chat .banner.chat-box__banner .owl-carousel .item h4 {
+    margin: 10px 0;
+}
+
+#tiny-chat .banner.chat-box__banner .owl-carousel .item span {
+    color: black;
+    font-size: 13px;
+    font-weight: 500;
+}
+
 #tiny-chat .banner.chat-box__banner .owl-carousel img {
     width: 700px;
     height: 450px;

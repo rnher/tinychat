@@ -62,23 +62,27 @@ class Config
             "introduce_images" => [
                 [
                     "dir" => "/public/images/app/banners/introduce/quick-connect.png",
-                    "content" => "Kết nối khách hàng nhanh chống",
-                    "name" => "Kết nối khách hàng nhanh chống"
+                    "title" => "Kết nối khách hàng nhanh chống",
+                    "name" => "Kết nối khách hàng nhanh chống",
+                    "content" => "Cuộc trò chuyện nhiều hơn với thao tác ít hơn nhờ vào giao diện thân thiện"
                 ],
                 [
                     "dir" => "/public/images/app/banners/introduce/quick-message.png",
-                    "content" => "Tin nhắn tức thời",
-                    "name" => "Tin nhắn tức thời"
+                    "title" => "Quản trị kênh chat thông minh",
+                    "name" => "Quản trị kênh chat thông minh",
+                    "content" => "Phân quyền cho các thành viên khác tham gia kênh chat cùng bạn"
                 ],
                 [
                     "dir" => "/public/images/app/banners/introduce/rsa-encrypt.png",
-                    "content" => "Được mã hóa 2 chiều với RSA",
-                    "name" => "Được mã hóa 2 chiều với RSA"
+                    "title" => "Được mã hóa 2 chiều với RSA",
+                    "name" => "Được mã hóa 2 chiều với RSA",
+                    "content" => "Nội dung tin nhắn sẽ được mã hóa trong suốt quá trình gửi và nhận"
                 ],
                 [
                     "dir" => "/public/images/app/banners/introduce/file-variety.png",
-                    "content" => "Gửi đa dạng tập tin",
-                    "name" => "Gửi đa dạng tập tin"
+                    "title" => "Gửi dữ liệu thông minh",
+                    "name" => "Gửi dữ liệu thông minh",
+                    "content" => "Bộ lọc sẽ giúp bạn giới thiệu sản phẩm chính xác đến người dùng dễ dàng hơn"
                 ],
             ],
             "defaults" => [

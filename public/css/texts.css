@@ -54,6 +54,18 @@
     background-color: var(--success);
 }
 
+#tiny-chat .badge-danger.brand-notification::before,
+#tiny-chat .user-online.badge-danger::before,
+#tiny-chat .user-online.badge-success::before {
+    content: " ";
+    display: block;
+    background-color: transparent;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
 /* label */
 #tiny-chat .label-title {
     font-weight: 700;
