@@ -285,7 +285,10 @@ window.Chat = (function () {
                 // Kiểm tra ping users sau khi add
                 this._updatePingChatinfos();
 
-                $("#tiny-chat").updateBrandNotification({ brandID: data.chatinfo.brand_id });
+                $("#tiny-chat").updateBrandNotification({
+                    brandID: data.chatinfo.brand_id,
+                    offset_count_chatinfo: 1
+                });
 
                 // Chuông thông báo
                 $("#tiny-chat").playSoundNotification({ type: "greeting" });
@@ -295,7 +298,10 @@ window.Chat = (function () {
                 let tiny_chat = $("#tiny-chat");
 
                 tiny_chat.removeChatinfo({ id: data.chatinfo_id });
-                tiny_chat.updateBrandNotification({ brandID: data.brand_id });
+                tiny_chat.updateBrandNotification({
+                    brandID: data.brand_id,
+                    offset_count_chatinfo: -1
+                });
             };
 
             updateSeen(data) {

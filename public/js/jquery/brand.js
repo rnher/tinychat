@@ -797,6 +797,7 @@ import "/public/js/jquery/chatinfo.js";
         let _this = this;
 
         let defaults = {
+            offset_count_chatinfo: null
         };
         let settings = $.extend({}, defaults, options);
 
@@ -807,6 +808,14 @@ import "/public/js/jquery/chatinfo.js";
             let newMsg = chatinfoListChatinfo.find(`.chatinfo`).find(`.badge-new-msg[data-value!="0"]`);
 
             let brand = $(`.brand[data-id=${settings.brandID}]`);
+
+            if (settings.offset_count_chatinfo != null) {
+                let count_chatinfo = brand.find(".count-chatinfo");
+                let count = parseInt(count_chatinfo.data("value"), 10) + settings.offset_count_chatinfo;
+                count_chatinfo.data("value", count);
+                count_chatinfo.empty().text(count);
+            }
+
             if (notSeen.length || newMsg.length) {
                 brand.find(".brand-notification").show();
                 return true;

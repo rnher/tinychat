@@ -389,9 +389,9 @@ import "/public/js/services/rsa.js";
                         ${brand.name}
                         </div>
                         ${brand.count_chatinfo != null ? `  <div class="user-text">
-                            Tổng trò chuyện:        
-                            <span class="content" data-value="${brand.count_chatinfo}">
-                                ${brand.count_chatinfo}
+                                Tổng trò chuyện:        
+                                <span class="content count-chatinfo" data-value="${brand.count_chatinfo}">
+                                    ${brand.count_chatinfo}
                                 </span>
                             </div>`
                 : ""}
@@ -703,7 +703,7 @@ import "/public/js/services/rsa.js";
                 avatarIcon = `<i class="fa-regular fa-comments"></i>`;
                 break;
             case "22":
-                avatarIcon = `<i class="fa-solid fa-shop"></i>`;
+                avatarIcon = `<i class="fa-solid fa-store"></i>`;
                 break;
             default:
                 break;

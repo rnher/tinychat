@@ -117,10 +117,11 @@ $views = function () {
                         [$brand["id"], 0]
                     );
 
-                    $brand =  Brand::ShortcutInfo($brand);
-                    $brand["count_chatinfo"] = 0;
+                    $brand = Brand::ShortcutInfo($brand);
                     if (isset($chatinfos) && isset($chatinfos[0])) {
                         $brand["count_chatinfo"] = count($chatinfos);
+                    } else {
+                        $brand["count_chatinfo"] = 0;
                     }
 
                     $brands[] = $brand;

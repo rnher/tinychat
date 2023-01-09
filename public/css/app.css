@@ -116,8 +116,7 @@
 
 #tiny-chat .chat-container .chat-menu .chat-menu__head .chat-menu__head-title {
     display: block;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 14px;
     overflow: hidden;
     width: 100%;
     text-align: start;

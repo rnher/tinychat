@@ -529,31 +529,33 @@ class Chat implements MessageComponentInterface
         $brand = Brand::Find_Where(["id"], [$chatinfo["brand_id"]]);
 
         foreach ($rooms as $room) {
-            foreach ($this->clients as $client) {
-                if (
-                    $client->id == $room["user_id"]
-                    && ($client->isMember ? "1" : "0") == $room["is_member"]
-                ) {
-                    $data["isSelf"] = ($selfClient->id == $client->id) && ($selfClient->isMember == $client->isMember);
+            if (isset($room)) {
+                foreach ($this->clients as $client) {
+                    if (
+                        $client->id == $room["user_id"]
+                        && ($client->isMember ? "1" : "0") == $room["is_member"]
+                    ) {
+                        $data["isSelf"] = ($selfClient->id == $client->id) && ($selfClient->isMember == $client->isMember);
 
-                    if ($selfClient->isMember && $client->isMember && !$data["isSelf"]) {
-                        $data["isBrandSelf"] = true;
+                        if ($selfClient->isMember && $client->isMember && !$data["isSelf"]) {
+                            $data["isBrandSelf"] = true;
+                        }
+
+                        $data["id"] = ($selfClient->isMember ? "user-" : "customer-") . $selfClient->id;
+                        $data["userName"] = $selfAuth["name"];
+                        $data["avatar"] = CONF_HOST . $selfAuth["avatar"];
+
+                        if ($selfClient->isMember && !$client->isMember) {
+                            $data["id"] = "brand-" . $selfClient->id;
+                            $data["userName"] = $brand["name"];
+                            $data["avatar"] = CONF_HOST . $brand["avatar"];
+                        }
+
+                        $this->send(
+                            $client,
+                            $data
+                        );
                     }
-
-                    $data["id"] = ($selfClient->isMember ? "user-" : "customer-") . $selfClient->id;
-                    $data["userName"] = $selfAuth["name"];
-                    $data["avatar"] = CONF_HOST . $selfAuth["avatar"];
-
-                    if ($selfClient->isMember && !$client->isMember) {
-                        $data["id"] = "brand-" . $selfClient->id;
-                        $data["userName"] = $brand["name"];
-                        $data["avatar"] = CONF_HOST . $brand["avatar"];
-                    }
-
-                    $this->send(
-                        $client,
-                        $data
-                    );
                 }
             }
         }

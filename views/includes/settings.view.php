@@ -20,10 +20,10 @@
                     Người dùng
                 </div>
             </div>
-            <div id="setting-item__btn-brand" class="menu-item setting-item__btn" data-action="show" data-prevtarget="setting"
-                data-target="settings-brand">
+            <div id="setting-item__btn-brand" class="menu-item setting-item__btn" data-action="show"
+                data-prevtarget="setting" data-target="settings-brand">
                 <div class="item-icon">
-                    <i class="fa-solid fa-shop"></i>
+                    <i class="fa-solid fa-store"></i>
                 </div>
                 <div class="item-content">
                     Thương hiệu

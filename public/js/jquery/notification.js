@@ -287,7 +287,7 @@ import "/public/js/jquery/create.js";
 
                 let noti = $(this);
                 if (noti.hasClass("unread")) {
-                    _this.taggoleViewNotification(noti.data("id"));
+                    noti.find(".notification-item__action-item__view").trigger("click");
                 }
             });
 
@@ -315,7 +315,8 @@ import "/public/js/jquery/create.js";
                 let noti = $(`.notifications .notification-item[data-id=${notification_id}]`);
                 noti.find(`.notification-item__action-item__accept`).remove();
                 noti.find(`.notification-item__action-item__reject`).remove();
-                noti.removeClass("unread");
+
+                _this.taggoleViewNotification(notification_id);
 
                 noti.updateNotification();
             };

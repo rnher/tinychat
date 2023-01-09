@@ -133,14 +133,14 @@ $delete = function () {
             $otherMember = Member::Find_Where(["id"], [$member_id]);
             if (isset($otherMember)) {
                 Member::Delete_Where(
-                    ["brand_id", "role", "id"],
-                    [$brand["id"], Member::Role("member"),  $member_id]
+                    ["brand_id", "role", "user_id"],
+                    [$brand["id"], Member::Role("member"), $otherMember["user_id"]]
                 );
 
                 // Xóa room brand
                 Room::Delete_Where(
                     ["type", "room_id", "user_id"],
-                    [Room::Type("brand"), $brand["id"], $member_id]
+                    [Room::Type("brand"), $brand["id"], $otherMember["user_id"]]
                 );
                 // Xóa room chatinfo
                 $chatinfo_list = ChatInfo::Find_Where("brand_id", $brand["id"]);

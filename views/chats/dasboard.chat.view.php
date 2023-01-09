@@ -119,7 +119,7 @@ $user = User::DetailInfo(Auth::User());
         <div class="chat-menu">
             <div class="chat-menu__head">
                 <div class="chat-menu__head-title">
-                    <i class="fa-solid fa-house-fire"></i> Thương hiệu
+                    <i class="fa-solid fa-store"></i> Thương hiệu
                 </div>
                 <button id="chat-menu__btn" class="chat-menu__btn btn">
                     <i class="fa-solid fa-angles-right"></i>

@@ -33,7 +33,11 @@ $accept_member_invite = function ($user, $brand_id) {
         }
 
         // Add room chatinfo
-        $chatinfo_list = ChatInfo::Find_Where("brand_id", $brand_id);
+        $chatinfo_list = ChatInfo::Find_Where(
+            ["brand_id", "is_deleted_brand"],
+            [$brand_id, 0]
+        );
+
         if (isset($chatinfo_list)) {
             if (!isset($chatinfo_list[0])) {
                 $chatinfo_list = [$chatinfo_list];
@@ -49,10 +53,17 @@ $accept_member_invite = function ($user, $brand_id) {
                     ]);
                 }
             }
+        } else {
+            $chatinfo_list = [];
         }
 
         $brand = Brand::Find_Where(["id"], [$brand_id]);
-        $brand = isset($brand) ? Brand::DetailInfo($brand) : [];
+        if (isset($brand)) {
+            $brand = Brand::DetailInfo($brand);
+            $brand["count_chatinfo"] = count($chatinfo_list);
+        } else {
+            $brand = [];
+        }
 
         return [
             "is_error" => false,
