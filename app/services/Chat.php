@@ -198,9 +198,6 @@ class Chat implements MessageComponentInterface
             $this->clients->detach($re_auth["client"]);
         }
 
-        // Check đã online chưa
-        $is_online = false;
-
         if (isset($data["ssid"])) {
             if ($data["isMember"]) {
                 $_auth = Auth::User($data["ssid"]);
@@ -225,39 +222,18 @@ class Chat implements MessageComponentInterface
                 $this->noticationPing($auth, 1);
             } else {
                 // User 
-                foreach ($this->clients as $c) {
-                    if (
-                        $c->isMember
-                        && $c->id == $_auth["id"]
-                    ) {
-                        $is_online = true;
-                        break;
-                    }
-                }
-
-                if (!$is_online) {
-                    // Cập nhật trạng thái
-                    $update_session = [
-                        "is_login" => 1
-                    ];
-                    Session::Update_Where("user_id", $_auth["id"], $update_session);
-                }
+                // Cập nhật trạng thái
+                $update_session = [
+                    "is_login" => 1
+                ];
+                Session::Update_Where("user_id", $_auth["id"], $update_session);
             }
         }
 
-        if (!$is_online) {
-            $this->clients->attach($_client);
-            $this->send($_client, [
-                "actionKey" => CONF_SOCKET["actionKey"]["login"]
-            ]);
-        } else {
-            $this->send($_client, [
-                "actionKey" => CONF_SOCKET["actionKey"]["login"],
-                "error" => [
-                    "is" => "Người dùng đang trực tuyến"
-                ]
-            ]);
-        }
+        $this->clients->attach($_client);
+        $this->send($_client, [
+            "actionKey" => CONF_SOCKET["actionKey"]["login"]
+        ]);
     }
 
     function logout($auth)
@@ -661,24 +637,36 @@ class Chat implements MessageComponentInterface
     function pushNotification($auth, $data)
     {
         if (isset($auth["auth"])) {
+            $client = $auth["client"];
+
             $notification = Notification::Find_Where(
                 ["id"],
                 [$data["notification_id"]]
             );
 
             if (isset($notification)) {
-                foreach ($this->clients as $client) {
-                    if ($client->id ==  $notification["receiver_id"] && $client->isMember) {
-                        $this->send(
-                            $client,
-                            [
-                                "actionKey" => $data["actionKey"],
-                                "notification" => Notification::DetailInfo($notification)
-                            ]
-                        );
+                if ($client->isMember) {
+                    foreach ($this->clients as $c) {
+                        if ($c->id ==  $notification["receiver_id"] && $c->isMember) {
+                            $this->send(
+                                $c,
+                                [
+                                    "actionKey" => $data["actionKey"],
+                                    "notification" => Notification::DetailInfo($notification)
+                                ]
+                            );
 
-                        break;
+                            break;
+                        }
                     }
+                } else {
+                    $this->sendToBrand(
+                        $notification["receiver_id"],
+                        [
+                            "actionKey" => $data["actionKey"],
+                            "notification" => Notification::DetailInfo($notification)
+                        ]
+                    );
                 }
             }
         }

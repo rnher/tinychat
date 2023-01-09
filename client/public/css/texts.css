@@ -43,7 +43,7 @@
     font-weight: 500;
 }
 
-#client-tiny-chat .badge-danger {
+#client-tiny-chat    {
     background-color: var(--danger);
 }
 

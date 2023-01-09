@@ -278,7 +278,7 @@ sudo apache2ctl configtest
 sudo service apache2 restart
 sudo service apache2 status
 
-sudo service mysql start
+sudo service mysql restart
 sudo service mysql status
 
 ==========================================
@@ -312,5 +312,12 @@ sudo php socket.php
 ==========================================
 ==========================================View Log
 ==========================================
-PHP
+*
+*PHP
+*
 /var/log/apache2
+
+*
+*App
+*
+/var/www/tinychat/app/logs

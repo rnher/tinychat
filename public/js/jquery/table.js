@@ -14,6 +14,10 @@ import { getDate } from "/public/js/util.js";
                         name: "Người dùng"
                     },
                     {
+                        value: "brand_name",
+                        name: "Tên thương hiệu"
+                    },
+                    {
                         value: "status",
                         name: "Trạng thái"
                     },
@@ -74,19 +78,24 @@ import { getDate } from "/public/js/util.js";
             groups: [
                 {
                     value: "service_code",
-                    name: "Mã dịch vụ"
+                    name: "Mã dịch vụ",
+                    icon: '<i class="fa-solid fa-barcode"></i>'
                 }, {
                     vaule: "user_name",
-                    name: "Tên người dùng"
+                    name: "Tên người dùng",
+                    icon: '<i class="fa-solid fa-user"></i>'
                 }, {
                     value: "active",
-                    name: "Hoạt động"
+                    name: "Hoạt động",
+                    icon: '<i class="fa-regular fa-calendar-check"></i>'
                 }, {
                     value: "expire",
-                    name: "Ngày hết hạn"
+                    name: "Ngày hết hạn",
+                    icon: '<i class="fa-regular fa-calendar-xmark"></i>'
                 }, {
                     value: "create_date",
-                    name: "Ngày tạo"
+                    name: "Ngày tạo",
+                    icon: '<i class="fa-regular fa-calendar-plus"></i>'
                 },
             ]
         };
@@ -128,6 +137,7 @@ import { getDate } from "/public/js/util.js";
                 let op = $(tiny_chat.createSelectOption({
                     value: d.value,
                     name: d.name,
+                    icon: d.icon,
                 }));
                 group.find(".options").append(op);
             }
@@ -502,11 +512,18 @@ import { getDate } from "/public/js/util.js";
             let not_data_label = "Chưa có dữ liệu";
             let tds = [
                 {
-                    data: `data-userid="${data.user_id}" data-memberid="${data.member_id}"`,
+                    data: `data-userid="${data.user_id}" data-memberid="${data.member_id}" data-brandid="${data.brand_id}"`,
                     content: createPreTable.createUser({
                         avatar: data.user_avatar,
                         name: data.user_name,
                         mail: data.user_mail,
+                    })
+                },
+                {
+                    data: `data-brandid="${data.brand_id}" data-memberid="${data.member_id}"`,
+                    content: createPreTable.createUser({
+                        avatar: data.brand_avatar,
+                        name: data.brand_name,
                     })
                 },
                 {
@@ -541,7 +558,7 @@ import { getDate } from "/public/js/util.js";
             trd.append($(`<td></td>`).append(createPreTable.checkboxInput("table-checkbox")));
             for (let j = 0; j < tds.length; j++) {
                 let td = tds[j];
-                trd.append(createPreTable.createTd(td, j == 0));
+                trd.append(createPreTable.createTd(td, j < 2));
             }
 
             return trd;

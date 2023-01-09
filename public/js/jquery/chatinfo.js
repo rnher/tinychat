@@ -1,7 +1,7 @@
 import "/public/js/libraries/jquery-3.6.1.js";
 import "/public/js/jquery/brand.js";
 import "/public/js/services/rsa.js";
-import { CONF_URL, CONF_SOCKET, CONF_CHAT } from "/public/js/config.js";
+import { CONF_URL, CONF_SOCKET, CONF_CHAT, CONF_APP } from "/public/js/config.js";
 import { getDate } from "/public/js/util.js";
 
 (function ($) {
@@ -403,8 +403,10 @@ import { getDate } from "/public/js/util.js";
 
             // Chatinfo empty
             if (!chatinfo_list.find(".chatinfo").length) {
+                debugger;
                 chatinfo_list.append(tiny_chat.createMini404({
-                    type: "chatinfo"
+                    type: "chatinfo",
+                    image: CONF_APP.defaults.images.chatinfoEmpty
                 }));
 
                 tiny_chat.find(".chat-box__banner").show();

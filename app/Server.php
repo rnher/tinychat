@@ -108,22 +108,32 @@ class Server
         return $_SERVER["REQUEST_METHOD"];
     }
 
+    static function Go($parameter = "home", $isRaw = false)
+    {
+        if ($isRaw) {
+            header("Location: " . $parameter);
+        } else {
+            header("Location: " . CONF_URL[$parameter]);
+        }
+    }
+
     static function Controller($controller)
     {
         switch ($_SERVER["REQUEST_METHOD"]) {
             case "POST": {
-                    isset($controller["post"]) ?  $controller["post"]() : null;
+                    isset($controller["post"]) ?  $controller["post"]() : self::Go();
                 }
                 break;
             case "GET": {
-                    isset($controller["get"]) ?  $controller["get"]() : null;
+                    isset($controller["get"]) ?  $controller["get"]() : self::Go();
                 }
                 break;
             case "DELETE": {
-                    isset($controller["delete"]) ?  $controller["delete"]() : null;
+                    isset($controller["delete"]) ?  $controller["delete"]() : self::Go();
                 }
                 break;
             default: {
+                    self::Go();
                 }
                 break;
         }

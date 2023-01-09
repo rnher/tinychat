@@ -50,15 +50,6 @@ class App extends Server
         return $this->config;
     }
 
-    static function Go($parameter = "home", $isRaw = false)
-    {
-        if ($isRaw) {
-            header("Location: " . $parameter);
-        } else {
-            header("Location: " . CONF_URL[$parameter]);
-        }
-    }
-
     static function responseJson($data)
     {
         header('Content-Type: application/json');

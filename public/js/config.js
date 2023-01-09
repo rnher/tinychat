@@ -40,8 +40,9 @@ export let CONF_SOCKET = {
 export let CONF_APP = {
     defaults: {
         images: {
-            notificationEmpty: CONF_HOST + "/public/images/defaults/notifications-empty.jpg",
-            dataEmpty: CONF_HOST + "/public/images/defaults/data-empty.jpg",
+            notificationEmpty: CONF_HOST + "/public/images/defaults/empty/notifications-empty.png",
+            dataEmpty: CONF_HOST + "/public/images/defaults/empty/data-empty.jpg",
+            chatinfoEmpty: CONF_HOST + "/public/images/defaults/empty/chatinfo-empty.png",
         }
     },
     encrypt: {

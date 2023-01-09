@@ -281,6 +281,16 @@ import "/public/js/jquery/create.js";
         let settings = $.extend({}, defaults, options);
 
         _this.init = function () {
+            _this.on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                let noti = $(this);
+                if (noti.hasClass("unread")) {
+                    _this.taggoleViewNotification(noti.data("id"));
+                }
+            });
+
             _this.taggoleViewNotification = (notification_id) => {
                 let noti = $(`.notifications .notification-item[data-id=${notification_id}]`);
                 noti.toggleClass("unread");
@@ -351,7 +361,7 @@ import "/public/js/jquery/create.js";
             });
 
             _this.find(".notification-item__action-item__view").on("click", function (e) {
-                e.stopPropagation();
+                e.preventDefault();
 
                 let noti = $(`.notifications .notification-item[data-id=${settings.notification_id}]`);
 
@@ -385,7 +395,7 @@ import "/public/js/jquery/create.js";
 
         _this.init = function () {
             _this.on("click", function (e) {
-                e.stopPropagation();
+                e.preventDefault();
 
                 _this.postAjax({
                     url: CONF_URL.notifications,

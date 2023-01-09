@@ -271,6 +271,7 @@ import "/public/js/jquery/chatinfo.js";
                         _this.add404({
                             target: `.chat-info__list-chatinfo[data-id=${error.brand_id}]`,
                             text: error.is,
+                            image: CONF_APP.defaults.images.chatinfoEmpty
                         });
                     }
                 });

@@ -90,7 +90,7 @@ $user = User::DetailInfo(Auth::User());
         <!-- <div class="divid"></div>
 
         <div class="navigation-bar-item brand-navigation-bar__item" data-target="nav-bar__token" title="Mã nhúng">
-            <i class="fa-solid fa-code"></i> Mã nhúng
+            <i class="fa-solid fa-barcode"></i> Mã nhúng
 
             <div class="token">
             </div>
@@ -146,25 +146,9 @@ $user = User::DetailInfo(Auth::User());
         <div class="chat-view">
             <div class="chat-box">
                 <!-- chat-box__banner ở đây -->
-                <div class="banner chat-box__banner">
-                    <div class="owl-carousel owl-theme chat-box__banner">
-                        <div class="item">
-                            <img src="<?= CONF_APP["defaults"]["data_empty"]  ?>" alt="<?= CONF_APP["name"] ?>">
-                        </div>
-                        <div class="item">
-                            <img src="<?= CONF_APP["defaults"]["data_empty"]  ?>" alt="<?= CONF_APP["name"] ?>">
-                        </div>
-                        <div class="item">
-                            <img src="<?= CONF_APP["defaults"]["data_empty"]  ?>" alt="<?= CONF_APP["name"] ?>">
-                        </div>
-                        <div class="item">
-                            <img src="<?= CONF_APP["defaults"]["data_empty"]  ?>" alt="<?= CONF_APP["name"] ?>">
-                        </div>
-                        <div class="item">
-                            <img src="<?= CONF_APP["defaults"]["data_empty"]  ?>" alt="<?= CONF_APP["name"] ?>">
-                        </div>
-                    </div>
-                </div>
+                <?php
+                include_once "views/includes/chat.box.banner.view.php";
+                ?>
 
                 <div class="chat-box__content">
                     <!-- Dữ liệu messages load ở đây -->

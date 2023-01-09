@@ -549,6 +549,7 @@ import { formatNoticationNumber } from "/client/public/js/util.js";
                 e.preventDefault();
 
                 localStorage.clear(settings.token);
+                sessionStorage.clear(settings.token);
                 window.reloadchat();
             });
         };

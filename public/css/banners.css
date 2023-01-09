@@ -5,6 +5,34 @@
 }
 
 #tiny-chat .banner.chat-box__banner .owl-carousel {
-    width: 500px;
+    width: 90%;
     margin: auto;
+}
+
+#tiny-chat .banner.chat-box__banner .owl-carousel .item {
+    color: var(--bg-main);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+#tiny-chat .banner.chat-box__banner .owl-carousel img {
+    width: 700px;
+    height: 450px;
+    margin: auto;
+}
+
+#tiny-chat .banner.chat-box__banner {
+    text-align: center;
+}
+
+#tiny-chat .banner.chat-box__banner .app_greeting {
+    font-size: 20px;
+}
+
+#tiny-chat .banner.chat-box__banner .app_greeting span {
+    font-weight: 600;
+}
+
+#tiny-chat .owl-dot.active span {
+    background-color: var(--bg-active);
 }

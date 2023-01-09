@@ -210,7 +210,6 @@ import "/public/js/services/rsa.js";
                     break;
             }
         }
-
         return `<div class="error ${settings.image ? `error-image` : ``} error-404 mini-error-404">
                     <div class="error-title">
                         <h1>Không tìm thấy !</h1>
@@ -880,10 +879,9 @@ import "/public/js/services/rsa.js";
         return `<div class="option" data-id="${settings.value}">
                     <input class="s-c top" type="radio" name="platform" value="${settings.value}">
                     <input class="s-c bottom" type="radio" name="platform" value="${settings.value}">
-                    ${settings.icon ? settings.icon : ``}
                     ${settings.image ? `<img src="${settings.image.src}" alt = "${settings.name}" >` : ``}
-                    <span class="label" > ${settings.name}</span>
-                    <span class="opt-val">${settings.name}</span>
+                    <span class="label" > ${settings.icon ? settings.icon : ``} ${settings.name}</span>
+                    <span class="opt-val">  ${settings.icon ? settings.icon : ``} ${settings.name}</span>
                 </div > `;
     }
 
@@ -908,8 +906,8 @@ import "/public/js/services/rsa.js";
                 return $(`  <div class="user-td">
                                 <img src="${data.avatar}" alt="${data.name}">
                                 <div class="user-td__group">
-                                    <div title="${data.name}" class="user-td__group-item">${data.name}</div>
-                                    <div title="${data.mail}" class="user-td__group-item">${data.mail}</div>
+                                    ${data.name ? `<div title="${data.name}" class="user-td__group-item">${data.name}</div>` : ""}
+                                    ${data.mail ? `<div title="${data.mail}" class="user-td__group-item">${data.mail}</div>` : ""}
                                 </div>
                             </div>`);
             }

@@ -317,6 +317,17 @@
     right: 0px;
 }
 
+#tiny-chat .user-online.badge-danger::before,
+#tiny-chat .user-online.badge-success::before {
+    content: " ";
+    display: block;
+    background-color: transparent;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
 #tiny-chat .profile-item.profile-item-avatar .info-user .user-avatar,
 #tiny-chat .chatinfo.chatinfo-avatar .info-user .user-avatar {
     width: 50px;
@@ -424,4 +435,8 @@
 
 #tiny-chat .chat-info .chat-info__content .chat-info__list-chatinfo .chatinfo:hover .date-content span {
     display: none;
+}
+
+#tiny-chat .chat-info .chat-info__content .chat-info__list-chatinfo .chatinfo:hover .badge-new {
+    left: -30px;
 }

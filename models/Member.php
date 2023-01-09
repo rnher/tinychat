@@ -151,8 +151,12 @@ class Member
         ] : null;
     }
 
-    static function Find_With_Rerelative_Brand_User($brand_id)
+    static function Find_With_Rerelative_Brand_User($brand_id, $role = null)
     {
+        if(!$role){
+            $role=  self::Role("admin");
+        }
+
         $sql = "SELECT
         member.id AS member_id, 
         member.brand_id AS brand_id,
@@ -160,6 +164,7 @@ class Member
         user.name AS user_name,
         user.avatar AS user_avatar,
         user.mail AS user_mail,
+        brand.name AS brand_name,
         brand.avatar AS brand_avatar,
         brand.domain AS brand_domain,
         brand.expire AS brand_expire,
@@ -183,6 +188,8 @@ class Member
 
         WHERE 
         member.brand_id = '$brand_id' 
+        AND
+        member.role = '$role' 
         ;
         ";
 

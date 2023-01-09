@@ -59,15 +59,38 @@ class Config
             "host" => CONF_HOST,
             "domain" => CONF_DOMAIN,
             "logo" => "/public/images/app/logo.png",
+            "introduce_images" => [
+                [
+                    "dir" => "/public/images/app/banners/introduce/quick-connect.png",
+                    "content" => "Kết nối khách hàng nhanh chống",
+                    "name" => "Kết nối khách hàng nhanh chống"
+                ],
+                [
+                    "dir" => "/public/images/app/banners/introduce/quick-message.png",
+                    "content" => "Tin nhắn tức thời",
+                    "name" => "Tin nhắn tức thời"
+                ],
+                [
+                    "dir" => "/public/images/app/banners/introduce/rsa-encrypt.png",
+                    "content" => "Được mã hóa 2 chiều với RSA",
+                    "name" => "Được mã hóa 2 chiều với RSA"
+                ],
+                [
+                    "dir" => "/public/images/app/banners/introduce/file-variety.png",
+                    "content" => "Gửi đa dạng tập tin",
+                    "name" => "Gửi đa dạng tập tin"
+                ],
+            ],
             "defaults" => [
                 "max_customer_avatar" => 9,
                 "max_user_avatar" => 9,
-                "customer_avatar_1" => "/public/images/defaults/customer-avatar-1.jpg",
-                "customer_avatar" => "/public/images/defaults/customer-avatar-[index].jpg",
-                "user_avatar" => "/public/images/defaults/user-avatar-[index].jpg",
-                "brand_avatar" => "/public/images/defaults/brand-avatar.jpg",
-                "brand_banner" => "/public/images/defaults/brand-banner.jpg",
-                "data_empty" => "/public/images/defaults/data-empty.jpg"
+                "customer_avatar_1" => "/public/images/defaults/customers/customer-avatar-1.jpg",
+                "customer_avatar" => "/public/images/defaults/customers/customer-avatar-[index].jpg",
+                "user_avatar" => "/public/images/defaults/users/user-avatar-[index].jpg",
+                "brand_avatar" => "/public/images/defaults/brands/brand-avatar.png",
+                "brand_banner" => "/public/images/defaults/brands/brand-banner.png",
+                "data_empty" => "/public/images/defaults/empty/data-empty.jpg",
+                "chatinfo_empty" => "/public/images/defaults/empty/chatinfo.empty.png",
             ],
             "ssl" => [
                 "local_cert"  => "app/ssl/certificate.crt",

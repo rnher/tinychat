@@ -24,7 +24,6 @@ switch ($uri[router]) {
                         ]);
                     }
                     break;
-
                 default:
                     App::Go();
                     break;
@@ -163,6 +162,6 @@ switch ($uri[router]) {
         }
         break;
     default:
-        App::Go("signin");
+        App::Go();
         break;
 }

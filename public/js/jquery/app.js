@@ -334,7 +334,7 @@ import { CONF_URL } from "/public/js/config.js";
                         top: -10
                     });
                     chat_menu_btn.append(`<i class="fa-solid fa-angles-left"></i>`);
-                    chat_menu_title.slideDown();
+                    chat_menu_title.show("slow");
                 } else {
                     chat_menu.animate({ width: settings.width.min });
                     chat_menu.find(".brand .info-content").hide();

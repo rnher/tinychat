@@ -69,7 +69,6 @@ $signin = function () {
                 $session = Session::Find_Where("user_id", $user["id"]);
 
                 if ($session["is_login"] == 0) {
-
                     $token = User::Create_Token($user);
                     $update_session = [
                         "expire" => time() + CONF_SESSION["expire"],
