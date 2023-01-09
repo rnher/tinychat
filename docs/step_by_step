@@ -247,7 +247,8 @@ sudo apt-get install ntp
 *Clone
 *
 cd /var/www/
-git clone --branch release https://github.com/rnher/tinychat.git 
+//git clone --branch release https://github.com/rnher/tinychat.git 
+git clone https://github.com/rnher/tinychat.git 
 
 *
 *Init

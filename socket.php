@@ -18,8 +18,6 @@ use React\Socket\SocketServer;
 use React\EventLoop\Loop;
 use React\Socket\SecureServer;
 
-session_start();
-
 $loop = Loop::get();
 
 $server = new SocketServer(CONF_SOCKET["host"], array(), $loop);

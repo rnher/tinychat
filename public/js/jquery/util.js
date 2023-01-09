@@ -196,7 +196,7 @@ import "/public/js/jquery/create.js";
         let defaults = {
             id: uniqId(),
             autoClose: false,
-            hideTimeout: 4000
+            hideTimeout: 3000
         };
 
         let settings = $.extend({}, defaults, options);
@@ -244,7 +244,7 @@ import "/public/js/jquery/create.js";
                 if (settings.autoClose) {
                     setTimeout(() => {
                         currentAlert.hide("slow").remove();
-                    }, settings.hideTimeout); // 1s chờ, 3s animation css
+                    }, settings.hideTimeout); // 1s chờ, 2s animation css
                 }
             }
         };
