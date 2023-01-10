@@ -23,7 +23,14 @@ import { CONF_URL } from "/public/js/config.js";
                     fields: ["username", "name", "mail", "password", "repassword"],
                     url: settings.url,
                     success: (data) => {
-                        $("#tiny-chat").go(CONF_URL.home);
+                        // $("#tiny-chat").go(CONF_URL.home);
+
+                        $("#tiny-chat").showAlert({
+                            type: "success",
+                            content: data.is,
+                            autoClose: true,
+                            name: "signup"
+                        });
                     },
                     reject: (error) => {
                         form.endabaleInput();

@@ -44,5 +44,5 @@
 }
 
 #tiny-chat .owl-dot.active span {
-    background-color: var(--bg-active);
+    background-color: var(--bg-secondary);
 }

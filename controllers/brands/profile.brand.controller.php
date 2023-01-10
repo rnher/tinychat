@@ -75,7 +75,10 @@ $create = function () {
             }
 
             $brand = Brand::Find_Where("id", $brand_id);
-            $response["data"] = Brand::DetailInfo($brand);
+            $brand = Brand::DetailInfo($brand);
+            $brand["count_chatinfo"] = 0;
+            
+            $response["data"] = $brand;
         }
     } else {
         $response["error"]["is"] = "Tạo thương hiệu không thành công";

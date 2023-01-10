@@ -429,3 +429,10 @@
 #tiny-chat .chat-info .chat-info__content .chat-info__list-chatinfo .chatinfo:hover .badge-new {
     left: -30px;
 }
+
+/* signin-user  */
+/* signup-user  */
+#tiny-chat #signin-user .logo,
+#tiny-chat #signup-user .logo {
+    width: 250px;
+}

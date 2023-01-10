@@ -18,15 +18,24 @@ import "/public/js/jquery/create.js";
             $(settings.elements).on("click", settings.selector, function (e) {
                 e.preventDefault();
 
+                let tiny_chat = $("#tiny-chat");
+
                 let target = $(this).data("target");
                 let prevtarget = $(this).data("prevtarget");
                 let action = $(this).data("action");
+                let is_clear = $(this).data("clear");
 
                 switch (action) {
                     case "toggle": {
-                        $("#" + prevtarget).toggle();
-                        $("#" + target).slideToggle();
-                        $("#tiny-chat").blurBlackground().toggle();
+                        prevtarget = $("#" + prevtarget);
+                        prevtarget.toggle();
+                        target = $("#" + target);
+                        target.toggle();
+                        tiny_chat.blurBlackground().toggle();
+
+                        if (is_clear) {
+                            prevtarget.onResetForm();
+                        }
                     }
                         break;
                     case "show": {
@@ -39,7 +48,7 @@ import "/public/js/jquery/create.js";
                     }
                         break;
                     case "link": {
-                        $("#tiny-chat").go(target);
+                        tiny_chat.go(target);
                     }
                         break;
                     case "close": {
@@ -275,6 +284,8 @@ import "/public/js/jquery/create.js";
                 .prop("src", "")
                 .prop("alt", "")
                 .data("self", 0);
+
+            _this.find("input").prop('checked', false);
         };
 
         return _this.init();

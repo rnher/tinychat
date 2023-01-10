@@ -20,7 +20,7 @@
     padding: 0 16px;
     width: 100%;
     color: var(--color-btn);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 #tiny-chat .btn-danger {
@@ -28,9 +28,42 @@
     color: var(--color-btn);
 }
 
-#tiny-chat  .clr-field button {
+#tiny-chat .clr-field button {
     border-radius: 5px !important;
     height: 30px !important;
     margin-right: 5px !important;
     margin-top: -2px !important;
+}
+
+/* owl  */
+#tiny-chat .owl-prev {
+    width: 30px;
+    height: 100px;
+    position: absolute;
+    top: 40%;
+    margin-left: -50px;
+    display: block !important;
+    border: 0px solid black;
+}
+
+#tiny-chat .owl-next {
+    width: 30px;
+    height: 100px;
+    position: absolute;
+    top: 40%;
+    right: -50px;
+    display: block !important;
+    border: 0px solid black;
+}
+
+#tiny-chat .owl-prev i,
+#tiny-chat .owl-next i {
+    font-size: 40px;
+    color: var(--color-link);
+}
+
+
+#tiny-chat .owl-prev:hover,
+#tiny-chat .owl-next:hover {
+    background-color: transparent;
 }

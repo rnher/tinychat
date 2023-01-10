@@ -235,7 +235,7 @@ import "/public/js/jquery/chatinfo.js";
             listChatinfo: $(".chat-info__content"),
             listChatbox: $(".chat-box__content"),
             isReload: false,
-            isRemove: false
+            isRemove: false,
         };
         let settings = $.extend({}, defaults, options);
 
@@ -249,10 +249,11 @@ import "/public/js/jquery/chatinfo.js";
                 $(`#settings-brand .option[data-id=${brandData.id}]`).onClickSelectBrand({ type: "brand" });
                 $(`#settings-member .option[data-id=${brandData.id}]`).onClickSelectBrand({ type: "member" });
 
+                let brand_item = $("tiny-chat").createBrandItem({ data: brandData });
                 if (isPrepend) {
-                    settings.listBrand.prepend($("tiny-chat").createBrandItem({ data: brandData }));
+                    settings.listBrand.prepend(brand_item);
                 } else {
-                    settings.listBrand.append($("tiny-chat").createBrandItem({ data: brandData }));
+                    settings.listBrand.append(brand_item);
                 }
 
                 let listChatInfo = $($("tiny-chat").createListChatInfo({ data: brandData }));
@@ -623,7 +624,7 @@ import "/public/js/jquery/chatinfo.js";
             _this.loadSettings(_this, brand);
             _this.loadData(_this, brand);
 
-            _this.updateBrand({ data: brand });
+            _this.updateBrandPing({ data: brand });
         };
 
         return _this.init();
@@ -764,7 +765,11 @@ import "/public/js/jquery/chatinfo.js";
             _this.callbackSuccessCreateBrand = function (popup) {
                 return function (data) {
                     let tiny_chat = $("#tiny-chat");
-                    _this.loadDataBrand({ data });
+                    _this.loadDataBrand({
+                        data
+                    });
+
+                    _this.updateVisibleBrand();
 
                     tiny_chat.showAlert({
                         type: "success",
@@ -1203,7 +1208,7 @@ import "/public/js/jquery/chatinfo.js";
         return _this.init();
     };
 
-    $.fn.updateBrand = function (options) {
+    $.fn.updateBrandPing = function (options) {
         let _this = this;
 
         let defaults = {
@@ -1225,6 +1230,59 @@ import "/public/js/jquery/chatinfo.js";
             brandActive.find(".chat-menu__item").prop("title", brand.name);
             brandActive.find("img").prop("src", brand.avatar);
             brandActive.find("img").prop("alt", brand.name);
+        };
+
+        return _this.init();
+    };
+
+    $.fn.updateVisibleBrand = function (options) {
+        let _this = this;
+
+        let defaults = {
+            width: {
+                max: "350px",
+                min: "50px"
+            },
+            avatar: {
+                hide: {
+                    width: 30,
+                    height: 30,
+                    "margin-top": 0
+                },
+                show: {
+                    width: 50,
+                    height: 50,
+                    "margin-top": -10
+                }
+            }
+        };
+        let settings = $.extend({}, defaults, options);
+
+        _this.init = function () {
+            let tiny_chat = $("#tiny-chat");
+
+            let chat_menu = tiny_chat.find(".chat-menu");
+            let chat_menu_btn = chat_menu.find("#chat-menu__btn");
+            chat_menu_btn.empty();
+            console.log(chat_menu.data("isopen"));
+
+            if (!chat_menu.data("isopen")) {
+                chat_menu.animate({ width: settings.width.min });
+                chat_menu.find(".brand .info-content").hide();
+                chat_menu.find(".brand .user-avatar img").css(settings.avatar.hide);
+                chat_menu.find(".brand .user-avatar .brand-notification").css({
+                    top: 0
+                });
+                chat_menu_btn.append(`<i class="fa-solid fa-angles-right"></i>`);
+            } else {
+                chat_menu.animate({ width: settings.width.max });
+                chat_menu.find(".brand .info-content").show();
+                chat_menu.find(".brand .user-avatar img").css(settings.avatar.show);
+                chat_menu.find(".brand .user-avatar .brand-notification").css({
+                    top: -10
+                });
+                chat_menu_btn.append(`<i class="fa-solid fa-angles-left"></i>`);
+            }
         };
 
         return _this.init();

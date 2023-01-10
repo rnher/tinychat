@@ -116,7 +116,7 @@ $user = User::DetailInfo(Auth::User());
         </div>
     </div>
     <div class="chat-container">
-        <div class="chat-menu">
+        <div class="chat-menu" data-isopen="false">
             <div class="chat-menu__head">
                 <div class="chat-menu__head-title">
                     <i class="fa-solid fa-store"></i> Thương hiệu

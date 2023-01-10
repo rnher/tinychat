@@ -18,11 +18,34 @@
 
 <body>
     <div id="tiny-chat">
-        <!-- <div class="blur-bg_layout"></div> -->
-        <?php
-        include_once "views/users/signin.user.view.php";
-        include_once "views/users/signup.user.view.php";
-        ?>
+        <div class="main-bg__area">
+            <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+
+        <div class="home-container">
+            <div class="home-container__left">
+                <?php
+                include_once "includes/home.banner.view.php";
+                ?>
+            </div>
+            <div class="home-container__right">
+                <?php
+                include_once "views/users/signin.user.view.php";
+                include_once "views/users/signup.user.view.php";
+                ?>
+            </div>
+        </div>
     </div>
 
     <!-- js  -->

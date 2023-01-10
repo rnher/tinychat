@@ -10,7 +10,7 @@
 
 <body>
     <!--Add script từ trang quản trị chat  -->
-    <script id="client-tiny-chat-script" type="module" src="https://designweb.vn/client/public/js/main.js" data-id="cd8e6a9b3fa8fa864cebe2e2dad6f671a696b1002263bbd78714ad0"></script>
+    <script id="client-tiny-chat-script" type="module" src="https://designweb.vn/client/public/js/main.js" data-id="1fd824d969d62077bf11ee98aefba34ee85772b01163bbe876b3605"></script>
 </body>
 
 </html>

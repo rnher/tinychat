@@ -2,16 +2,18 @@
     text-align: start;
 }
 
-#tiny-chat .signin-user .customer-form,
-#tiny-chat .signup-user .customer-form {
-    margin-top: 50px;
-}
-
 #tiny-chat .input-group,
 #tiny-chat .form-content,
 #tiny-chat .form-header {
     margin-bottom: 10px;
 }
+
+#tiny-chat .customer-form .input-group.inline-input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 #tiny-chat .input-group textarea,
 #tiny-chat .input-group input {

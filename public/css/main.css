@@ -16,6 +16,7 @@
 @import "app.css";
 @import "tables.css";
 @import "banners.css";
+@import "home.layout.css";
 
 /* client */
 @import "../../client/public/css/main.css";
@@ -36,9 +37,7 @@
     --light: #f8f9fa;
     --dark: #343a40;
 
-    --font-family: Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-
-    --bg: #f5f8fd;
+    --font-family: sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
     /* Main  */
     /* --bg-btn: #1877f2;
@@ -63,6 +62,8 @@
 
 
     /* I-WEB  */
+    --bg: #f5f8fd;
+
     --bg-btn: #eab741;
     --color-btn: #f5f8fd;
     --color-link: #1877f2;
@@ -84,6 +85,8 @@
     --text-secondary: #9fa4a8;
     --bg-secondary: #6e757a;
 
+    --bg-form__home: #e6e9ec;
+    --bg-input__home: #f5f8fd;
 }
 
 *,

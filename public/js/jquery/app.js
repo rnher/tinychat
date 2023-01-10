@@ -59,6 +59,12 @@ import { CONF_URL } from "/public/js/config.js";
                 autoplay: true,
                 autoplayTimeout: 5000,
                 loop: true,
+                dots: true,
+                nav: true,
+                navText: [
+                    '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+                    '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+                ],
             });
 
             //
@@ -300,23 +306,6 @@ import { CONF_URL } from "/public/js/config.js";
         let _this = this;
 
         let defaults = {
-            is_min: true,
-            width: {
-                max: "350px",
-                min: "50px"
-            },
-            avatar: {
-                hide: {
-                    width: 30,
-                    height: 30,
-                    "margin-top": 0
-                },
-                show: {
-                    width: 50,
-                    height: 50,
-                    "margin-top": -10
-                }
-            }
         };
         let settings = $.extend({}, defaults, options);
 
@@ -326,28 +315,17 @@ import { CONF_URL } from "/public/js/config.js";
 
                 let tiny_chat = $("#tiny-chat");
                 let chat_menu = tiny_chat.find(".chat-menu");
-                let chat_menu_btn = chat_menu.find("#chat-menu__btn");
-                chat_menu_btn.empty();
 
-                if (settings.is_min) {
-                    chat_menu.animate({ width: settings.width.max });
-                    chat_menu.find(".brand .info-content").show();
-                    chat_menu.find(".brand .user-avatar img").css(settings.avatar.show);
-                    chat_menu.find(".brand .user-avatar .brand-notification").css({
-                        top: -10
-                    });
-                    chat_menu_btn.append(`<i class="fa-solid fa-angles-left"></i>`);
+                if (chat_menu.data("isopen")) {
+                    chat_menu.find(".chat-menu__head").css("padding-left", 0);
+                    chat_menu.find(".chat-menu__head-title").hide();
                 } else {
-                    chat_menu.animate({ width: settings.width.min });
-                    chat_menu.find(".brand .info-content").hide();
-                    chat_menu.find(".brand .user-avatar img").css(settings.avatar.hide);
-                    chat_menu.find(".brand .user-avatar .brand-notification").css({
-                        top: 0
-                    });
-                    chat_menu_btn.append(`<i class="fa-solid fa-angles-right"></i>`);
+                    chat_menu.find(".chat-menu__head").css("padding-left", 15);
+                    chat_menu.find(".chat-menu__head-title").show();
                 }
 
-                settings.is_min = !settings.is_min;
+                chat_menu.data("isopen", !chat_menu.data("isopen"));
+                chat_menu.updateVisibleBrand();
             });
         };
 

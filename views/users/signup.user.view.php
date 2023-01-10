@@ -41,12 +41,10 @@ use APP\App;
             </form>
         </div>
         <div class="form-bottom text-center">
-            <a class="link action-btn" data-prevtarget="signup-user" data-target="signin-user" data-action="toggle" href="<?= CONF_URL["signin"] ?>">
+            <span>Bạn đã có tài khoản ?</span>
+            <a class="link action-btn" data-prevtarget="signup-user" data-target="signin-user" data-action="toggle"
+                data-clear="true" href="<?= CONF_URL["signin"] ?>">
                 Đăng nhập
-            </a>
-            <span class="presentation">-</span>
-            <a class="link" href="<?= CONF_URL["home"] ?>">
-                Quay lại trang chủ
             </a>
         </div>
     </div>

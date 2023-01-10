@@ -111,11 +111,11 @@
     width: 100%;
     display: flex;
     align-items: center;
-    padding-left: 15px;
+    /* padding-left: 15px; */
 }
 
 #tiny-chat .chat-container .chat-menu .chat-menu__head .chat-menu__head-title {
-    display: block;
+    display: none;
     font-size: 14px;
     overflow: hidden;
     width: 100%;
@@ -123,9 +123,15 @@
     height: 20px;
 }
 
+#tiny-chat .chat-container .chat-menu .chat-menu__head .chat-menu__head-title i {
+    font-size: 18px;
+}
+
+
 #tiny-chat .chat-container .chat-menu .chat-menu__btn {
     width: 40px;
     height: 40px;
+    border-radius: 0;
 }
 
 #tiny-chat .chat-container .chat-menu .chat-menu__btn i {
@@ -133,4 +139,9 @@
     position: absolute;
     top: 15px;
     right: 10px;
+}
+
+#tiny-chat .chat-container .chat-menu .chat-menu__btn:hover {
+    background-color: var(--bg-hover__main);
+    color: var(--color-hover__main);
 }

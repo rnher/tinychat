@@ -23,7 +23,7 @@ use APP\App;
                 <div class="input-group inline-input-group text-center">
                     <input class="inline-input" id="remember" type="checkbox" name="remember"
                         <?= App::Singleton()->Cookie("remember") ?  "checked" : "" ?>>
-                    <label class="inline-input" for="remember">Ghi nhớ tài khoản</label>
+                    <label class="inline-input remember-label" for="remember">Ghi nhớ tài khoản</label>
                 </div>
                 <div class="input-group submit-input">
                     <button class="btn btn-submit" type="submit">Đăng nhập</button>
@@ -31,13 +31,10 @@ use APP\App;
             </form>
         </div>
         <div class="form-bottom text-center">
+            <span>Bạn chưa có tài khoản ?</span>
             <a class="link action-btn" data-prevtarget="signin-user" data-target="signup-user" data-action="toggle"
-                href="<?= CONF_URL["signup"] ?>">
+                data-clear="true" href="<?= CONF_URL["signup"] ?>">
                 Đăng ký
-            </a>
-            <span class="presentation">-</span>
-            <a class="link" href="<?= CONF_URL["home"] ?>">
-                Quay lại trang chủ
             </a>
         </div>
     </div>

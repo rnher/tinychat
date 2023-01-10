@@ -92,7 +92,7 @@ function validate($typeNames, $typePatterns, $typeError, $typeRequiredNames = []
             isset($typeRequiredNames[$name])
             && is_null($data[$name])
         ) {
-            $error[$name] = $typeError[$name];
+            $error[$name] = "Không được để trống";
         }
 
         if (isset($data[$name])) {

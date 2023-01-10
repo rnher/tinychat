@@ -196,7 +196,7 @@ window.Chat = (function () {
             updatePingUsers(data) {
                 let _this = this;
 
-                function updateBrand(ping, brand_id = null) {
+                function updateBrandPing(ping, brand_id = null) {
                     // Off
                     if (!ping.ping) {
                         _this._hideTyping(ping.chatinfo_id, brand_id);
@@ -210,7 +210,7 @@ window.Chat = (function () {
                     let ping = pings[i];
 
                     if (!data.isSelf) {
-                        updateBrand(ping, data.id);
+                        updateBrandPing(ping, data.id);
                     }
                 }
             }
